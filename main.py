@@ -159,7 +159,6 @@ class AddDataHandler(BaseHandler):
         user_obj = User(
             sid = 4093,
             fullname = "Gavin Uberti",
-            inkscape_cert_level = 5,
             sewing_machine_cert_level = 2,
             soldering_cert_level = 1
         )
@@ -167,7 +166,6 @@ class AddDataHandler(BaseHandler):
         user_obj = User(
             sid = 4837,
             fullname = "Quinn Bowers",
-            inkscape_cert_level = 1,
             sewing_machine_cert_level = 5,
             soldering_cert_level = 3
         )
@@ -175,7 +173,6 @@ class AddDataHandler(BaseHandler):
         user_obj = User(
             sid = 4758,
             fullname = "Zach Daniels",
-            inkscape_cert_level = 2,
             sewing_machine_cert_level = 2,
             soldering_cert_level = 3
         )
