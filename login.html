@@ -1,0 +1,158 @@
+<html>
+  <head>
+  <title>Sign in to EPSchedule</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="bower_components/polymer/polymer.html">
+  <link rel="import" href="bower_components/paper-input/paper-input.html">
+  <link rel="import" href="bower_components/paper-button/paper-button.html">
+  <link rel="import" href="bower_components/paper-material/paper-material.html">
+  <link rel="import" href="bower_components/iron-image/iron-image.html">
+  </head>
+  <body unresolved>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F44336;
+      padding: 20px;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      max-width: 360px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 2px;
+    }
+    .image-container {
+      margin-bottom: 0px;
+      width: 360px;
+    }
+    .copy {
+      font-size: 16;
+      margin-bottom: 0px;
+    }
+    paper-input {
+      text-align: left;
+    }
+    .link {
+      text-decoration: none;
+    }
+    paper-button {
+      margin: 12px auto;
+      width: 100%;
+      color: white;
+      background-color: #536DFE;
+    }
+    #loginButton {
+      display: block;
+    }
+    #registerButton {
+      display: none;
+    }
+    #loginText {
+      display: none;
+    }
+    #registerText {
+      display: block;
+    }
+    #toast {
+      text-align: left;
+    }
+    #toastButton {
+      margin-left: 48px;
+      color: #2196f3;
+    }
+    iron-image {
+      width: 360px;
+    }
+  </style>
+
+	<paper-material class="card" elevation="2">
+	<div class="image-container">
+    <iron-image src="images/logo_large.jpg"></iron-image>
+  </div>
+	<h1>Design Lab Manager</h1>
+	<p class="copy">Sign in to use the design lab machinery</p>
+  <paper-input id="email" label="Email address (@eastsideprep.org)">
+  </paper-input>
+
+  <paper-button onclick="submitMainForm('login')" raised id="loginButton">SIGN IN</paper-button>
+  </paper-material>
+
+  <paper-toast id="toast" text="" duration=10000>
+    <span role="button" id="toastButton"></span>
+  </paper-toast>
+
+  <script>
+  var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
+  function checkSubmit(e) {
+    if (e && e.keyCode === 13) {
+      submitMainForm(action);
+     }
+  }
+  function submitMainForm(postAction) {
+    submitForm(postAction, onSuccess, onError);
+  }
+  function submitForm(postAction, successFunction, errorFunction) { //Takes either login, register, or resend
+    var data = new FormData();
+    data.append('email', email.value);
+
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          result = JSON.parse(xhr.responseText);
+          if (result.error == "") {
+            successFunction(result);
+          } else {
+            errorFunction(result);
+          }
+          locked = false;
+        } else {
+          email.value = "";
+          password.value = "";
+          errorFunction(UNKNOWN_ERROR);
+        }
+      }
+    }
+    xhr.open("POST", postAction, true);
+    xhr.send(data);
+  }
+
+  function processToast(errorObj) {
+    toast = document.getElementById("toast");
+    toastButton = document.getElementById("toastButton");
+    toast.text = errorObj.error;
+    if (errorObj.hasOwnProperty('action')) {
+      toastButton.innerHTML = errorObj.buttonText;
+      toastButton.style.display = "";
+
+      if (errorObj.actionId == 'url') {
+        toastButton.onclick = function() { self.location = action; }
+      } else if (errorObj.actionId == 'button') {
+        switch (errorObj.action) {
+          case "resendConfirmationEmail":
+            toastButton.onclick = function() { submitResendForm(); };
+            break;
+          case "switchToRegister":
+            toastButton.onclick = switchToRegister;
+            break;
+        }
+      }
+    } else {
+      toastButton.style.display = "none";
+    }
+
+    toast.show();
+  }
+  function onSuccess(errorObj) {
+    location.reload();
+  }
+  function onError(errorObj) {
+    processToast(errorObj);
+  }
+
+  </script>
+
+</body></html>

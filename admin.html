@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <link rel="manifest" href="/manifest.json">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+      <link rel="import" href="bower_components/paper-input/paper-input.html">
+      <link rel="import" href="bower_components/paper-button/paper-button.html">
+      <link rel="import" href="bower_components/paper-material/paper-material.html">
+      <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+      <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+      <link rel="import" href="bower_components/paper-item/paper-item.html">
+      <link rel="import" href="bower_components/iron-image/iron-image.html">
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        overflow: hidden;
+        @apply(--layout-fullbleed);
+        @apply(--layout-vertical);
+      }
+    </style>
+  </head>
+  {% raw %}
+  <body>
+    <template is="dom-bind">
+    <paper-toolbar>
+      <div flex class="title">Puddleractor</div>
+    </paper-toolbar>
+    <template is="dom-repeat" items="{{entries}}" as="entry">
+      <paper-item>
+        <p>{{entry.sid}}</p>
+      </paper-item>
+    </template>
+    </template>
+  </body>
+  {% endraw %}
+
+  <script>
+    var scope = document.querySelector('template[is="dom-bind"]');
+    scope.entries = {{entries | safe}};
+  </script>
+</html>
