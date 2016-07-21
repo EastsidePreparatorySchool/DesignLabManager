@@ -181,9 +181,15 @@ class AddDataHandler(BaseHandler):
             logging.info("Added " + student[0] + " to the database")
         self.response.write('Success!!')
 
+class PrototypeHandler(BaseHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('frontendprototype.html')
+        self.response.write(template.render({}))
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/adddata', AddDataHandler),
     ('/login', LoginHandler),
-    ('/admin', AdminHandler)
+    ('/admin', AdminHandler),
+    ('/prototype', PrototypeHandler)
 ], debug=True)
