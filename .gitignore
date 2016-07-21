@@ -2,3 +2,4 @@ admin_ids.json
 /node_modules/*
 *.pyc
 dlm_logo.svg
+id_table.json
