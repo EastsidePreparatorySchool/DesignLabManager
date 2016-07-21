@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+    body {
+    }
+    .navbar {
+        list-style-type: none;
+        margin:0;
+        padding:0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        overflow: hidden;
+        background-color:#333;
+        margin-left:-8px;
+        transition-property:background-color;
+        transition-delay:2s;
+    }
+    .navbar li {
+        float: left;
+    }
+    .navbar li a {
+        text-decoration: none;
+        color: white;
+        display:block;
+        text-align:center;
+        font-family: 'Roboto',sans-serif;
+        padding: 14px 16px;
+        transition-property:background-color;
+        transition-duration:1s;
+    }
+    .navbar li:hover a {
+        background-color:#6A6A6A;
+    }
+    .paragraph {
+        position:absolute;
+        font-family: 'Roboto',sans-serif;
+        top:20%;
+        width:35%;
+        right:20%;
+        padding:10px;
+        transition:1s;
+    }
+    .heading1 {
+        position:absolute;
+        left:3%;
+    }
+    #picture1 {
+        position:absolute;
+        top:17%;
+    }
+    #picture2 {
+        position:absolute;
+        top:17%;
+        width:23%;
+    }
+    #sidenavbar {
+        list-style-type:none;
+        text-align:center;
+        position:fixed;
+        background-color:#333;
+        right:0%;
+        height:100%;
+        width:10%;
+        top:6%;
+        margin:0;
+        padding:0;
+    }
+    #coffeemaker {
+        transition: 1s;
+    }
+    #home {
+        transition-property:display;
+        transition-duration:1s;
+    }
+    #sidenavbar li a {
+        text-decoration: none;
+        color: white;
+        display:block;
+        text-align:center;
+        font-family: 'Roboto',sans-serif;
+        padding: 14px 16px;
+        transition-property:background-color;
+        transition-duration:1s;
+    }
+    #sidenavbar li {
+        margin:0;
+        float:left;
+        width:100%;
+    }
+    #sidenavbar li:hover a {
+        background-color: #6A6A6A
+    }
+    .toolbox {
+        width:30%;
+        height:20%;
+        margin-top:3%;
+        border: 1px solid #DADADA;
+        background-color:#DADADA;
+        display:flex;
+        transition-property:background-color;
+        transition-duration:1s;
+    }
+    #div2 {
+        position:absolute;
+        left:36%;
+        top:6%;
+    }
+    .toolclass {
+        padding:2%;
+        transition-property: filter;
+        transition-duration:1s;
+    }
+    .toolbox:hover {
+        background-color:#6A6A6A;
+    }
+</style>
+</head>
+<body>
+<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+<ul class="navbar">
+<li><a href="#" onClick="openTab('home')">Home</a></li>    
+<li><a href="#" onClick="openTab('tools')">Tools</a></li>     
+</ul>
+    <br />
+    <br />
+<div id="home" class="tab">
+<h1 class="heading1" style="font-family:'Roboto',sans-serif"> Home </h1>
+</div>
+<div id="tools" class="tab">
+<div id="div1" class="toolbox" onClick="openTool('coffeemaker'); funcShow('coffee')">
+    <img class="toolclass" onClick="openTool('coffeemaker')" src="http://ghk.h-cdn.co/assets/cm/15/12/5509017529fc5-mr-coffee-coffee-maker-s3.jpg" style="width:25%;height:25%">
+    <h1 style="font-family:'Roboto',sans-serif"> Coffee Maker</h1>
+    </div>
+<div id="div2" class="toolbox" onClick="openTool('3dprint'); funcShow('3d')">
+<img class="toolclass" src="https://all3dp.com/wp-content/uploads/2015/03/makerbot-replicator-56.jpg" style="width:25%;">
+<h1 style="font-family:'Roboto',sans-serif"> 3D Printer</h1>   
+</div>
+</div>
+<div id="coffeemaker" class="tool">
+<h1 class="heading1" style="font-family:'Roboto',sans-serif">Coffee maker</h1>
+<ul id="sidenavbar">
+<li><a href="#" onClick="funcShow('coffee')">Coffee Maker</a></li>
+<li><a href="#" onClick="funcShow('cert')">Certification</a></li>
+</ul>
+<br />
+<img id="picture1" src="http://ghk.h-cdn.co/assets/cm/15/12/5509017529fc5-mr-coffee-coffee-maker-s3.jpg">
+<p class="paragraph" id="coffee">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt, velit non gravida ornare, ante lacus sagittis augue, nec mollis turpis ligula vulputate sapien. Pellentesque ipsum urna, dapibus at sapien sed, viverra vestibulum ligula. Etiam blandit quam tortor, id maximus quam convallis id. Ut consequat rutrum urna in tincidunt. Ut elementum nulla et maximus convallis. Duis mollis elit volutpat, auctor lorem eu, varius leo. Praesent viverra faucibus porttitor. Nunc vel lorem semper, auctor velit at, aliquet diam. Morbi id turpis ut justo venenatis commodo. Nullam quis venenatis orci. Nullam cursus sem sapien, in aliquam nisl aliquam ut.
+
+Vivamus sit amet venenatis felis. Pellentesque accumsan quam turpis, lobortis tincidunt enim venenatis ac. Etiam mollis sem et libero molestie dignissim. Nullam volutpat lorem non nisl semper, vitae malesuada odio posuere. Suspendisse et dapibus tortor, id suscipit odio. Maecenas velit leo, viverra non ipsum in, iaculis placerat augue. In ligula ex, ultrices et felis finibus, bibendum facilisis ex.</p>
+<p class="paragraph" id="cert" style="display:none">TEST PARAGRAPH</p>
+</div>
+<div id="3dprint" class="tool">
+<h1 class="heading1" style="font-family:'Roboto',sans-serif">3D Printer</h1>
+<ul id="sidenavbar">
+<li><a href="#" onClick="funcShow('3d')">3D Printer</a></li>
+<li><a href="#" onClick="funcShow('3dcert')">Certification</a></li>
+</ul>
+<br />
+<img id="picture2" src="https://all3dp.com/wp-content/uploads/2015/03/makerbot-replicator-56.jpg">
+<p class="paragraph" id="3d">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt, velit non gravida ornare, ante lacus sagittis augue, nec mollis turpis ligula vulputate sapien. Pellentesque ipsum urna, dapibus at sapien sed, viverra vestibulum ligula. Etiam blandit quam tortor, id maximus quam convallis id. Ut consequat rutrum urna in tincidunt. Ut elementum nulla et maximus convallis. Duis mollis elit volutpat, auctor lorem eu, varius leo. Praesent viverra faucibus porttitor. Nunc vel lorem semper, auctor velit at, aliquet diam. Morbi id turpis ut justo venenatis commodo. Nullam quis venenatis orci. Nullam cursus sem sapien, in aliquam nisl aliquam ut.
+
+Vivamus sit amet venenatis felis. Pellentesque accumsan quam turpis, lobortis tincidunt enim venenatis ac. Etiam mollis sem et libero molestie dignissim. Nullam volutpat lorem non nisl semper, vitae malesuada odio posuere. Suspendisse et dapibus tortor, id suscipit odio. Maecenas velit leo, viverra non ipsum in, iaculis placerat augue. In ligula ex, ultrices et felis finibus, bibendum facilisis ex.</p>
+<p class="paragraph" id="3dcert" style="display:none">TEST PARAGRAPH</p>
+</div>
+<script>
+openTab("home")
+function openTab(tabName) {
+    var i;
+    var tabs = document.getElementsByClassName("tab");
+    for(i = 0; i < tabs.length;i++) {
+        tabs[i].style.display = "none";
+    }
+    var tools = document.getElementsByClassName("tool");
+    for(var j = 0;j < tools.length;j++) {
+        tools[j].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+}
+function funcShow(idName) {
+    var x = document.getElementsByClassName("paragraph");
+    for(var i = 0;i < x.length;i++) {
+        x[i].style.display = "none";    
+    }
+    document.getElementById(idName).style.display = "inline";
+}
+    function openTool(toolName) {
+    var i;
+    var tools = document.getElementsByClassName("tool");
+    for(i = 0; i < tools.length;i++) {
+        tools[i].style.display = "none";
+    }
+    document.getElementById("tools").style.display = "none";
+    document.getElementById(toolName).style.display = "block";
+}
+</script>
+</body>
+</html>
