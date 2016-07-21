@@ -86,15 +86,13 @@ class BaseHandler(webapp2.RequestHandler):
             'fullname': obj.fullname,
             'vinyl_cert_level': obj.vinyl_cert_level,
             'sewing_machine_cert_level': obj.sewing_machine_cert_level,
-            'hand_tools_cert_level': obj.hand_tools_cert_level,
             'epilog_cert_level': obj.epilog_cert_level,
             'universal_laser_cert_level': obj.universal_laser_cert_level,
             'cnc_cert_level': obj.cnc_cert_level,
             'printrbot_cert_level': obj.printrbot_cert_level,
             'robo3d_cert_level': obj.robo3d_cert_level,
-            'makerbot_cert_level': obj.makerbot_cert_level,
             'soldering_cert_level': obj.soldering_cert_level,
-            'power_tools_cert_level': obj.power_tools_cert_level,
+            'tools_cert_level': obj.tools_cert_level,
             'coffee_maker_cert_level': obj.coffee_maker_cert_level
         };
 
@@ -142,7 +140,6 @@ class AdminHandler(BaseHandler):
 
         entriesQuery = User.query()
         entries = []
-        logging.info("FOAAAAAAAAAAAADS")
         for obj in entriesQuery:
             entries.append(self.db_user_to_simple_obj(obj))
 
@@ -156,28 +153,33 @@ class AdminHandler(BaseHandler):
 
 class AddDataHandler(BaseHandler):
     def get(self):
-        user_obj = User(
-            sid = 4093,
-            fullname = "Gavin Uberti",
-            sewing_machine_cert_level = 2,
-            soldering_cert_level = 1
-        )
-        user_obj.put();
-        user_obj = User(
-            sid = 4837,
-            fullname = "Quinn Bowers",
-            sewing_machine_cert_level = 5,
-            soldering_cert_level = 3
-        )
-        user_obj.put();
-        user_obj = User(
-            sid = 4758,
-            fullname = "Zach Daniels",
-            sewing_machine_cert_level = 2,
-            soldering_cert_level = 3
-        )
-        user_obj.put();
-        self.response.write('Success!')
+        for student in ID_TABLE:
+            query = User.query(User.sid == student[1])
+            has_obj = False
+            for obj in query:
+                has_obj = True
+                break
+
+            if has_obj:
+                continue
+
+            user_obj = User(
+                sid = student[1],
+                fullname = student[0],
+                sewing_machine_cert_level = 0,
+                soldering_cert_level = 0,
+                vinyl_cert_level = 0,
+                epilog_cert_level = 0,
+                universal_laser_cert_level = 0,
+                cnc_cert_level = 0,
+                printrbot_cert_level = 0,
+                robo3d_cert_level = 0,
+                tools_cert_level = 0,
+                coffee_maker_cert_level = 0
+            )
+            user_obj.put()
+            logging.info("Added " + student[0] + " to the database")
+        self.response.write('Success!!')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
