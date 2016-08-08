@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+        <link rel="manifest" href="/manifest.json">
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+            <!--<link rel="import" href="bower_components/paper-input/paper-input.html">
+            <link rel="import" href="bower_components/paper-button/paper-button.html">
+            <link rel="import" href="bower_components/paper-material/paper-material.html">
+            <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+            <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+            <link rel="import" href="bower_components/paper-item/paper-item.html">
+            <link rel="import" href="bower_components/iron-image/iron-image.html">
+            <link rel="import" href="bower_components/paper-tooltip/paper-tooltip.html">-->
+            <link rel="import" href="bower_components/iron-collapse/iron-collapse.html">
+        
+        <style is="custom-style">
+            body {
+                font-family: 'Roboto', sans-serif;
+                @apply(--layout-fullbleed);
+                @apply(--layout-vertical);
+                margin: 0px;
+            }
+            .container {
+                display: table;
+                width: 100%;
+                font-size: 32px;
+            }
+            iron-collapse {
+                width: 100%;
+            }
+            .scroll_box {
+                overflow: auto;
+                height: 790px;
+                width: 100%;
+            }
+            
+            
+            .header {
+                height: 90px;
+                width: 100%;
+                
+                background-color: #bbbbbb;
+                
+                display: flex;
+                justify-content: space-between;
+            }
+            .legend {
+                height: 90px;
+                width: 100%;
+                
+                background-color: #aaaaaa;
+                
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            
+            img {
+                height: 70px;
+                margin-right: 20px;
+                margin-top: 10px;
+            }
+            
+            .row {
+                height: 70px;
+                background-color: white;
+                width: 100%;
+                
+                display: flex;
+                
+            }
+            
+        </style>
+    </head>
+    {% raw %}
+    <body>
+        <template is="dom-bind">
+            <div class='header'>
+                <div style='order: 1; margin-left: 30px;'>
+                    <h1>Admin page</h1>
+                </div>
+                <div style='order: 2; margin-right: 30px;'>
+                    <p>text box place holder because Im lazy</p>
+                </div>
+            </div>
+        
+            <div class='legend'>
+                <h1 style='order: 1; margin-left: 60px;'>Name</h1>
+                <h1 style='order: 2;'>SID</h1>
+                <div style='order: 3; margin-right: 60px;'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                    
+                    <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
+                </div>
+            </div>
+            
+            
+            
+            <div class='scroll_box'>
+                <template is="dom-repeat" items="{{entries}}" as="entry">
+                    <iron-collapse opened>
+                        <div class='row'>
+                            <h1>{{entry.fullname}}</h1>
+                            <h1>{{entry.sid}}</h1>
+                        </div>
+                    </iron-collapse>
+                </template>
+            </div>
+            
+        </template>
+    </body>
+    {% endraw %}
+    <script>
+        var scope = document.querySelector('template[is="dom-bind"]');
+        
+        scope.entries = {{entries | safe}};
+            scope.genId = function(entry, machine) {
+                return entry.sid.toString() + machine;
+            };
+        scope.updateSearch = function(e) {
+            
+            
+            
+            var text = document.getElementById("searchbar").value;
+            var collapsables = document.querySelectorAll("iron-collapse");
+            for (var i = 0; i < collapsables.length; i++) {
+                var innerText = collapsables[i].children[0].children[0].innerText;
+                if (innerText.includes(text)) {
+                    collapsables[i].opened = true;
+                } else {
+                    collapsables[i].opened = false;
+                }
+            }
+        };
+    </script>
+</html>
