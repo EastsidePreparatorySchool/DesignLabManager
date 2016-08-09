@@ -5,15 +5,17 @@
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
         <link rel="manifest" href="/manifest.json">
         <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-            <!--<link rel="import" href="bower_components/paper-input/paper-input.html">
-            <link rel="import" href="bower_components/paper-button/paper-button.html">
-            <link rel="import" href="bower_components/paper-material/paper-material.html">
-            <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
-            <link rel="import" href="bower_components/paper-menu/paper-menu.html">
-            <link rel="import" href="bower_components/paper-item/paper-item.html">
-            <link rel="import" href="bower_components/iron-image/iron-image.html">
-            <link rel="import" href="bower_components/paper-tooltip/paper-tooltip.html">-->
-            <link rel="import" href="bower_components/iron-collapse/iron-collapse.html">
+            
+		<link rel="import" href="bower_components/paper-input/paper-input.html">
+		<link rel="import" href="bower_components/paper-button/paper-button.html">
+		<link rel="import" href="bower_components/paper-material/paper-material.html">
+		<link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+		<link rel="import" href="bower_components/paper-menu/paper-menu.html">
+		<link rel="import" href="bower_components/paper-item/paper-item.html">
+		<link rel="import" href="bower_components/iron-image/iron-image.html">
+		<link rel="import" href="bower_components/paper-tooltip/paper-tooltip.html">
+
+		<link rel="import" href="bower_components/iron-collapse/iron-collapse.html">
         
         <style is="custom-style">
             body {
@@ -32,25 +34,25 @@
             }
             .scroll_box {
                 overflow: auto;
-                height: 790px;
+                height: 620px;
                 width: 100%;
             }
             
             
             .header {
-                height: 90px;
+                height: 60px;
                 width: 100%;
                 
-                background-color: #bbbbbb;
+                background-color: #607D8B;
                 
                 display: flex;
                 justify-content: space-between;
             }
             .legend {
-                height: 90px;
+                height: 80px;
                 width: 100%;
                 
-                background-color: #aaaaaa;
+                background-color: #455A64;
                 
                 display: flex;
                 justify-content: space-between;
@@ -58,18 +60,40 @@
             
             
             img {
-                height: 70px;
+                height: 64px;
                 margin-right: 20px;
                 margin-top: 10px;
             }
             
+			
+			
+			
+			
             .row {
                 height: 70px;
                 background-color: white;
                 width: 100%;
+				
+				margin-top: 10px;
+				
                 
                 display: flex;
-                
+                justify-content: space-between;
+            }
+			
+			.circle {
+                width: 64px;
+                height: 64px;
+                border-radius: 32px;
+                font-size: 20px;
+                color: #fff;
+                line-height: 64px;
+                text-align: center;
+                background: #000;
+				
+				
+				order: 1;
+				margin-right: 24px; 
             }
             
         </style>
@@ -79,10 +103,10 @@
         <template is="dom-bind">
             <div class='header'>
                 <div style='order: 1; margin-left: 30px;'>
-                    <h1>Admin page</h1>
+                    <h3>Admin page</h3>
                 </div>
                 <div style='order: 2; margin-right: 30px;'>
-                    <p>text box place holder because Im lazy</p>
+                    <paper-input id="searchbar"></paper-input>
                 </div>
             </div>
         
@@ -112,9 +136,46 @@
                 <template is="dom-repeat" items="{{entries}}" as="entry">
                     <iron-collapse opened>
                         <div class='row'>
-                            <h1>{{entry.fullname}}</h1>
-                            <h1>{{entry.sid}}</h1>
-                        </div>
+                            
+							<div style='order: 1; margin-left: 60px; width: 360px; display: flex; justify-content: space-between;'>
+								<div style='order: 1'><h1>{{entry.fullname}}</h1></div>
+								<div style='order: 2;'><h1>{{entry.sid}}</h1></div>
+							</div>
+							
+							<div style='order: 3; margin-right: 40px; display: flex;'>
+                            	<div class='circle'>
+									{{entry.sewing_machine_cert_level}}
+								</div>
+								<div class='circle'>
+									{{entry.soldering_cert_level}}
+								</div>
+                            	<div class='circle'>
+									{{entry.vinyl_cert_level}}
+								</div>
+								<div class='circle'>
+									{{entry.epilog_cert_level}}
+								</div>
+								<div class='circle'>
+									{{entry.universal_laser_cert_level}}
+								</div>
+								<div class='circle'>
+									{{entry.cnc_cert_level}}
+								</div>
+                            	<div class='circle'>
+									{{entry.printrbot_cert_level}}
+								</div>
+								<div class='circle'>
+									{{entry.robo3d_cert_level}}
+								</div>
+								<div class='circle'>
+									{{entry.tools_cert_level}}
+								</div>
+                            	<div class='circle'>
+									{{entry.coffee_maker_cert_level}}
+								</div>
+							</div>
+						</div>
+						<hr>
                     </iron-collapse>
                 </template>
             </div>
@@ -126,13 +187,23 @@
         var scope = document.querySelector('template[is="dom-bind"]');
         
         scope.entries = {{entries | safe}};
-            scope.genId = function(entry, machine) {
-                return entry.sid.toString() + machine;
-            };
+        scope.genId = function(entry, machine) {
+            return entry.sid.toString() + machine;
+        };
+		
+		console.log(scope.entries);
+		
+		
+		
+		//-----you have to hit enter for it to search
+		//-------this cleans/speeds up the proccess a bit
+		document.addEventListener('keyup', enter, false);
+		function enter(event) {
+			if (event.which == 13) {
+				scope.updateSearch();
+			}
+		}
         scope.updateSearch = function(e) {
-            
-            
-            
             var text = document.getElementById("searchbar").value;
             var collapsables = document.querySelectorAll("iron-collapse");
             for (var i = 0; i < collapsables.length; i++) {

@@ -142,9 +142,10 @@
         var scope = document.querySelector('template[is="dom-bind"]');
         
         scope.entries = {{entries | safe}};
-            scope.genId = function(entry, machine) {
-                return entry.sid.toString() + machine;
-            };
+        scope.genId = function(entry, machine) {
+            return entry.sid.toString() + machine;
+        };
+		
         scope.updateSearch = function(e) {
             var text = document.getElementById("searchbar").value;
             var collapsables = document.querySelectorAll("iron-collapse");
