@@ -32,7 +32,7 @@
             iron-collapse {
                 width: 100%;
             }
-            .scroll_box {
+            #scroll_box {
                 overflow: auto;
                 height: 620px;
                 width: 100%;
@@ -57,18 +57,11 @@
                 display: flex;
                 justify-content: space-between;
             }
-            
-            
             img {
                 height: 64px;
                 margin-right: 20px;
                 margin-top: 10px;
             }
-            
-			
-			
-			
-			
             .row {
                 height: 70px;
                 background-color: white;
@@ -90,11 +83,57 @@
                 line-height: 64px;
                 text-align: center;
                 background: #000;
-				
-				
 				order: 1;
 				margin-right: 24px; 
             }
+						
+			.button-circle {
+				order: 0;
+				margin-left: 40px;
+				margin-right: -30px;
+			}
+			
+			#cover {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				
+				background-color: black;
+				opacity: 0.6;
+				
+				display: none;
+				
+			}
+			#popup {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				
+				width: 600px;
+				height: 600px;
+				margin-left: -300px;
+				margin-top: -300px;
+				
+				background-color: white;
+				
+				display: none;
+			}
+			
+			
+			
+			.button {
+				
+				position: absolute;
+				
+				bottom: 10%;
+				left: 45%;
+				
+				width: 100px;
+				height: 50px;
+				background-color: #6666ff;
+			}
             
         </style>
     </head>
@@ -111,8 +150,8 @@
             </div>
         
             <div class='legend'>
-                <h1 style='order: 1; margin-left: 60px;'>Name</h1>
-                <h1 style='order: 2;'>SID</h1>
+                <h1 style='order: 1; margin-left: 160px;'>Name</h1>
+                <h1 style='order: 2; margin-left: 100px;'>SID</h1>
                 <div style='order: 3; margin-right: 60px;'>
                     <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
                     <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
@@ -129,21 +168,18 @@
                     <img src='http://www.clipartbest.com/cliparts/RcG/65y/RcG65yx5i.png'>
                 </div>
             </div>
-            
-            
-            
-            <div class='scroll_box'>
+			
+            <div id='scroll_box'>
                 <template is="dom-repeat" items="{{entries}}" as="entry">
                     <iron-collapse opened>
-                        <div class='row'>
-                            
-							<div style='order: 1; margin-left: 60px; width: 360px; display: flex; justify-content: space-between;'>
+                        <div class='row' id='thewholeshebang'>
+							<div class='circle button-circle' onclick='certPopUp(event)'>EDIT</div>
+							<div id='headish' style='order: 1; margin-left: -5px; width: 360px; display: flex; justify-content: space-between;'>
 								<div style='order: 1'><h1>{{entry.fullname}}</h1></div>
-								<div style='order: 2;'><h1>{{entry.sid}}</h1></div>
+								<div style='order: 2'><h1>{{entry.sid}}</h1></div>
 							</div>
-							
-							<div style='order: 3; margin-right: 40px; display: flex;'>
-                            	<div class='circle'>
+							<div id='content' style='order: 3; margin-right: 40px; display: flex;'>
+                            	<div class='circle' id='sew'>
 									{{entry.sewing_machine_cert_level}}
 								</div>
 								<div class='circle'>
@@ -179,24 +215,89 @@
                     </iron-collapse>
                 </template>
             </div>
+			
+			
+			<div id='cover'></div>
+			<div id='popup'>
+				<div id='name'></div>
+				
+				<form>
+				</form>
+				
+				
+				<div class='button' onclick='submitPopUp()'>submit</div>
+			</div>
+			
+			
             
         </template>
     </body>
     {% endraw %}
     <script>
-        var scope = document.querySelector('template[is="dom-bind"]');
-        
+        /*----SETUP----*/
+		var scope = document.querySelector('template[is="dom-bind"]');
+		
         scope.entries = {{entries | safe}};
         scope.genId = function(entry, machine) {
             return entry.sid.toString() + machine;
         };
 		
-		console.log(scope.entries);
+		
+		var machines = ['sewing', 'soldering', 'vinyl', 'epilog', 'universal', 'cnc', 'printrbot', 'robo3d', 'tools', 'coffee'];
+		setTimeout(START, 1000);
+		function START() {
+			document.getElementById('scroll_box').style.height = String(window.innerHeight - 140) + 'px';
+			
+			for (var i = 0; i < machines.length; i++) {
+				var machine = machines[i];
+				console.log(machine);
+				var content = machine + ': <input type=\'text\' id=\'' + machine + '_cert_box\'><br>';
+				document.getElementById('popup').childNodes[3].innerHTML += content;
+			}
+		}
+		/*----SETUP----*/
 		
 		
 		
-		//-----you have to hit enter for it to search
-		//-------this cleans/speeds up the proccess a bit
+		
+		/*----POPUP----*/
+		function certPopUp(event) {
+			var data = {
+				name: event.target.parentNode.childNodes[3].childNodes[1].innerHTML,
+				sid: event.target.parentNode.childNodes[3].childNodes[3].innerHTML,
+			};
+			
+			data.name = data.name.substring(4, data.name.length - 5);
+			data.sid = data.sid.substring(4, data.sid.length - 5);
+			
+			console.log('things');
+			console.log(machines.length);
+			for (var i = 0; i < machines.length; i++) {
+				data[machines[i]] =  event.target.parentNode.childNodes[5].childNodes[(2 * i) + 1].innerHTML;
+			}
+			
+			//TRICKY BIT
+			for (var i = 0; i < machines.length; i++) {
+				var machine = machines[i];
+				document.getElementById(machine + '_cert_box').value = String(data[machine] * 1);
+			}
+			document.getElementById('cover').style.display = 'block';
+			document.getElementById('popup').style.display = 'block';
+		}
+		function submitPopUp() {
+			
+			document.getElementById('cover').style.display = 'none';
+			document.getElementById('popup').style.display = 'none';
+		}
+		/*----POPUP----*/
+		
+		
+		
+		
+		
+		
+		
+		/*----SEARCH CODE----*/
 		document.addEventListener('keyup', enter, false);
 		function enter(event) {
 			if (event.which == 13) {
@@ -215,5 +316,6 @@
                 }
             }
         };
+		/*----SEARCH CODE----*/
     </script>
 </html>
