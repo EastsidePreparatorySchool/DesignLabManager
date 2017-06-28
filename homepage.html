@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MAKE@EPS</title>
+    <link rel="stylesheet" type="text/css" href="css\modal.css" />
+    <link rel="stylesheet" type="text/css" href="css\style.css" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function($){
+          var parPosition = [];
+        $('.par').each(function() {
+            parPosition.push($(this).offset().top);
+        });
+        
+        $('a').click(function(){
+            $('html, body').animate({
+                scrollTop: $( $.attr(this, 'href') ).offset().top
+            }, 500);
+            return false;
+        });
+        
+            $('.vNav ul li a').click(function () {
+            $('.vNav ul li a').removeClass('active');
+                $(this).addClass('active');
+        }); 
+        
+       $('.vNav a').hover(function() {
+           $(this).find('.label').show();
+           }, function() {
+           $(this).find('.label').hide();
+       });
+        
+           $(document).scroll(function(){
+        var position = $(document).scrollTop(),
+                index; 
+                for (var i=0; i<parPosition.length; i++) {
+                if (position <= parPosition[i]) {
+                    index = i;
+                    break;
+                }
+            }
+      $('.vNav ul li a').removeClass('active');
+            $('.vNav ul li a:eq('+index+')').addClass('active');
+        });
+        
+            $('.vNav ul li a').click(function () {
+            $('.vNav ul li a').removeClass('active');
+                $(this).addClass('active');
+        });   
+    });
+    </script>
+</head>
+
+<body>
+    <nav class="main-nav">
+        <a href="login">--Login--</a>
+        <a>{{loggedin | safe}}</a>
+    </nav>
+ <div class="vNav">
+       <ul class="vNav">
+            <li>
+                <a href="#home">
+                    <div class="label">Home</div>
+                </a>
+            </li>
+            <li>
+                <a href="#machines">
+                    <div class="label">Equipment</div>
+                </a>
+            </li>
+            <li>
+                <a href="#levels">
+                    <div class="label">Levels</div>
+                </a>
+            </li>
+            <li>
+                <a href="#gallery">
+                    <div class="label">Gallery</div>
+                </a>
+            </li>
+     </ul>
+    </div>
+
+    <div class="section" id="home">
+        <div class="welcome-tag">
+            <h1 class="welcome-font">WELCOME.</h1>
+            <p class="welcome-description">This is Make@EPS, a lab where you <b>MAKE</b> your dreams into reality.</p>
+        </div>
+    </div>
+    <div class="section" id="machines">
+        <div class="welcome-tag welcome-split">
+            <div style="width: 50%; float: left; bottom: 0;">
+                <h1 class="welcome-font">MACHINES.</h1>
+                <p class="welcome-description">These are the tools and machines available for certified students to use. Click the names to see their requirements.</p>
+            </div>
+            <div class="list">
+                <ul>
+                    <li><a href="printrbotplay.html">Printrbot Play</a> &amp; <a href="printrbotplay.html">Printrbot Plus</a></li>
+                    <li><a href="lasercutter.html">Laser Cutter</a></li>
+                    <li><a href="robo3d.html">Robo 3D</a></li>
+                    <li><a href="vinylcutter.html">Vinyl Cutter</a></li>
+                    <li><a href="drillpress.html">Drill Press</a></li>
+                </ul>
+            </div>
+            <div class="list">
+                <ul style="float: left; margin-left: 5%;">
+                    <li><a href="handtools.html">Hand Tools</a></li>
+                    <li><a href="powertools.html">Power Tools</a></li>
+                    <li><a href="solderingiron.html">Soldering Iron</a></li>
+                    <li><a href="sewingmachine.html">Sewing Machine</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="levels">
+        <div class="welcome-tag">
+            <div style="width: 50%; float: left; bottom: 0;">
+                <h1 class="welcome-font">Levels.</h1>
+                <p class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines click the rank.</p>
+            </div>
+            <div class="list">
+                <ul style="float:right;">
+                    <label for="novice"><li>Novice</li></label>
+                    <label for="competent"><li>Competent</li></label>
+                    <label for="proficient"><li>Proficient</li></label>
+                    <label for="advanced"><li>Advanced</li></label>
+                    <label for="expert"><li>Expert</li></label>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="gallery">       
+        <div class="carousel">
+            <div class="carousel-img slider1">
+            </div>
+            <div class="carousel-img slider2">
+            </div>
+            <div class="carousel-img slider3">
+            </div>
+        </div>
+    </div>
+        <div class="modal">
+    <input id="novice" type="checkbox" />
+    <div class="modal__overlay" role="dialog" aria-labelledby="novice_title" aria-describedby="novice_desc">
+        <div class="modal__wrap">
+            <label for="novice">&#10006;</label>
+            <h2 id="novice_title">Novice Requirements:</h2>
+            <ul id="novice__desc">
+                <li>Supervised on all tools.</li>
+			</ul>
+        </div>
+    </div>
+</div>
+<div class="modal">
+    <input id="competent" type="checkbox" />
+    <div class="modal__overlay" role="dialog" aria-labelledby="competent_title" aria-describedby="competent_desc">
+        <div class="modal__wrap">
+            <label for="competent">&#10006;</label>
+            <h2 id="competent_title">Competent Requirements:</h2>
+            <ul id="competent_desc">
+                <li>May use tools unsupervised.</li>
+			</ul>
+        </div>
+    </div>
+</div>
+<div class="modal">
+    <input id="proficient" type="checkbox" />
+    <div class="modal__overlay" role="dialog" aria-labelledby="proficient_title" aria-describedby="proficient_desc">
+        <div class="modal__wrap">
+            <label for="proficient">&#10006;</label>
+            <h2 id="proficient_title">Proficient Requirements:</h2>
+            <ul id="proficient_desc">
+                <li>May supervise others.</li>
+			</ul>
+        </div>
+    </div>
+</div>
+<div class="modal">
+    <input id="advanced" type="checkbox" />
+    <div class="modal__overlay" role="dialog" aria-labelledby="advanced_title" aria-describedby="advanced_desc">
+        <div class="modal__wrap">
+            <label for="advanced">&#10006;</label>
+            <h2 id="advanced_title">Advanced Requirements:</h2>
+            <ul id="advanced_desc">
+                <li>Produce something that is beneficial to the MakerSpace.</li>
+			</ul>
+        </div>
+    </div>
+</div>
+<div class="modal">
+    <input id="expert" type="checkbox" />
+    <div class="modal__overlay" role="dialog" aria-labelledby="expert_title" aria-describedby="expert_desc">
+        <div class="modal__wrap">
+            <label for="expert">&#10006;</label>
+            <h2 id="expert_title">Expert Requirements:</h2>
+            <ul id="expert_desc">
+                <li>Required clean and maintain tools on Wednesdays and available to certify others (Confirmation period first tri) </li>
+			</ul>
+        </div>
+    </div>
+</div>
+    <div class="footer" id="footer">
+        <div class="footy">
+            <p>Contact</p>
+            <p>Roger Mack</p>
+            <p>rmack@eastsideprep.org</p>
+            <p>+1 (425) 822-5668</p>
+        </div>
+        <div class="footy">
+            <p>Location</p>
+            <p>Eastside Preparatory School</p>
+            <p>10613 NE 38th Pl</p>
+            <p>Kirkland, WA 98033</p>
+        </div>
+        <div class="footy">
+            <p>Social</p>
+         <a class="icon facebook" href="#"><span class="zocial-facebook"></span></a>
+        <a class="icon twitter" href="#"><span class="zocial-twitter"></span></a>
+        <a class="icon linkedin" href="#"><span class="zocial-linkedin"></span></a><br>
+        <a class="icon youtube" href="#"><span class="zocial-youtube"></span></a>
+        <a class="icon flickr" href="#"><span class="zocial-flickr"></span></a>
+        <a class="icon email" href="#"><span class="zocial-email"></span></a>           
+        </div>
+    </div>
+
+</body>
+
+</html>

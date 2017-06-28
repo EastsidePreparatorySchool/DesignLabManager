@@ -8,6 +8,7 @@
   <link rel="import" href="bower_components/paper-button/paper-button.html">
   <link rel="import" href="bower_components/paper-material/paper-material.html">
   <link rel="import" href="bower_components/iron-image/iron-image.html">
+  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
   </head>
   <body unresolved>
   <style>
@@ -44,9 +45,6 @@
       color: white;
       background-color: #536DFE;
     }
-    #loginButton {
-      display: block;
-    }
     #registerButton {
       display: none;
     }
@@ -59,56 +57,52 @@
     #toast {
       text-align: left;
     }
-    #toastButton {
-      margin-left: 48px;
-      color: #2196f3;
-    }
     iron-image {
       width: 360px;
     }
   </style>
 
 	<paper-material class="card" elevation="2">
-	<div class="image-container">
-    <iron-image src="images/logo_large.jpg"></iron-image>
-  </div>
 	<h1>Design Lab Manager</h1>
 	<p class="copy">Sign in to use the design lab machinery</p>
   <paper-input id="email" label="Email address (@eastsideprep.org)">
+  </paper-input>
+
+  <paper-input id="password" type="password" label="Password (use your school password)" onkeypress="checkSubmit(event)">
   </paper-input>
 
   <paper-button onclick="submitMainForm('login')" raised id="loginButton">SIGN IN</paper-button>
   </paper-material>
 
   <paper-toast id="toast" text="" duration=10000>
-    <span role="button" id="toastButton"></span>
   </paper-toast>
 
   <script>
   var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
   function checkSubmit(e) {
     if (e && e.keyCode === 13) {
-      submitMainForm(action);
+      submitMainForm();
      }
   }
-  function submitMainForm(postAction) {
-    submitForm(postAction, onSuccess, onError);
+  function submitMainForm() {
+    showToast("Login request sent");
+    submitForm(onSuccess, showToast);
   }
-  function submitForm(postAction, successFunction, errorFunction) { //Takes either login, register, or resend
+  function submitForm(successFunction, errorFunction) { //Takes either login, register, or resend
     var data = new FormData();
     data.append('email', email.value);
+    data.append('password', password.value)
 
     xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
         if (xhr.status == 200) {
-          result = JSON.parse(xhr.responseText);
-          if (result.error == "") {
+          result = xhr.responseText;
+          if (result == "") {
             successFunction(result);
           } else {
             errorFunction(result);
           }
-          locked = false;
         } else {
           email.value = "";
           password.value = "";
@@ -116,41 +110,17 @@
         }
       }
     }
-    xhr.open("POST", postAction, true);
+    xhr.open("POST", "/login", true);
     xhr.send(data);
   }
 
-  function processToast(errorObj) {
+  function showToast(text) {
     toast = document.getElementById("toast");
-    toastButton = document.getElementById("toastButton");
-    toast.text = errorObj.error;
-    if (errorObj.hasOwnProperty('action')) {
-      toastButton.innerHTML = errorObj.buttonText;
-      toastButton.style.display = "";
-
-      if (errorObj.actionId == 'url') {
-        toastButton.onclick = function() { self.location = action; }
-      } else if (errorObj.actionId == 'button') {
-        switch (errorObj.action) {
-          case "resendConfirmationEmail":
-            toastButton.onclick = function() { submitResendForm(); };
-            break;
-          case "switchToRegister":
-            toastButton.onclick = switchToRegister;
-            break;
-        }
-      }
-    } else {
-      toastButton.style.display = "none";
-    }
-
+    toast.text = text;
     toast.show();
   }
-  function onSuccess(errorObj) {
-    location.reload();
-  }
-  function onError(errorObj) {
-    processToast(errorObj);
+  function onSuccess(error) {
+    window.location.replace("/");
   }
 
   </script>
