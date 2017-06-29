@@ -1,0 +1,99 @@
+
+div{display: inline-block;}
+
+h2{
+  font-family: "Gill Sans MT";
+  font-size: 50px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  color: white;
+  margin-top: 60px;
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+.levelInfoContainer{
+  display: block;
+  margin: 50px 30px;
+}
+
+.certLevelContainer {
+  display: block;
+  background-color: rgb(51,51,51);
+  padding: 25px 50px;
+  margin: auto;
+  position:relative;
+  overflow: hidden;
+  height: 100px;
+}
+
+.certLevelBG{
+  background-color: white;
+  height: 100px;
+  position:relative;
+  overflow: hidden;
+}
+
+.certLevelFG{
+  background: none;
+}
+
+.level{
+  background: url("../img/circle-dark.png");
+  width: 100px;
+  height: 100px;
+  opacity: 50%;
+  background-size:contain;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  position: relative;
+  top: -100px;
+}
+
+.levelDivider{
+  background: url("../img/line-dark.png");
+  width: 20px;
+  height: 100px;
+  background-size: 100px;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  position: relative;
+  top: -100px;
+}
+
+.green{
+  display:block;
+  height: 100px;
+  width: 100px;
+  background: rgba(50, 255, 50, 1);
+  animation-duration: 1.2s;
+}
+
+.level h2{
+  display:inline-block;
+  position:absolute;
+  margin: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lvl1 .green{
+  width: 100px;
+}
+
+.lvl2 .green{
+  width: 220px;
+}
+
+.lvl3 .green{
+  width: 340px;
+}
+
+.lvl4 .green {
+  width: 460px;
+}
+
+.lvl5 .green{
+  width: 580px;
+}

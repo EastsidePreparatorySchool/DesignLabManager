@@ -20,6 +20,12 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+
+def log(text):
+    logging.info("-------->" + text.upper() + "<--------")
+
+
+
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
     vinyl_cutter = ndb.IntegerProperty()
@@ -34,14 +40,20 @@ class User(ndb.Model):
     coffee_maker = ndb.IntegerProperty()
 
 class BaseHandler(webapp2.RequestHandler):
+    
+    log("base handler")
+    
+    
+    
     def get_id(self):
+        
+        log("get id")
         if not (self.request.cookies.get("auth")):
             return None
         return json.loads(self.request.cookies.get("auth"))["username"]
 
-    def send_login_response(self):
-        template = JINJA_ENVIRONMENT.get_template('login.html')
-        self.response.write(template.render({}))
+       
+        
 
     def convert_email_to_id(self, email):
         email = email.lower()
@@ -70,15 +82,21 @@ class BaseHandler(webapp2.RequestHandler):
             'coffee_maker_cert_level': obj.coffee_maker_cert_level
         };
 
-class MainHandler(BaseHandler):
+class IndexHandler(BaseHandler):
+    
+    log("index handler")
+    
     def get(self):
         loggedin = "You are not logged in"
         str_id = self.get_id()
         if (str_id):
             loggedin = "You are logged in as " + str_id
         
-        template = JINJA_ENVIRONMENT.get_template('homepage.html')
-        self.response.write(template.render({'loggedin': loggedin}))
+        template = JINJA_ENVIRONMENT.get_template('public/index.html')
+        self.response.write(template.render({
+            'loggedin': loggedin
+        }))
+         
         #user_id = int(str_id)
 #
 #        query = User.query(User.sid == user_id)
@@ -95,7 +113,8 @@ class MainHandler(BaseHandler):
 
 class LoginHandler(BaseHandler):
     def get(self):
-        self.send_login_response()
+        template = JINJA_ENVIRONMENT.get_template('public/login.html')
+        self.response.write(template.render({}))
 
     def post(self):
         email = self.request.get('email').lower()
@@ -104,8 +123,10 @@ class LoginHandler(BaseHandler):
         password = self.request.get('password')
 
         if (authenticate_user.auth_user(username, password)):
-            expiration_date = datetime.datetime.now()
-            obj = {"username": username, "time_issued": expiration_date.isoformat()}
+            obj = {
+                "username": username,
+                "time_issued": datetime.datetime.now().isoformat()
+            }
             expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
 
             self.response.set_cookie('auth', json.dumps(obj), expires=expiration_date)
@@ -131,7 +152,7 @@ class ToolHandler(BaseHandler):
         self.response.write(resp)
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
+    ('/', IndexHandler),
     ('/login', LoginHandler),
     ('/tool/([\w\-]+)', ToolHandler)
 ], debug=True)
