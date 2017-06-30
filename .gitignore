@@ -3,3 +3,4 @@ admin_ids.json
 *.pyc
 dlm_logo.svg
 id_table.json
+data/crypto.key
