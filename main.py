@@ -41,26 +41,19 @@ class User(ndb.Model):
 
 class BaseHandler(webapp2.RequestHandler):
     
-    log("base handler")
-    
-    
-    
-    def get_id(self):
-        
-        log("get id")
-        if not (self.request.cookies.get("auth")):
+    def name(self):
+        auth = self.request.cookies.get('auth')
+        if not (auth):
             return None
-        return json.loads(self.request.cookies.get("auth"))["username"]
+        return json.loads(auth)['username']
 
        
         
 
-    def convert_email_to_id(self, email):
-        email = email.lower()
-        pieces = string.split(email, "@")
-        username = pieces[0]
+    def email_to_id(self, email):
+        name = string.split(email, "@")[0].lower()
         for student in ID_TABLE:
-            if (student[0] == username):
+            if (student[0] == name):
                 return student[1]
         return None
 
@@ -83,18 +76,16 @@ class BaseHandler(webapp2.RequestHandler):
         };
 
 class IndexHandler(BaseHandler):
-    
-    log("index handler")
-    
     def get(self):
-        loggedin = "You are not logged in"
-        str_id = self.get_id()
-        if (str_id):
-            loggedin = "You are logged in as " + str_id
+        loggedin = False
+        name = self.name()
+        if (name):
+            loggedin = True
         
         template = JINJA_ENVIRONMENT.get_template('public/index.html')
         self.response.write(template.render({
-            'loggedin': loggedin
+            'loggedin': loggedin,
+            'name': name
         }))
          
         #user_id = int(str_id)
@@ -112,24 +103,23 @@ class IndexHandler(BaseHandler):
 #           break
 
 class LoginHandler(BaseHandler):
+    
     def get(self):
+        log('get request')
         template = JINJA_ENVIRONMENT.get_template('public/login.html')
         self.response.write(template.render({}))
 
     def post(self):
-        email = self.request.get('email').lower()
-        logging.info("Email: " + email)
-        username = string.split(email, "@")[0]
+        username = string.split(request.get('email'), "@")[0].lower()
         password = self.request.get('password')
 
         if (authenticate_user.auth_user(username, password)):
+            now = datetime.datetime.now()
             obj = {
                 "username": username,
-                "time_issued": datetime.datetime.now().isoformat()
+                "time_issued": now.isoformat()
             }
-            expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
-
-            self.response.set_cookie('auth', json.dumps(obj), expires=expiration_date)
+            self.response.set_cookie('auth', json.dumps(obj), expires= now+datetime.timedelta(2))
             self.response.write("")
             # Now, if user does not already have a database object, make them one
 

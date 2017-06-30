@@ -3,17 +3,72 @@
     <head>
         <title>Design Lab Manager</title>
         
+        <!----BOOTSTRAP---->
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+        <!----BOOTSTRAP---->
         
         <link rel='stylesheet' href='style/global.css'>
     </head>
     <body>
-        <h1>Design Lab Manager</h1>
-        <h2>Here would be a navbar</h2>
-        <p>{{loggedin}}</p>
+        <!----NAVBAR---->
+        <nav class='navbar navbar-default'>
+            <div class='container-fluid'>
+                <div class='navbar-header'>
+                    <a class='navbar-brand' href='#'>DLM</a>
+                </div>
+                
+                <ul class='nav navbar-nav'>
+                    <li class='active'><a href='#'>Link</a></li>
+                    <li><a href='#'>Link</a></li>
+                    <li class='dropdown'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'>Dropdown <span class='caret'></span></a>
+                        <ul class='dropdown-menu'>
+                            <li><a href='#'>Action</a></li>
+                            <li><a href='#'>Another action</a></li>
+                            <li><a href='#'>Something else here</a></li>
+                            <li><a href='#'>Separated link</a></li>
+                            <li><a href='#'>One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                
+                <div class='navbar-form navbar-right'>
+                    {% if loggedin %}
+                    <div class='form-group'><p>{{name}}</p></div>
+                    <button class='btn btn-default' onclick='logout'>Log out</button>
+                    {% else %}
+                    <div class='form-group'>
+                        <input type='text' class='form-control' placeholder='name'>
+                        <input type='text' class='form-control' placeholder='password'>
+                    </div>
+                    <a class='btn btn-default' href='login'>Log in</a>
+                    {% endif %}
+                </div>
+                
+            </div>
+        </nav>
+        <!----NAVBAR---->
+        
+        
+        
         
         {% block content %}{% endblock %}
         
         
-        <h2>Here would be a footer</h2>
+        
+        
+        
+        <!----FOOTER---->
+        <div class='footer'>
+            <hr>
+            <div class='container'>
+                <p>Here's a nice footer</p>
+            </div>
+        </div>
+        <!----FOOTER---->
     </body>
+    <script src='script/global.js'></script>
 </html>

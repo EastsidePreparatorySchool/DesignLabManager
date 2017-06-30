@@ -1,4 +1,13 @@
-body {
+.footer {
+    position: absolute;
+    bottom: 0;
     
-    color: aqua
+    width: 100%;
+    
+    
+}
+
+.footer .container {
+    position: relative;
+    width: 75vw;
 }

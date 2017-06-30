@@ -12,6 +12,9 @@ handlers:
 
 - url: /style
   static_dir: public/style
+  
+- url: /bower_components
+  static_dir: public/bower_components
 
 - url: /script
   static_dir: public/script
