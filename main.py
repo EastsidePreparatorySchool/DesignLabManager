@@ -13,8 +13,8 @@ import datetime
 import authenticate_user
 
 
-ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
-TOOLS = ["vinyl_cutter", "sewing_machine", "hand_tools", "epilog_laser", "universal_laser", "cnc", "printrbot", "robo3d", "soldering", "coffee_maker"]
+ADMIN_USERNAMES = ['guberti', 'qbowers', 'jbriggs', 'dclarke', 'jnolan', 'rmack']
+TOOLS = ['vinyl_cutter', 'sewing_machine', 'hand_tools', 'epilog_laser', 'universal_laser', 'cnc', 'printrbot', 'robo3d', 'soldering', 'coffee_maker']
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -22,12 +22,12 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 
 def log(text):
-    logging.info("-------->" + text.upper() + "<--------")
+    logging.info('-------->' + text.upper() + '<--------')
 
 
 
 class User(ndb.Model):
-    username = ndb.StringProperty(required=True)
+    uid = ndb.IntegerProperty(required=True)
     vinyl_cutter = ndb.IntegerProperty()
     sewing_machine = ndb.IntegerProperty()
     hand_tools = ndb.IntegerProperty()
@@ -51,7 +51,7 @@ class BaseHandler(webapp2.RequestHandler):
         
 
     def email_to_id(self, email):
-        name = string.split(email, "@")[0].lower()
+        name = string.split(email, '@')[0].lower()
         for student in ID_TABLE:
             if (student[0] == name):
                 return student[1]
@@ -89,7 +89,7 @@ class IndexHandler(BaseHandler):
         }))
          
         #user_id = int(str_id)
-#
+
 #        query = User.query(User.sid == user_id)
 #        for db_obj in query: # Will only ever be one
 #            template_values = { \
@@ -99,7 +99,7 @@ class IndexHandler(BaseHandler):
 #            'soldering_cert_level': db_obj.soldering_cert_level, \
 #            }
 #            template = JINJA_ENVIRONMENT.get_template('index.html')
-##            self.response.write(template.render(template_values))
+#            self.response.write(template.render(template_values))
 #           break
 
 class LoginHandler(BaseHandler):
@@ -110,21 +110,21 @@ class LoginHandler(BaseHandler):
         self.response.write(template.render({}))
 
     def post(self):
-        username = string.split(request.get('email'), "@")[0].lower()
+        username = string.split(self.request.get('email'), '@')[0].lower()
         password = self.request.get('password')
 
         if (authenticate_user.auth_user(username, password)):
             now = datetime.datetime.now()
             obj = {
-                "username": username,
-                "time_issued": now.isoformat()
+                'username': username,
+                'time_issued': now.isoformat()
             }
             self.response.set_cookie('auth', json.dumps(obj), expires= now+datetime.timedelta(2))
-            self.response.write("")
+            self.response.write('')
             # Now, if user does not already have a database object, make them one
 
         else:
-            self.response.write("Username or password was incorrect")
+            self.response.write('Username or password was incorrect')
 
 class ToolHandler(BaseHandler):
     def get(self, tool):
@@ -132,13 +132,12 @@ class ToolHandler(BaseHandler):
             self.error(404)
             return
 
-        resp = "This is the future home of the " + tool + " page."
+        resp = 'This is the future home of the ' + tool + ' page.'
         login = self.get_id()
-        if login:
-            resp += "\n\nYou are currently logged in as " + login
+        if (login):
+            resp += '\n\nYou are currently logged in as ' + login
         else:
-            resp += "\n\nYou are not currently logged in. <a href='/login'>LOGIN</a>"
-
+            resp += '\n\nYou are not currently logged in. <a href=\'/login\'>LOGIN</a>'
         self.response.write(resp)
 
 app = webapp2.WSGIApplication([
