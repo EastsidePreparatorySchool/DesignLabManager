@@ -25,15 +25,11 @@ def post(uri, obj):
 
 def auth_user(username, password):
     obj = {'user[user_name]' : username, 'user[password]' : password}
-    logging.info("Got password as " + password)
     res = post(AUTHENTICATION_URL, obj)
     for cookie in cookies:
-        logging.info("Name: " + cookie.name)
-        logging.info("Value: " + cookie.value)
         if (cookie.name != "_four11_session"):
             continue
         else:
-            logging.info("Found correct cookie")
             if (cookie.value[5] == "0"):
                 cookies.clear()
                 return True
