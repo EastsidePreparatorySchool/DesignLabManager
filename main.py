@@ -3,6 +3,7 @@ import urllib
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from slowaes import aes
 
 import webapp2
 import jinja2
@@ -11,10 +12,14 @@ import json
 import string
 import datetime
 import authenticate_user
+import base64
+
 
 
 ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
 TOOLS = ["vinyl_cutter", "sewing_machine", "hand_tools", "epilog_laser", "universal_laser", "cnc", "printrbot", "robo3d", "soldering", "coffee_maker"]
+CRYPTO_KEY = open('data/crypto.key', 'rb').read()
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -37,7 +42,11 @@ class BaseHandler(webapp2.RequestHandler):
     def get_id(self):
         if not (self.request.cookies.get("auth")):
             return None
-        return json.loads(self.request.cookies.get("auth"))["username"]
+        cookie = self.request.cookies.get("auth")
+        
+        decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
+
+        return json.loads(decoded)["username"]
 
     def send_login_response(self):
         template = JINJA_ENVIRONMENT.get_template('login.html')
@@ -105,7 +114,9 @@ class LoginHandler(BaseHandler):
             obj = {"username": username, "time_issued": expiration_date.isoformat()}
             expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
 
-            self.response.set_cookie('auth', json.dumps(obj), expires=expiration_date)
+            cookie = base64.b64encode(aes.encryptData(CRYPTO_KEY, json.dumps(obj)))
+
+            self.response.set_cookie('auth', cookie, expires=expiration_date)
             # Now, if user does not already have a database object, make them one
             if not self.get_db_obj(username):
                 user = User(username=username)
