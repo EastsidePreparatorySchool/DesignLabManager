@@ -43,13 +43,11 @@ class BaseHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('login.html')
         self.response.write(template.render({}))
 
-    def convert_email_to_id(self, email):
-        email = email.lower()
-        pieces = string.split(email, "@")
-        username = pieces[0]
-        for student in ID_TABLE:
-            if (student[0] == username):
-                return student[1]
+    def get_db_obj(self, name):
+        query = User.query(User.username == name)
+        for item in query:
+            return item
+        logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
         return None
 
     def db_user_to_simple_obj(self, obj):
@@ -76,7 +74,7 @@ class MainHandler(BaseHandler):
         str_id = self.get_id()
         if (str_id):
             loggedin = "You are logged in as " + str_id
-        
+
         template = JINJA_ENVIRONMENT.get_template('homepage.html')
         self.response.write(template.render({'loggedin': loggedin}))
         #user_id = int(str_id)
@@ -99,18 +97,23 @@ class LoginHandler(BaseHandler):
 
     def post(self):
         email = self.request.get('email').lower()
-        logging.info("Email: " + email)
         username = string.split(email, "@")[0]
         password = self.request.get('password')
 
-        if (authenticate_user.auth_user(username, password)):
+        if (authenticate_user.auth_user(username, password)): # Four11 login being finicky, disabled it for now
             expiration_date = datetime.datetime.now()
             obj = {"username": username, "time_issued": expiration_date.isoformat()}
             expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
 
             self.response.set_cookie('auth', json.dumps(obj), expires=expiration_date)
-            self.response.write("")
             # Now, if user does not already have a database object, make them one
+            if not self.get_db_obj(username):
+                user = User(username=username)
+                for tool_name in TOOLS:
+                    setattr(user, tool_name, 0)
+                user.put()
+
+            self.response.write("")
 
         else:
             self.response.write("Username or password was incorrect")
@@ -124,14 +127,32 @@ class ToolHandler(BaseHandler):
         resp = "This is the future home of the " + tool + " page."
         login = self.get_id()
         if login:
-            resp += "\n\nYou are currently logged in as " + login
+            resp += "You are currently logged in as " + login + ".Your level on this tool is " + str(getattr(self.get_db_obj(login), tool))
         else:
-            resp += "\n\nYou are not currently logged in. <a href='/login'>LOGIN</a>"
+            resp += "You are not currently logged in. <a href='/login'>LOGIN</a>"
 
         self.response.write(resp)
+
+class AdminHandler(BaseHandler):
+    def post(self):
+        admin_name = self.get_id()
+        if not admin_name in ADMIN_USERNAMES:
+            self.error(403) # Unauthorized
+            return
+
+        obj = self.get_db_obj(self.request.get("username"))
+        if not obj:
+            self.error(400) # Bad request
+
+        for tool_name in TOOLS:
+            if self.request.get(tool_name):
+                setattr(obj, tool_name, int(self.request.get(tool_name)))
+
+        obj.put()
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/login', LoginHandler),
-    ('/tool/([\w\-]+)', ToolHandler)
+    ('/tool/([\w\-]+)', ToolHandler),
+    ('/setlevels', AdminHandler)
 ], debug=True)
