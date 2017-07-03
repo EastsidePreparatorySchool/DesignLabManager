@@ -21,23 +21,37 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 
-def log(text):
-    logging.info('-------->' + text.upper() + '<--------')
-
-
 
 class User(ndb.Model):
     uid = ndb.IntegerProperty(required=True)
-    vinyl_cutter = ndb.IntegerProperty()
-    sewing_machine = ndb.IntegerProperty()
-    hand_tools = ndb.IntegerProperty()
-    epilog_laser = ndb.IntegerProperty()
-    universal_laser = ndb.IntegerProperty()
-    cnc = ndb.IntegerProperty()
-    printrbot = ndb.IntegerProperty()
-    robo3d = ndb.IntegerProperty()
-    soldering = ndb.IntegerProperty()
-    coffee_maker = ndb.IntegerProperty()
+    vinyl = ndb.IntegerProperty(default=0)
+    sewing = ndb.IntegerProperty(default=0)
+    tools = ndb.IntegerProperty(default=0)
+    epilog = ndb.IntegerProperty(default=0)
+    universal = ndb.IntegerProperty(default=0)
+    cnc = ndb.IntegerProperty(default=0)
+    printrbot = ndb.IntegerProperty(default=0)
+    robo3d = ndb.IntegerProperty(default=0)
+    soldering = ndb.IntegerProperty(default=0)
+    coffee = ndb.IntegerProperty(default=0)
+
+def log(text):
+    logging.info('-------->' + text.upper() + '<--------')
+def newUser(name):
+    user = User(uid = name_to_id(name))
+    user.key = ndb.Key(User, name_to_id(name))
+    user.put()
+
+
+def name_to_id(self, name):
+    for student in ID_TABLE:
+        if (student[0] == name):
+            return student[1]
+    return None
+    
+def email_to_name(self, email):
+    return string.split(email, '@')[0].lower()
+
 
 class BaseHandler(webapp2.RequestHandler):
     
@@ -48,15 +62,9 @@ class BaseHandler(webapp2.RequestHandler):
         return json.loads(auth)['username']
 
        
-        
-
-    def email_to_id(self, email):
-        name = string.split(email, '@')[0].lower()
-        for student in ID_TABLE:
-            if (student[0] == name):
-                return student[1]
-        return None
-
+    
+    
+    
     def db_user_to_simple_obj(self, obj):
         return {
             'sid': obj.sid,
