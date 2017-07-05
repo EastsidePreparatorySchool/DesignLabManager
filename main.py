@@ -27,16 +27,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
-    vinyl_cutter = ndb.IntegerProperty()
-    sewing_machine = ndb.IntegerProperty()
-    hand_tools = ndb.IntegerProperty()
-    epilog_laser = ndb.IntegerProperty()
-    universal_laser = ndb.IntegerProperty()
-    cnc = ndb.IntegerProperty()
-    printrbot = ndb.IntegerProperty()
-    robo3d = ndb.IntegerProperty()
-    soldering = ndb.IntegerProperty()
-    coffee_maker = ndb.IntegerProperty()
+    vinyl = ndb.IntegerProperty(default = 0)
+    sewing = ndb.IntegerProperty(default = 0)
+    tools = ndb.IntegerProperty(default = 0)
+    epilog = ndb.IntegerProperty(default = 0)
+    universal = ndb.IntegerProperty(default = 0)
+    cnc = ndb.IntegerProperty(default = 0)
+    printrbot = ndb.IntegerProperty(default = 0)
+    robo = ndb.IntegerProperty(default = 0)
+    soldering = ndb.IntegerProperty(default = 0)
+    coffee = ndb.IntegerProperty(default = 0)
 
 class BaseHandler(webapp2.RequestHandler):
     def get_id(self):
@@ -53,29 +53,11 @@ class BaseHandler(webapp2.RequestHandler):
         self.response.write(template.render({}))
 
     def get_db_obj(self, name):
-        query = User.query(User.username == name)
-        for item in query:
-            return item
+        user = ndb.Key(User, name).get()
+		if (user):
+			return user
         logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
         return None
-
-    def db_user_to_simple_obj(self, obj):
-        return {
-            'sid': obj.sid,
-            'fullname': obj.fullname,
-            'vinyl_cert_level': obj.vinyl_cert_level,
-            'sewing_machine_cert_level': obj.sewing_machine_cert_level,
-            'hand_tools_cert_level': obj.hand_tools_cert_level,
-            'epilog_cert_level': obj.epilog_cert_level,
-            'universal_laser_cert_level': obj.universal_laser_cert_level,
-            'cnc_cert_level': obj.cnc_cert_level,
-            'printrbot_cert_level': obj.printrbot_cert_level,
-            'robo3d_cert_level': obj.robo3d_cert_level,
-            'makerbot_cert_level': obj.makerbot_cert_level,
-            'soldering_cert_level': obj.soldering_cert_level,
-            'power_tools_cert_level': obj.power_tools_cert_level,
-            'coffee_maker_cert_level': obj.coffee_maker_cert_level
-        };
 
 class MainHandler(BaseHandler):
     def get(self):
@@ -86,19 +68,7 @@ class MainHandler(BaseHandler):
 
         template = JINJA_ENVIRONMENT.get_template('homepage.html')
         self.response.write(template.render({'loggedin': loggedin}))
-        #user_id = int(str_id)
-#
-#        query = User.query(User.sid == user_id)
-#        for db_obj in query: # Will only ever be one
-#            template_values = { \
-#            'sid': db_obj.sid, \
-#            'fullname': db_obj.fullname, \
-#            'sewing_machine_cert_level': db_obj.sewing_machine_cert_level, \
-#            'soldering_cert_level': db_obj.soldering_cert_level, \
-#            }
-#            template = JINJA_ENVIRONMENT.get_template('index.html')
-##            self.response.write(template.render(template_values))
-#           break
+        
 
 class LoginHandler(BaseHandler):
     def get(self):
@@ -120,8 +90,7 @@ class LoginHandler(BaseHandler):
             # Now, if user does not already have a database object, make them one
             if not self.get_db_obj(username):
                 user = User(username=username)
-                for tool_name in TOOLS:
-                    setattr(user, tool_name, 0)
+				user.key = ndb.Key(User, username)
                 user.put()
 
             self.response.write("")
