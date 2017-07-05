@@ -91,6 +91,7 @@ class LoginHandler(BaseHandler):
             self.response.set_cookie('auth', cookie, expires=expiration_date)
             # Now, if user does not already have a database object, make them one
             if not self.get_db_obj(username):
+                logging.info('no previous user')
                 user = User(username=username)
                 user.key = ndb.Key(User, username)
                 user.put()
@@ -161,6 +162,6 @@ app = webapp2.WSGIApplication([
     ('/tool/([\w\-]+)', ToolHandler),
     ('/admin', AdminHandler),
     ('/getuser', AdminUserSearchHandler),
-    ('/userlevel/([\w\-]+)', DataViewHandler)
-    ('/setlevel', LevelSetHandler),
+    ('/userlevel/([\w\-]+)', DataViewHandler),
+    ('/setlevel', LevelSetHandler)
 ], debug=True)
