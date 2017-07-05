@@ -54,9 +54,9 @@ class BaseHandler(webapp2.RequestHandler):
 
     def get_db_obj(self, name):
         user = ndb.Key(User, name).get()
-		if (user):
+        if user:
 			return user
-        logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
+        #logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
         return None
 
 class MainHandler(BaseHandler):
@@ -90,7 +90,7 @@ class LoginHandler(BaseHandler):
             # Now, if user does not already have a database object, make them one
             if not self.get_db_obj(username):
                 user = User(username=username)
-				user.key = ndb.Key(User, username)
+                user.key = ndb.Key(User, username)
                 user.put()
 
             self.response.write("")
