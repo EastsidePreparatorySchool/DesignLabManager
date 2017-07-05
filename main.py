@@ -99,7 +99,7 @@ class IndexHandler(BaseHandler):
         
         
         
-        template = JINJA_ENVIRONMENT.get_template('public/tool.html')
+        template = JINJA_ENVIRONMENT.get_template('public/index.html')
         self.response.write(template.render({
             
             
@@ -127,29 +127,22 @@ class ToolHandler(BaseHandler):
             else:
                 user = True
         
-        
-        
         template = JINJA_ENVIRONMENT.get_template('public/tool.html')
         self.response.write(template.render({
             
             
             'loggedin': loggedin,
             'name': name,
-            'tool': {'name': 'printrbots', 'level': 2},
-            'tools': [
-                {'name': 'printrbots', 'level': 2},
-                {'name': 'robos', 'level': 2},
-                {'name': 'THAT ONE DEMON OF MADNESS', 'level': 2}
-            ]
+            'tool': {
+				'name': 'printrbot',
+				'level': 2,
+				'macros': '/public/macros/printrbot.html'
+			},
+			'level': 5,
         }))
 
 
 class LoginHandler(BaseHandler):
-    
-    def get(self):
-        template = JINJA_ENVIRONMENT.get_template('public/login.html')
-        self.response.write(template.render({}))
-
     def post(self):
         username = string.split(self.request.get('email'), '@')[0].lower()
         password = self.request.get('password')

@@ -1,27 +1,35 @@
-{% extends "public/main.html" %}
-
+{% extends "/public/main.html" %}
+{% import tool.macros as macros %}
 {% block content %}
     <div class='container'>
         
-        <h2>The name of the tool</h2>
+        <h2>The name of the tool is {{tool.name}}</h2>
         
         <h3>Artsy photos. Maybe sciency photos. Who knows</h3>
         
         <div class="panel with-nav-tabs panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#description" data-toggle="tab">Default 1</a></li>
-                    <li><a href="#levels" data-toggle="tab">Default 2</a></li>
-                    <li><a href="#tutorials" data-toggle="tab">Default 3</a></li>
-                    <li><a href="#resources" data-toggle="tab">Default 3</a></li>
+                    <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+                    <li><a href="#levels" data-toggle="tab">Levels</a></li>
+                    <li><a href="#tutorials" data-toggle="tab">Tutorials</a></li>
+                    <li><a href="#resources" data-toggle="tab">Resources</a></li>
                 </ul>
             </div>
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="description">Default 1</div>
-                    <div class="tab-pane fade" id="levels">Default 2</div>
-                    <div class="tab-pane fade" id="tutorials">Default 3</div>
-                    <div class="tab-pane fade" id="resources">Default 4</div>
+                    <div class="tab-pane fade in active" id="description">
+						{{ macros.description() }}
+					</div>
+                    <div class="tab-pane fade" id="levels">
+						{{ macros.level(tool.level) }}
+					</div>
+                    <div class="tab-pane fade" id="tutorials">
+						{{ macros.tutorials() }}
+					</div>
+                    <div class="tab-pane fade" id="resources">
+						{{ macros.resources(tool.level) }}
+					</div>
                 </div>
             </div>
         </div>
