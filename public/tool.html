@@ -1,0 +1,49 @@
+{% extends "public/main.html" %}
+
+{% block content %}
+    <div class='container'>
+        
+        <h2>The name of the tool</h2>
+        
+        <h3>Artsy photos. Maybe sciency photos. Who knows</h3>
+        
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#description" data-toggle="tab">Default 1</a></li>
+                    <li><a href="#levels" data-toggle="tab">Default 2</a></li>
+                    <li><a href="#tutorials" data-toggle="tab">Default 3</a></li>
+                    <li><a href="#resources" data-toggle="tab">Default 3</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="description">Default 1</div>
+                    <div class="tab-pane fade" id="levels">Default 2</div>
+                    <div class="tab-pane fade" id="tutorials">Default 3</div>
+                    <div class="tab-pane fade" id="resources">Default 4</div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        //any js you want run only by this page
+        //any js in need of jinja inputs
+        //e.g.
+        var tools = [
+            {% for tool in tools %}
+                {name: '{{tool.name}}', level: {{tool.level}}},
+            {% endfor %}
+        ];
+        
+        console.log(tools);
+        
+    </script>
+{% endblock %}

@@ -43,13 +43,13 @@ def newUser(name):
     user.put()
 
 
-def name_to_id(self, name):
+def name_to_id(name):
     for student in ID_TABLE:
         if (student[0] == name):
             return student[1]
     return None
     
-def email_to_name(self, email):
+def email_to_name(email):
     return string.split(email, '@')[0].lower()
 
 
@@ -86,34 +86,67 @@ class BaseHandler(webapp2.RequestHandler):
 class IndexHandler(BaseHandler):
     def get(self):
         loggedin = False
+        admin = False
+        user = False
+        
         name = self.name()
         if (name):
             loggedin = True
+            if(name == 'admin'):
+                admin = True
+            else:
+                user = True
         
-        template = JINJA_ENVIRONMENT.get_template('public/index.html')
+        
+        
+        template = JINJA_ENVIRONMENT.get_template('public/tool.html')
         self.response.write(template.render({
+            
+            
             'loggedin': loggedin,
-            'name': name
+            'name': name,
+            'tool': {'name': 'printrbots', 'level': 2},
+            'tools': [
+                {'name': 'printrbots', 'level': 2},
+                {'name': 'robos', 'level': 2},
+                {'name': 'THAT ONE DEMON OF MADNESS', 'level': 2}
+            ]
         }))
-         
-        #user_id = int(str_id)
 
-#        query = User.query(User.sid == user_id)
-#        for db_obj in query: # Will only ever be one
-#            template_values = { \
-#            'sid': db_obj.sid, \
-#            'fullname': db_obj.fullname, \
-#            'sewing_machine_cert_level': db_obj.sewing_machine_cert_level, \
-#            'soldering_cert_level': db_obj.soldering_cert_level, \
-#            }
-#            template = JINJA_ENVIRONMENT.get_template('index.html')
-#            self.response.write(template.render(template_values))
-#           break
+class ToolHandler(BaseHandler):
+    def get(self, tool):
+        loggedin = False
+        admin = False
+        user = False
+        
+        name = self.name()
+        if (name):
+            loggedin = True
+            if(name == 'admin'):
+                admin = True
+            else:
+                user = True
+        
+        
+        
+        template = JINJA_ENVIRONMENT.get_template('public/tool.html')
+        self.response.write(template.render({
+            
+            
+            'loggedin': loggedin,
+            'name': name,
+            'tool': {'name': 'printrbots', 'level': 2},
+            'tools': [
+                {'name': 'printrbots', 'level': 2},
+                {'name': 'robos', 'level': 2},
+                {'name': 'THAT ONE DEMON OF MADNESS', 'level': 2}
+            ]
+        }))
+
 
 class LoginHandler(BaseHandler):
     
     def get(self):
-        log('get request')
         template = JINJA_ENVIRONMENT.get_template('public/login.html')
         self.response.write(template.render({}))
 
@@ -134,22 +167,11 @@ class LoginHandler(BaseHandler):
         else:
             self.response.write('Username or password was incorrect')
 
-class ToolHandler(BaseHandler):
-    def get(self, tool):
-        if tool not in TOOLS:
-            self.error(404)
-            return
 
-        resp = 'This is the future home of the ' + tool + ' page.'
-        login = self.get_id()
-        if (login):
-            resp += '\n\nYou are currently logged in as ' + login
-        else:
-            resp += '\n\nYou are not currently logged in. <a href=\'/login\'>LOGIN</a>'
-        self.response.write(resp)
 
 app = webapp2.WSGIApplication([
     ('/', IndexHandler),
+    ('/tool/([\w\-]+)', ToolHandler),
     ('/login', LoginHandler),
-    ('/tool/([\w\-]+)', ToolHandler)
+    ('/admin', )
 ], debug=True)

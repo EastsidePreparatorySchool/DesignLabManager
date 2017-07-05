@@ -41,10 +41,10 @@
                     <button class='btn btn-default' onclick='logout()'>Log out</button>
                     {% else %}
                     <div class='form-group'>
-                        <input type='text' class='form-control' placeholder='name'>
-                        <input type='text' class='form-control' placeholder='password'>
+                        <input id='login_email' type='text' class='form-control' placeholder='name'>
+                        <input id='login_pass' type='text' class='form-control' placeholder='password'>
                     </div>
-                    <a class='btn btn-default' href='login'>Log in</a>
+                    <a class='btn btn-default' onclick='login()'>Log in</a>
                     {% endif %}
                 </div>
                 
@@ -53,10 +53,16 @@
         <!----NAVBAR---->
         
         
+        {% if admin %}
+        <!----Admin tools----
+            Stick the admin tools in here
+            I imagine it will look something like a popout side menu
+            up to you really
+        <!----Admin tools---->
+        {% endif %}
         
         
         {% block content %}{% endblock %}
-        
         
         
         
@@ -71,4 +77,5 @@
         <!----FOOTER---->
     </body>
     <script src='script/global.js'></script>
+    {% block script %}{% endblock %}
 </html>

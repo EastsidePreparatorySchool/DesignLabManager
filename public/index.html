@@ -1,4 +1,40 @@
 {% extends "public/main.html" %}
+
 {% block content %}
-    <h2> here is some content isnt this fun</h2>
+    <div class='container'>
+        
+        <h2> here is some content isnt this fun</h2>
+        
+        <h3>I believe we also want a gallery in here somewhere</h3>
+        
+        <h3>Tool list:</h3>
+        {% for tool in tools %}
+            {% if user %}
+                <p>{{tool.level}}  {{tool.name}}</p>
+            {% else %}
+                <p>{{tool.name}}</p>
+            {% endif %}
+        {% endfor %}
+        
+        <h3>Some other stuff probably</h3>
+        
+        
+        
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        //any js you want run only by this page
+        //any js in need of jinja inputs
+        //e.g.
+        var tools = [
+            {% for tool in tools %}
+                {name: '{{tool.name}}', level: {{tool.level}}},
+            {% endfor %}
+        ];
+        
+        console.log(tools);
+        
+    </script>
 {% endblock %}
