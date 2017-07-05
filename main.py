@@ -80,12 +80,16 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         loggedin = "You are not logged in"
+        loginlink = '<a href="login">--Login--</a>'
+
         str_id = self.get_id()
         if (str_id):
             loggedin = "You are logged in as " + str_id
+            loginlink = '<a href="logout">--Log Out--</a>'
 
+        
         template = JINJA_ENVIRONMENT.get_template('homepage.html')
-        self.response.write(template.render({'loggedin': loggedin}))
+        self.response.write(template.render({'loggedin': loggedin, 'loginURL': loginlink}))
         #user_id = int(str_id)
 #
 #        query = User.query(User.sid == user_id)

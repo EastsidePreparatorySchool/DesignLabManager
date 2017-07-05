@@ -6,9 +6,11 @@
     <title>MAKE@EPS</title>
     <link rel="stylesheet" type="text/css" href="css\modal.css" />
     <link rel="stylesheet" type="text/css" href="css\style.css" />
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css\bsStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function($){
           var parPosition = [];
@@ -56,12 +58,25 @@
 </head>
 
 <body>
-    <nav class="main-nav">
-        <a href="login">--Login--</a>
-        <a>{{loggedin | safe}}</a>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Make@EPS</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Machines</a></li>
+                <li><a href="#">Levels</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>{{loginURL | safe}}</li>
+                <li><a>{{loggedin | safe}}</a></li>
+            </ul>
+        </div>
     </nav>
- <div class="vNav">
-       <ul class="vNav">
+
+    <div class="vNav">
+        <ul class="vNav">
             <li>
                 <a href="#home">
                     <div class="label">Home</div>
@@ -82,13 +97,13 @@
                     <div class="label">Gallery</div>
                 </a>
             </li>
-     </ul>
+        </ul>
     </div>
 
     <div class="section" id="home">
         <div class="welcome-tag">
-            <h1 class="welcome-font">WELCOME.</h1>
-            <p class="welcome-description">This is Make@EPS, a lab where you <b>MAKE</b> your dreams into reality.</p>
+            <h1 class="welcome-font">WELCOME</h1>
+            <p class="welcome-description">This is Make@EPS.</p>
         </div>
     </div>
     <div class="section" id="machines">
@@ -99,15 +114,17 @@
             </div>
             <div class="list">
                 <ul>
-                    <li><a href="printrbotplay.html">Printrbot Play</a> &amp; <a href="printrbotplay.html">Printrbot Plus</a></li>
+                    <li><a href="printrbotplay.html">Printrbot Play</a></li>
+                    <li><a href="printrbotplay.html">Printrbot Plus</a></li>
                     <li><a href="lasercutter.html">Laser Cutter</a></li>
                     <li><a href="robo3d.html">Robo 3D</a></li>
                     <li><a href="vinylcutter.html">Vinyl Cutter</a></li>
-                    <li><a href="drillpress.html">Drill Press</a></li>
+
                 </ul>
             </div>
             <div class="list">
                 <ul style="float: left; margin-left: 5%;">
+                    <li><a href="drillpress.html">Drill Press</a></li>
                     <li><a href="handtools.html">Hand Tools</a></li>
                     <li><a href="powertools.html">Power Tools</a></li>
                     <li><a href="solderingiron.html">Soldering Iron</a></li>
@@ -120,7 +137,8 @@
         <div class="welcome-tag">
             <div style="width: 50%; float: left; bottom: 0;">
                 <h1 class="welcome-font">Levels.</h1>
-                <p class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines click the rank.</p>
+                <p class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines
+                    click the rank.</p>
             </div>
             <div class="list">
                 <ul style="float:right;">
@@ -133,7 +151,7 @@
             </div>
         </div>
     </div>
-    <div class="section" id="gallery">       
+    <div class="section" id="gallery">
         <div class="carousel">
             <div class="carousel-img slider1">
             </div>
@@ -143,66 +161,28 @@
             </div>
         </div>
     </div>
-        <div class="modal">
-    <input id="novice" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="novice_title" aria-describedby="novice_desc">
-        <div class="modal__wrap">
-            <label for="novice">&#10006;</label>
-            <h2 id="novice_title">Novice Requirements:</h2>
-            <ul id="novice__desc">
-                <li>Supervised on all tools.</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="competent" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="competent_title" aria-describedby="competent_desc">
-        <div class="modal__wrap">
-            <label for="competent">&#10006;</label>
-            <h2 id="competent_title">Competent Requirements:</h2>
-            <ul id="competent_desc">
-                <li>May use tools unsupervised.</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="proficient" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="proficient_title" aria-describedby="proficient_desc">
-        <div class="modal__wrap">
-            <label for="proficient">&#10006;</label>
-            <h2 id="proficient_title">Proficient Requirements:</h2>
-            <ul id="proficient_desc">
-                <li>May supervise others.</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="advanced" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="advanced_title" aria-describedby="advanced_desc">
-        <div class="modal__wrap">
-            <label for="advanced">&#10006;</label>
-            <h2 id="advanced_title">Advanced Requirements:</h2>
-            <ul id="advanced_desc">
-                <li>Produce something that is beneficial to the MakerSpace.</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="expert" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="expert_title" aria-describedby="expert_desc">
-        <div class="modal__wrap">
-            <label for="expert">&#10006;</label>
-            <h2 id="expert_title">Expert Requirements:</h2>
-            <ul id="expert_desc">
-                <li>Required clean and maintain tools on Wednesdays and available to certify others (Confirmation period first tri) </li>
-			</ul>
-        </div>
-    </div>
-</div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+            </tr>
+            <tr>
+                <td>Mary</td>
+                
+            </tr>
+            <tr>
+                <td>July</td>
+        </tbody>
+    </table>
     <div class="footer" id="footer">
         <div class="footy">
             <p>Contact</p>
@@ -218,12 +198,12 @@
         </div>
         <div class="footy">
             <p>Social</p>
-         <a class="icon facebook" href="#"><span class="zocial-facebook"></span></a>
-        <a class="icon twitter" href="#"><span class="zocial-twitter"></span></a>
-        <a class="icon linkedin" href="#"><span class="zocial-linkedin"></span></a><br>
-        <a class="icon youtube" href="#"><span class="zocial-youtube"></span></a>
-        <a class="icon flickr" href="#"><span class="zocial-flickr"></span></a>
-        <a class="icon email" href="#"><span class="zocial-email"></span></a>           
+            <a class="icon facebook" href="#"><span class="zocial-facebook"></span></a>
+            <a class="icon twitter" href="#"><span class="zocial-twitter"></span></a>
+            <a class="icon linkedin" href="#"><span class="zocial-linkedin"></span></a><br>
+            <a class="icon youtube" href="#"><span class="zocial-youtube"></span></a>
+            <a class="icon flickr" href="#"><span class="zocial-flickr"></span></a>
+            <a class="icon email" href="#"><span class="zocial-email"></span></a>
         </div>
     </div>
 
