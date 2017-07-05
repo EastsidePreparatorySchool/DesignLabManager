@@ -17,7 +17,7 @@ import base64
 
 
 ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
-TOOLS = ["vinyl_cutter", "sewing_machine", "hand_tools", "epilog_laser", "universal_laser", "cnc", "printrbot", "robo3d", "soldering", "coffee_maker"]
+TOOLS = ["vinyl_cutter", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
 CRYPTO_KEY = open('data/crypto.key', 'rb').read()
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -30,11 +30,9 @@ class User(ndb.Model):
     vinyl_cutter = ndb.IntegerProperty()
     sewing_machine = ndb.IntegerProperty()
     hand_tools = ndb.IntegerProperty()
-    epilog_laser = ndb.IntegerProperty()
-    universal_laser = ndb.IntegerProperty()
+    lasers = ndb.IntegerProperty()
     cnc = ndb.IntegerProperty()
-    printrbot = ndb.IntegerProperty()
-    robo3d = ndb.IntegerProperty()
+    printers_3d = ndb.IntegerProperty()
     soldering = ndb.IntegerProperty()
     coffee_maker = ndb.IntegerProperty()
 
@@ -59,23 +57,12 @@ class BaseHandler(webapp2.RequestHandler):
         logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
         return None
 
-    def db_user_to_simple_obj(self, obj):
-        return {
-            'sid': obj.sid,
-            'fullname': obj.fullname,
-            'vinyl_cert_level': obj.vinyl_cert_level,
-            'sewing_machine_cert_level': obj.sewing_machine_cert_level,
-            'hand_tools_cert_level': obj.hand_tools_cert_level,
-            'epilog_cert_level': obj.epilog_cert_level,
-            'universal_laser_cert_level': obj.universal_laser_cert_level,
-            'cnc_cert_level': obj.cnc_cert_level,
-            'printrbot_cert_level': obj.printrbot_cert_level,
-            'robo3d_cert_level': obj.robo3d_cert_level,
-            'makerbot_cert_level': obj.makerbot_cert_level,
-            'soldering_cert_level': obj.soldering_cert_level,
-            'power_tools_cert_level': obj.power_tools_cert_level,
-            'coffee_maker_cert_level': obj.coffee_maker_cert_level
-        };
+    def db_user_to_simple_obj(self, db_obj):
+        obj = {"username" : db_obj.username}
+        for tool in TOOLS:
+            attr = getattr(db_obj, tool)
+            obj[tool + "_cert"] = attr
+        return obj
 
 class MainHandler(BaseHandler):
     def get(self):
@@ -148,11 +135,21 @@ class ToolHandler(BaseHandler):
 
 class AdminHandler(BaseHandler):
     def get(self):
+        admin_name = self.get_id()
+        if not admin_name in ADMIN_USERNAMES:
+            self.error(403) # Unauthorized
+            return
+
         template = JINJA_ENVIRONMENT.get_template('admin.html')
         self.response.write(template.render({}))
 
 class AdminUserSearchHandler (BaseHandler):
     def post(self):
+        admin_name = self.get_id()
+        if not admin_name in ADMIN_USERNAMES:
+            self.error(403) # Unauthorized
+            return
+
         username = self.request.get("username")
         username = string.split(username, "@")[0] # Turn emails to usernames
 
@@ -163,11 +160,16 @@ class AdminUserSearchHandler (BaseHandler):
             self.response.write("That user has never logged in.")
 
         self.response.write("/userlevel/" + username)
-        self.redirect("/userlevel/" + username)
 
 class DataViewHandler(BaseHandler):
     def get(self, username):
-        self.response.write(username)
+        admin_name = self.get_id()
+        if not admin_name in ADMIN_USERNAMES:
+            self.error(403) # Unauthorized
+            return
+
+        template = JINJA_ENVIRONMENT.get_template('admin_view.html')
+        self.response.write(template.render(self.db_user_to_simple_obj(self.get_db_obj(username))))
 
 class LevelSetHandler (BaseHandler):
     def post(self):
@@ -192,6 +194,6 @@ app = webapp2.WSGIApplication([
     ('/tool/([\w\-]+)', ToolHandler),
     ('/admin', AdminHandler),
     ('/getuser', AdminUserSearchHandler),
-    ('/userlevel/([\w\-]+)', DataViewHandler)
-    ('/setlevel', LevelSetHandler),
+    ('/userlevel/([\w\-]+)', DataViewHandler),
+    ('/setlevel', LevelSetHandler)
 ], debug=True)

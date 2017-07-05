@@ -1,0 +1,157 @@
+<html>
+  <head>
+  <title>DL Administrator</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../bower_components/polymer/polymer.html">
+  <link rel="import" href="../bower_components/paper-input/paper-input.html">
+  <link rel="import" href="../bower_components/paper-button/paper-button.html">
+  <link rel="import" href="../bower_components/paper-material/paper-material.html">
+  <link rel="import" href="../bower_components/iron-image/iron-image.html">
+  <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+  </head>
+  <body unresolved>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F44336;
+      padding: 20px;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      max-width: 360px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 2px;
+    }
+    .image-container {
+      margin-bottom: 0px;
+      width: 360px;
+    }
+    .copy {
+      font-size: 16;
+      margin-bottom: 0px;
+    }
+    paper-input {
+      text-align: left;
+    }
+    .link {
+      text-decoration: none;
+    }
+    paper-button {
+      margin: 12px auto;
+      width: 100%;
+    }
+    #registerText {
+      display: block;
+    }
+    #toast {
+      text-align: left;
+    }
+    .toolcontainer {
+      height: 64px;
+      width: 100%;
+    }
+    .toollabel {
+      float: left;
+      text-align: left;
+    }
+    paper-slider {
+      float: right;
+    }
+    iron-image {
+      width: 360px;
+    }
+  </style>
+
+	<paper-material class="card" elevation="2">
+	<h1>Set levels for {{username | safe}}</h1>
+  <div class="toolcontainer">
+    <span class="toollabel">3D printers</span>
+    <paper-slider id="printers_3d" pin snaps max="5" step="1" value="{{printers_3d_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Laser cutters</span>
+    <paper-slider id="lasers" pin snaps max="5" step="1" value="{{lasers_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Vinyl cutter</span>
+    <paper-slider id="vinyl_cutter" pin snaps max="5" step="1" value="{{vinyl_cutter_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Soldering</span>
+    <paper-slider id="soldering" pin snaps max="5" step="1" value="{{soldering_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Shopbot</span>
+    <paper-slider id="cnc" pin snaps max="5" step="1" value="{{cnc_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Hand tools</span>
+    <paper-slider id="hand_tools" pin snaps max="5" step="1" value="{{hand_tools_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Sewing machine</span>
+    <paper-slider id="sewing_machine" pin snaps max="5" step="1" value="{{sewing_machine_cert | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Coffee maker</span>
+    <paper-slider id="coffee_maker" pin snaps max="5" step="1" value="{{coffee_maker_cert | safe}}" editable></paper-slider>
+  </div>
+
+  <paper-button onclick="submitForm()" raised id="loginButton">SET LEVELS</paper-button>
+  </paper-material>
+
+  <paper-toast id="toast" text="" duration=10000>
+  </paper-toast>
+
+  <script>
+  var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
+  function checkSubmit(e) {
+    if (e && e.keyCode === 13) {
+      submitForm();
+     }
+  }
+  function submitForm() { //Takes either login, register, or resend
+    var data = new FormData();
+    data.append('username', '{{username | safe}}');
+    data.append('printers_3d', printers_3d.value);
+    data.append('lasers', lasers.value);
+    data.append('coffee_maker', coffee_maker.value);
+    data.append('cnc', cnc.value);
+    data.append('sewing_machine', sewing_machine.value);
+    data.append('hand_tools', hand_tools.value);
+    data.append('soldering', soldering.value);
+    data.append('vinyl_cutter', vinyl_cutter.value);
+
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          result = xhr.responseText;
+          if (result == "") { // If it is a redirection URL
+            window.location.replace("/admin");
+          } else {
+            showToast(UNKNOWN_ERROR);
+          }
+        } else {
+          username.value = "";
+          showToast(UNKNOWN_ERROR);
+        }
+      }
+    }
+    xhr.open("POST", "/setlevel", true);
+    xhr.send(data);
+  }
+
+  function showToast(text) {
+    toast = document.getElementById("toast");
+    toast.text = text;
+    toast.show();
+  }
+
+  </script>
+
+</body></html>
