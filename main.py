@@ -76,10 +76,12 @@ class LoginHandler(BaseHandler):
 
     def post(self):
         email = self.request.get('email').lower()
-        username = string.split(email, "@")[0]
+        if "@" not in email:
+            email += "@eastsideprep.org"
         password = self.request.get('password')
 
-        if (authenticate_user.auth_user(username, password)): # Four11 login being finicky, disabled it for now
+        if (authenticate_user.auth_user(email, password)): # Four11 login being finicky, disabled it for now
+            username = string.split(email, "@")[0] 
             expiration_date = datetime.datetime.now()
             obj = {"username": username, "time_issued": expiration_date.isoformat()}
             expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
@@ -114,6 +116,29 @@ class ToolHandler(BaseHandler):
         self.response.write(resp)
 
 class AdminHandler(BaseHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('admin.html')
+        self.response.write(template.render({}))
+
+class AdminUserSearchHandler (BaseHandler):
+    def post(self):
+        username = self.request.get("username")
+        username = string.split(username, "@")[0] # Turn emails to usernames
+
+        obj = self.get_db_obj(username)
+        if not obj:
+            self.response.write("That user has never logged in.")
+        if not obj.username:
+            self.response.write("That user has never logged in.")
+
+        self.response.write("/userlevel/" + username)
+        self.redirect("/userlevel/" + username)
+
+class DataViewHandler(BaseHandler):
+    def get(self, username):
+        self.response.write(username)
+
+class LevelSetHandler (BaseHandler):
     def post(self):
         admin_name = self.get_id()
         if not admin_name in ADMIN_USERNAMES:
@@ -134,5 +159,8 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/login', LoginHandler),
     ('/tool/([\w\-]+)', ToolHandler),
-    ('/setlevels', AdminHandler)
+    ('/admin', AdminHandler),
+    ('/getuser', AdminUserSearchHandler),
+    ('/userlevel/([\w\-]+)', DataViewHandler)
+    ('/setlevel', LevelSetHandler),
 ], debug=True)
