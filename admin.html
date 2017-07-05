@@ -1,57 +1,109 @@
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-    <link rel="manifest" href="/manifest.json">
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-
-      <link rel="import" href="bower_components/paper-input/paper-input.html">
-      <link rel="import" href="bower_components/paper-button/paper-button.html">
-      <link rel="import" href="bower_components/paper-material/paper-material.html">
-      <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
-      <link rel="import" href="bower_components/paper-menu/paper-menu.html">
-      <link rel="import" href="bower_components/paper-item/paper-item.html">
-      <link rel="import" href="bower_components/iron-image/iron-image.html">
-    <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-        overflow: hidden;
-        @apply(--layout-fullbleed);
-        @apply(--layout-vertical);
-      }
-    </style>
+  <title>DL Administrator</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="bower_components/polymer/polymer.html">
+  <link rel="import" href="bower_components/paper-input/paper-input.html">
+  <link rel="import" href="bower_components/paper-button/paper-button.html">
+  <link rel="import" href="bower_components/paper-material/paper-material.html">
+  <link rel="import" href="bower_components/iron-image/iron-image.html">
+  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
   </head>
-  {% raw %}
-  <body>
-    <template is="dom-bind">
-    <paper-toolbar>
-      <div flex class="title">Puddleractor</div>
-    </paper-toolbar>
-    <div class="container">
-      <div class="header row">
-        <div class="cell">Name</div>
-        <div class="cell">SID</div>
-        <div class="cell">3D Printer</div>
-        <div class="cell">Laser Cutter</div>
-        <div class="cell">Vinyl Cutter</div>
-      </div>
-      <template is="dom-repeat" items="{{entries}}" as="entry">
-        <div class="row">
-          <div class="cell">{{entry.fullname}}</div>
-          <div class="cell">{{entry.sid}}</div>
-          <div class="cell">{{entry.fullname}}</div>
-          <div class="cell">{{entry.fullname}}</div>
-          <div class="cell">{{entry.fullname}}</div>
-        </div>
-      </template>
-    </div>
-    </template>
-  </body>
-  {% endraw %}
+  <body unresolved>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #F44336;
+      padding: 20px;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      max-width: 360px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 2px;
+    }
+    .image-container {
+      margin-bottom: 0px;
+      width: 360px;
+    }
+    .copy {
+      font-size: 16;
+      margin-bottom: 0px;
+    }
+    paper-input {
+      text-align: left;
+    }
+    .link {
+      text-decoration: none;
+    }
+    paper-button {
+      margin: 12px auto;
+      width: 100%;
+    }
+    #registerText {
+      display: block;
+    }
+    #toast {
+      text-align: left;
+    }
+    iron-image {
+      width: 360px;
+    }
+  </style>
+
+	<paper-material class="card" elevation="2">
+	<h1>Design Lab Manager</h1>
+	<p class="copy">Enter a username or email to view and set certification levels</p>
+
+  <paper-input id="username" label="Username">
+  </paper-input>
+
+  <paper-button onclick="submitForm()" raised id="loginButton">GO</paper-button>
+  </paper-material>
+
+  <paper-toast id="toast" text="" duration=10000>
+  </paper-toast>
 
   <script>
-    var scope = document.querySelector('template[is="dom-bind"]');
-    scope.entries = {{entries | safe}};
+  var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
+  function checkSubmit(e) {
+    if (e && e.keyCode === 13) {
+      submitForm();
+     }
+  }
+  function submitForm() { //Takes either login, register, or resend
+    var data = new FormData();
+    data.append('username', username.value);
+
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          result = xhr.responseText;
+          if (result.charAt(0) == "/") { // If it is a redirection URL
+            window.location.replace(result);
+          } else {
+            showToast(result);
+          }
+        } else {
+          username.value = "";
+          showToast(UNKNOWN_ERROR);
+        }
+      }
+    }
+    xhr.open("POST", "/getuser", true);
+    xhr.send(data);
+  }
+
+  function showToast(text) {
+    toast = document.getElementById("toast");
+    toast.text = text;
+    toast.show();
+  }
+
   </script>
-</html>
+
+</body></html>
