@@ -17,7 +17,7 @@ import base64
 
 
 ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
-TOOLS = ["vinyl_cutter", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
+TOOLS = ["vinyl_cutter", "power_tools", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
 CRYPTO_KEY = open('data/crypto.key', 'rb').read()
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -30,6 +30,7 @@ class User(ndb.Model):
     vinyl_cutter = ndb.IntegerProperty()
     sewing_machine = ndb.IntegerProperty()
     hand_tools = ndb.IntegerProperty()
+    power_tools = ndb.IntegerProperty()
     lasers = ndb.IntegerProperty()
     cnc = ndb.IntegerProperty()
     printers_3d = ndb.IntegerProperty()
@@ -128,14 +129,8 @@ class ToolHandler(BaseHandler):
             self.error(404)
             return
 
-        resp = "This is the future home of the " + tool + " page."
-        login = self.get_id()
-        if login:
-            resp += "You are currently logged in as " + login + ".Your level on this tool is " + str(getattr(self.get_db_obj(login), tool))
-        else:
-            resp += "You are not currently logged in. <a href='/login'>LOGIN</a>"
-
-        self.response.write(resp)
+        template = JINJA_ENVIRONMENT.get_template('/tool_pages/' + tool + '.html')
+        self.response.write(template.render({}))
 
 class AdminHandler(BaseHandler):
     def get(self):
