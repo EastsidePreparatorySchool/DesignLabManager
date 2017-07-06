@@ -60,29 +60,14 @@ class BaseHandler(webapp2.RequestHandler):
         if not (auth):
             return None
         return json.loads(auth)['username']
-
-       
+	
+    def getobj(self, name):
+        user = ndb.Key(User, name).get()
+        if user:
+            return user
+        return None
     
     
-    
-    def db_user_to_simple_obj(self, obj):
-        return {
-            'sid': obj.sid,
-            'fullname': obj.fullname,
-            'vinyl_cert_level': obj.vinyl_cert_level,
-            'sewing_machine_cert_level': obj.sewing_machine_cert_level,
-            'hand_tools_cert_level': obj.hand_tools_cert_level,
-            'epilog_cert_level': obj.epilog_cert_level,
-            'universal_laser_cert_level': obj.universal_laser_cert_level,
-            'cnc_cert_level': obj.cnc_cert_level,
-            'printrbot_cert_level': obj.printrbot_cert_level,
-            'robo3d_cert_level': obj.robo3d_cert_level,
-            'makerbot_cert_level': obj.makerbot_cert_level,
-            'soldering_cert_level': obj.soldering_cert_level,
-            'power_tools_cert_level': obj.power_tools_cert_level,
-            'coffee_maker_cert_level': obj.coffee_maker_cert_level
-        };
-
 class IndexHandler(BaseHandler):
     def get(self):
         loggedin = False
@@ -155,7 +140,12 @@ class LoginHandler(BaseHandler):
             }
             self.response.set_cookie('auth', json.dumps(obj), expires= now+datetime.timedelta(2))
             self.response.write('')
+			
             # Now, if user does not already have a database object, make them one
+            if not self.getobj:
+                user = User(username = username)
+                user.key = ndb.Key(User, username)
+                user.put()
 
         else:
             self.response.write('Username or password was incorrect')
