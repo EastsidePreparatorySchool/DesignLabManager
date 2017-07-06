@@ -130,6 +130,7 @@ class ToolHandler(BaseHandler):
             return
 
         template = JINJA_ENVIRONMENT.get_template('/tool_pages/' + tool + '.html')
+        
         self.response.write(template.render({}))
 
 class AdminHandler(BaseHandler):

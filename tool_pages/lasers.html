@@ -9,7 +9,64 @@
     <link rel="stylesheet" type="text/css" href="..\css\style.css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-    <script src="..\js\main.js"></script>
+    <style>
+        .divTable{
+          display: table;
+          width: 100%;
+        }
+        .divTableRow {
+          height: 32px;
+          display: table-row;
+          border-top: 0px;
+          border-bottom: 0px;
+        }
+        .divTableHeading {
+          background-color: #EEE;
+          display: table-header-group;
+        }
+        .divTableCell {
+          display: table-cell;
+          padding: 3px 10px;
+          text-align: center;
+        }
+        .divTableHeading {
+          background-color: #EEE;
+          display: table-row;
+          font-weight: bold;
+        }
+        .divTableBody {
+          display: table-row-group;
+        }
+
+        .level {
+          width: 50%;
+          margin: 0 auto;
+          border-radius: 50%;
+
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          padding: 2px;
+
+          color: #FFF;
+          text-align: center;
+        }
+        .level0 {background-color: #DDD;}
+        .level1 {background-color: #FEF244;}
+        .level2 {background-color: #89D9F8;}
+        .level3 {background-color: #920FAA;}
+        .level4 {background-color: #F04726;}
+        .level5 {background-color: #E52F39;}
+
+        .section-heading {
+            padding: 20px;
+        }
+
+        .table-container {
+            width: 512px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,94 +78,121 @@
     <div class="section" id="lasercutter">
         <div class="welcome-tag">
             <div style="width: 70%; float: left;">
-<h1 class="welcome-font" style="font-size: 140px;">Laser Cutter.</h1>
-<p class="welcome-description">The <b>hottest</b> tool for Makers to use.</p>
-</div>
-<div class="list">
-    <ul>
-        <label for="novice"><li>Novice</li></label>
-        <label for="competent"><li>Competent</li></label>
-        <label for="proficient"><li>Proficient</li></label>
-        <label for="advanced"><li>Advanced</li></label>
-        <label for="expert"><li>Expert</li></label>
-    </ul>
-</div>
-<div class="modal">
-    <input id="novice" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="novice_title" aria-describedby="novice_desc">
-        <div class="modal__wrap">
-            <label for="novice">&#10006;</label>
-            <h2 id="novice_title">Novice Requirements:</h2>
-            <ul id="novice__desc">
-                <li>Congratulations! You’re a novice.</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="competent" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="competent_title" aria-describedby="competent_desc">
-        <div class="modal__wrap">
-            <label for="competent">&#10006;</label>
-            <h2 id="competent_title">Competent Requirements:</h2>
-            <ul id="competent_desc">
-                <li>Cardboard vs. wood.</li>
-				<li>Vector vs. Raster.</li>
-                <li>Power/speed.</li>
-                <li>Flag problems like:</li>
-                    <ul style="color:red">
-                        <li style="color:red">Fire/smoke</li>
-                        <li style="color:red">Strange head movements</li>
-                    </ul>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="proficient" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="proficient_title" aria-describedby="proficient_desc">
-        <div class="modal__wrap">
-            <label for="proficient">&#10006;</label>
-            <h2 id="proficient_title">Proficient Requirements:</h2>
-            <ul id="proficient_desc">
-            <li>Combined File design.</li>
-            <li>Communication errors.</li>
-            <li>Acrylic (grades 9-12 only).</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="advanced" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="advanced_title" aria-describedby="advanced_desc">
-        <div class="modal__wrap">
-            <label for="advanced">&#10006;</label>
-            <h2 id="advanced_title">Advanced Requirements:</h2>
-            <ul id="advanced_desc">
-            <li>Multicolor cuts.</li>
-            <li>Other materials (leather, plastic, metal).</li>
-            <li>Design and create a project that improves the MakerSpace.</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="expert" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="expert_title" aria-describedby="expert_desc">
-        <div class="modal__wrap">
-            <label for="expert">&#10006;</label>
-            <h2 id="expert_title">Expert Requirements:</h2>
-            <ul id="expert_desc">
-            <li>Clean hood/tray.</li>
-            <li>Lens replacement.</li>
-			</ul>
-        </div>
-    </div>
-</div>
+                <h1 class="welcome-font" style="font-size: 140px;">Laser Cutter.</h1>
+                <p class="welcome-description">The <b>hottest</b> tool for Makers to use.</p>
+            </div>
+            <div class="list">
+                <ul>
+                    <label for="novice"><li>Novice</li></label>
+                    <label for="competent"><li>Competent</li></label>
+                    <label for="proficient"><li>Proficient</li></label>
+                    <label for="advanced"><li>Advanced</li></label>
+                    <label for="expert"><li>Expert</li></label>
+                </ul>
+            </div>
+            <div class="modal">
+                <input id="novice" type="checkbox" />
+                <div class="modal__overlay" role="dialog" aria-labelledby="novice_title" aria-describedby="novice_desc">
+                    <div class="modal__wrap">
+                        <label for="novice">&#10006;</label>
+                        <h2 id="novice_title">Novice Requirements:</h2>
+                        <ul id="novice__desc">
+                            <li>Congratulations! You’re a novice.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal">
+                <input id="competent" type="checkbox" />
+                <div class="modal__overlay" role="dialog" aria-labelledby="competent_title" aria-describedby="competent_desc">
+                    <div class="modal__wrap">
+                        <label for="competent">&#10006;</label>
+                        <h2 id="competent_title">Competent Requirements:</h2>
+                        <ul id="competent_desc">
+                            <li>Cardboard vs. wood.</li>
+                            <li>Vector vs. Raster.</li>
+                            <li>Power/speed.</li>
+                            <li>Flag problems like:</li>
+                            <ul style="color:red">
+                                <li style="color:red">Fire/smoke</li>
+                                <li style="color:red">Strange head movements</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal">
+                <input id="proficient" type="checkbox" />
+                <div class="modal__overlay" role="dialog" aria-labelledby="proficient_title" aria-describedby="proficient_desc">
+                    <div class="modal__wrap">
+                        <label for="proficient">&#10006;</label>
+                        <h2 id="proficient_title">Proficient Requirements:</h2>
+                        <ul id="proficient_desc">
+                            <li>Combined File design.</li>
+                            <li>Communication errors.</li>
+                            <li>Acrylic (grades 9-12 only).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal">
+                <input id="advanced" type="checkbox" />
+                <div class="modal__overlay" role="dialog" aria-labelledby="advanced_title" aria-describedby="advanced_desc">
+                    <div class="modal__wrap">
+                        <label for="advanced">&#10006;</label>
+                        <h2 id="advanced_title">Advanced Requirements:</h2>
+                        <ul id="advanced_desc">
+                            <li>Multicolor cuts.</li>
+                            <li>Other materials (leather, plastic, metal).</li>
+                            <li>Design and create a project that improves the MakerSpace.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal">
+                <input id="expert" type="checkbox" />
+                <div class="modal__overlay" role="dialog" aria-labelledby="expert_title" aria-describedby="expert_desc">
+                    <div class="modal__wrap">
+                        <label for="expert">&#10006;</label>
+                        <h2 id="expert_title">Expert Requirements:</h2>
+                        <ul id="expert_desc">
+                            <li>Clean hood/tray.</li>
+                            <li>Lens replacement.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-<!--End of Modal -->
-</div>
-</div>
+            <!--End of Modal -->
+        </div>
+    </div>
+    <!-- End of section-->
+    <div class="section">
+        <h1 class="welcome-font section-heading" style="font-size: 80px;">Statistics</h1>
+        <h1 class="welcome-font section-heading" style="font-size: 80px;">Students certified:</h1>
+        <div class="table-container">
+            <div class="divTable">
+                <div class="divTableBody">
+                    <div class="divTableRow divTableHeading">
+                        <div class="divTableCell">Total</div>
+                        <div class="divTableCell">Level 1</div>
+                        <div class="divTableCell">Level 2</div>
+                        <div class="divTableCell">Level 3</div>
+                        <div class="divTableCell">Level 4</div>
+                        <div class="divTableCell">Level 5</div>
+                    </div>
+                    <div class="divTableRow divTableHeading">
+                        <div class="divTableCell"><div class="level level0">{{total_certified | safe}}</div></div>
+                        <div class="divTableCell"><div class="level level1">{{level_1 | safe}}</div></div>
+                        <div class="divTableCell"><div class="level level2">{{level_2 | safe}}</div></div>
+                        <div class="divTableCell"><div class="level level3">{{level_3 | safe}}</div></div>
+                        <div class="divTableCell"><div class="level level4">{{level_4 | safe}}</div></div>
+                        <div class="divTableCell"><div class="level level5">{{level_5 | safe}}</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
