@@ -38,6 +38,11 @@ class User(ndb.Model):
     coffee_maker = ndb.IntegerProperty()
 
 class BaseHandler(webapp2.RequestHandler):
+    def open_html(self, filepath):
+        with open(filepath, 'r') as f:
+            data = f.read()
+        return data
+        
     def get_id(self):
         if not (self.request.cookies.get("auth")):
             return None
@@ -68,16 +73,18 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         loggedin = "You are not logged in"
-        loginlink = '<a href="login">--Login--</a>'
+        logincomps = self.open_html('logincomponents.html')
+
+        loginmodal = self.open_html('modal.html')
 
         str_id = self.get_id()
         if (str_id):
             loggedin = "You are logged in as " + str_id
-            loginlink = '<a href="logout">--Log Out--</a>'
+            logincomps = '<a href="logout">--Log Out--</a>'
 
         
         template = JINJA_ENVIRONMENT.get_template('homepage.html')
-        self.response.write(template.render({'loggedin': loggedin, 'loginURL': loginlink}))
+        self.response.write(template.render({'loggedin': loggedin, 'loginURL': logincomps, 'loginmodal': loginmodal}))
         #user_id = int(str_id)
 #
 #        query = User.query(User.sid == user_id)

@@ -720,6 +720,10 @@ box-shadow: 0px 35px 77px -17px rgba(0,0,0,0.64);
   background-size: cover;
   left: 200%;
 }
+.text{
+  text-align:center;
+  size:200%;
+}
 
 @keyframes slider {
   0% {
