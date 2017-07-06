@@ -139,8 +139,17 @@ class AdminHandler(BaseHandler):
             self.error(403) # Unauthorized
             return
 
+        # Generate HTML for all students
+
+        query = User.query() # Get all students
+        rows = ""
+        for student in query:
+            row = JINJA_ENVIRONMENT.get_template('studentrow.html')
+            rows += row.render(self.db_user_to_simple_obj(student))
+
         template = JINJA_ENVIRONMENT.get_template('admin.html')
-        self.response.write(template.render({}))
+
+        self.response.write(template.render({'students' : rows}))
 
 class AdminUserSearchHandler (BaseHandler):
     def post(self):

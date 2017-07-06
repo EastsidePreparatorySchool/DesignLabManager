@@ -1,5 +1,5 @@
 <html>
-  <head>
+<head>
   <title>DL Administrator</title>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
@@ -9,19 +9,27 @@
   <link rel="import" href="bower_components/paper-material/paper-material.html">
   <link rel="import" href="bower_components/iron-image/iron-image.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
-  </head>
-  <body unresolved>
+</head>
+<body unresolved>
   <style>
     body {
       font-family: 'Roboto', sans-serif;
       background: #F44336;
       padding: 20px;
+      padding-bottom: 200px;
+      padding-left: 80px;
+      padding-right: 80px;
       text-align: center;
     }
     .card {
       background: white;
       max-width: 360px;
       margin: 20px auto;
+      padding: 20px;
+      border-radius: 2px;
+    }
+    .tablecard {
+      background: white;
       padding: 20px;
       border-radius: 2px;
     }
@@ -52,28 +60,96 @@
     iron-image {
       width: 360px;
     }
+    .divTable{
+      display: table;
+      width: 100%;
+    }
+    .divTableRow {
+      height: 32px;
+      display: table-row;
+      border-top: 0px;
+      border-bottom: 0px;
+    }
+    .divTableHeading {
+      background-color: #EEE;
+      display: table-header-group;
+    }
+    .divTableCell {
+      display: table-cell;
+      padding: 3px 10px;
+      text-align: center;
+    }
+    .divTableHeading {
+      background-color: #EEE;
+      display: table-row;
+      font-weight: bold;
+    }
+    .divTableBody {
+      display: table-row-group;
+    }
+
+    .level {
+      width: 50%;
+      margin: 0 auto;
+      border-radius: 50%;
+
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      padding: 2px;
+
+      color: #FFF;
+      text-align: center;
+    }
+    .level0 {background-color: #DDD;}
+    .level1 {background-color: #FEF244;}
+    .level2 {background-color: #89D9F8;}
+    .level3 {background-color: #920FAA;}
+    .level4 {background-color: #F04726;}
+    .level5 {background-color: #E52F39;}
+
   </style>
 
-	<paper-material class="card" elevation="2">
-	<h1>Design Lab Manager</h1>
-	<p class="copy">Enter a username or email to view and set certification levels</p>
+  <paper-material class="card" elevation="2">
+  	<h1>Design Lab Manager</h1>
+  	<p class="copy">Enter a username or email to view and set certification levels</p>
 
-  <paper-input id="username" label="Username">
-  </paper-input>
+    <paper-input id="username" label="Username">
+    </paper-input>
 
-  <paper-button onclick="submitForm()" raised id="loginButton">GO</paper-button>
+    <paper-button onclick="submitForm()" raised id="loginButton">GO</paper-button>
+  </paper-material>
+
+  <paper-material class="tablecard" elevation="2">
+    <h1>All students</h1>
+    <div class="divTable">
+      <div class="divTableBody">
+        <div class="divTableRow divTableHeading">
+          <div class="divTableCell">Username</div>
+          <div class="divTableCell">3D printers</div>
+          <div class="divTableCell">Laser cutters</div>
+          <div class="divTableCell">Vinyl cutters</div>
+          <div class="divTableCell">Shopbot</div>
+          <div class="divTableCell">Hand tools</div>
+          <div class="divTableCell">Soldering</div>
+          <div class="divTableCell">Sewing machine</div>
+          <div class="divTableCell">Coffee maker</div>
+        </div>
+        {{students | safe}}
+      </div>
+    </div>
   </paper-material>
 
   <paper-toast id="toast" text="" duration=10000>
   </paper-toast>
 
   <script>
-  var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
-  function checkSubmit(e) {
-    if (e && e.keyCode === 13) {
-      submitForm();
-     }
-  }
+    var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
+    function checkSubmit(e) {
+      if (e && e.keyCode === 13) {
+        submitForm();
+      }
+    }
   function submitForm() { //Takes either login, register, or resend
     var data = new FormData();
     data.append('username', username.value);
@@ -104,6 +180,6 @@
     toast.show();
   }
 
-  </script>
+</script>
 
 </body></html>
