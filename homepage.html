@@ -57,6 +57,32 @@
         });
     });
     </script>
+    <script>
+      function submitForm() { //Takes either login, register, or resend
+        var data = new FormData();
+        data.append('email', document.getElementById('email').value);
+        data.append('password', document.getElementById('password').value);
+
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              result = xhr.responseText;
+              if (result == "") {
+                window.location.replace("/");
+              } else {
+                window.alert(result);
+                // Show error
+              }
+            } else {
+              // Show error
+            }
+          }
+        }
+        xhr.open("POST", "/login", true);
+        xhr.send(data);
+      }
+    </script>
 </head>
 
 <body>

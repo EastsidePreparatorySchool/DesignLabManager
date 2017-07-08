@@ -8,25 +8,19 @@
 				<h4 class="modal-title">Log In</h4>
 			</div>
 			<div class="modal-body">
-				<form class="cd-form">
 					<p class="text">
 						<label class="image-replace cd-email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+						<input class="full-width has-padding has-border" id="email" type="email" placeholder="E-mail">
 					</p>
 
 					<p class= "text">
 						<label class="text">Password</label>
-						<input type="password" placeholder="Password" id="pwd" class="masked" name="password" />
+						<input type="password" placeholder="Password" id="password" class="masked" name="password" />
 					</p>
 
-					<p class="text">
-						<input type="checkbox" id="remember-me" checked>
-						<label>Remember me</label>
-					</p>
-					<div  align="center";>
-					<button class = "btn btn-success">Log In</button>
+					<div align="center";>
+					<button class="btn btn-success" onclick="submitForm()">Log In</button>
 					</div>
-				</form>
 			</div>
 		
 		</div>
