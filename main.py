@@ -130,6 +130,11 @@ class LoginHandler(BaseHandler):
         else:
             self.response.write("Username or password was incorrect")
 
+class LogoutHandler(BaseHandler):
+    def get(self):
+        self.response.delete_cookie("auth")
+        self.redirect("/")
+
 class ToolHandler(BaseHandler):
     def get(self, tool):
         if tool not in TOOLS:
@@ -210,5 +215,6 @@ app = webapp2.WSGIApplication([
     ('/admin', AdminHandler),
     ('/getuser', AdminUserSearchHandler),
     ('/userlevel/([\w\-]+)', DataViewHandler),
-    ('/setlevel', LevelSetHandler)
+    ('/setlevel', LevelSetHandler),
+    ('/logout', LogoutHandler)
 ], debug=True)
