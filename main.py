@@ -129,9 +129,17 @@ class ToolHandler(BaseHandler):
             self.error(404)
             return
 
+        total_certified = User.query(User._properties[tool] > 0).count()
+        people_certified_by_level = []
+
+        template_vals = {'total_certified': total_certified}
+
+        for i in range(1, 6):
+            template_vals['level_' + str(i)] = User.query(User._properties[tool] == i).count()
+
         template = JINJA_ENVIRONMENT.get_template('/tool_pages/' + tool + '.html')
-        
-        self.response.write(template.render({}))
+
+        self.response.write(template.render(template_vals))
 
 class AdminHandler(BaseHandler):
     def get(self):
