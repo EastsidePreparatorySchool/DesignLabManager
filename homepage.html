@@ -4,8 +4,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>MAKE@EPS</title>
-    <link rel="stylesheet" type="text/css" href="css\style.css" />
+    
     <link rel="stylesheet" href="css\bsStyle.css">
+    
+    <link rel="stylesheet" href="css\style.css" />
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,9 +94,9 @@
                 <a class="navbar-brand" href="#">Make@EPS</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Machines</a></li>
-                <li><a href="#">Levels</a></li>
+                <li class="active"><a href="#home">Home</a></li>
+                <li><a href="#machines">Machines</a></li>
+                <li><a href="#levels">Levels</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>{{loginURL | safe}}</li>
@@ -136,7 +138,7 @@
         </div>
     </div>
     <div class="section" id="machines">
-        <div class="welcome-tag welcome-split">
+        <div class="information-tag welcome-split">
             <div style="width: 50%; float: left; bottom: 0;">
                 <h1 class="welcome-font">MACHINES.</h1>
                 <p class="welcome-description">These are the tools and machines available for certified students to use. Click the names to see their requirements.</p>
@@ -163,43 +165,35 @@
         </div>
     </div>
     <div class="section" id="levels">
-        <div class="welcome-tag">
-            <div style="width: 50%; float: left; bottom: 0;">
+        <div class="information-tag">
+            <div style="width: 50%; margin: auto;">
                 <h1 class="welcome-font">Levels.</h1>
-                <p class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines
+                <p  class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines
                     click the rank.</p>
             </div>
             <table class="table table-bordered">
                 <thead>
                     <tr style="font-size:large;">
-                        <th>Novice</th>
-                        <th>Competent</th>
-                        <th>Proficient</th>
-                        <th>Advanced</th>
-                        <th>Expert</th>
+                        <th class="danger strokeme">Novice</th>
+                        <th class="warning strokeme">Competent</th>
+                        <th class="yellow strokeme">Proficient</th>
+                        <th class="success strokeme">Advanced</th>
+                        <th class="blue strokeme">Expert</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Novice Description</td>
-                        <td>Competent Description</td>
-                        <td>Proficient Description</td>
-                        <td>Advanced Description</td>
-                        <td>Expert Description</td>
+                        <td>Novice is the starting rank. The only thing that it requires is an intrest in the tool. Novices are generally not allowed to use tools, only spectate as someone with at least a Profision rank operates the tool.</td>
+                        <td>Competent is the rank at which one understands the basics of operating the tool. Competent students are allowed to use the tool when supervised by an Expert.</td>
+                        <td>Proficient students must know how to operate the tool and must be able to do basic troubleshooting if something goes wrong. Proficient users are alowed to use the tool without supervision, however supervision is advised.</td>
+                        <td>Advanced is a rank that is usually achieved by giving back to the tech community. This means that the user should be able to design and create a product that benifets the community.</td>
+                        <td>Expert users must be able to maintainance the tool. These people are responsible for making sure that the tool stays in working condition. They are also responsible for certifying other users.</td>
 
                     </tr>
 
                 </tbody>
             </table>
-            <div class="list">
-                <ul style="float:right;">
-                    <label for="novice"><li></li></label>
-                    <label for="competent"><li></li></label>
-                    <label for="proficient"><li></li></label>
-                    <label for="advanced"><li></li></label>
-                    <label for="expert"><li></li></label>
-                </ul>
-            </div>
+            
         </div>
     </div>
     <div class="section" id="gallery">
@@ -210,33 +204,12 @@
             </div>
             <div class="carousel-img slider3">
             </div>
+            <div class="carousel-img slider4">
+            </div>
+            <div class="carousel-img slider5">
+            </div>
         </div>
     </div>
-
-    <div class="footer" id="footer">
-        <div class="footy">
-            <p>Contact</p>
-            <p>Roger Mack</p>
-            <p>rmack@eastsideprep.org</p>
-            <p>+1 (425) 822-5668</p>
-        </div>
-        <div class="footy">
-            <p>Location</p>
-            <p>Eastside Preparatory School</p>
-            <p>10613 NE 38th Pl</p>
-            <p>Kirkland, WA 98033</p>
-        </div>
-        <div class="footy">
-            <p>Social</p>
-            <a class="icon facebook" href="#"><span class="zocial-facebook"></span></a>
-            <a class="icon twitter" href="#"><span class="zocial-twitter"></span></a>
-            <a class="icon linkedin" href="#"><span class="zocial-linkedin"></span></a><br>
-            <a class="icon youtube" href="#"><span class="zocial-youtube"></span></a>
-            <a class="icon flickr" href="#"><span class="zocial-flickr"></span></a>
-            <a class="icon email" href="#"><span class="zocial-email"></span></a>
-        </div>
-    </div>
-
 </body>
 
 </html>
