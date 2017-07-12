@@ -4,9 +4,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>MAKE@EPS</title>
-    <link rel="stylesheet" type="text/css" href="..\css\modal.css" />
-    
+
     <link rel="stylesheet" type="text/css" href="..\css\style.css" />
+    <link rel="stylesheet" type="text/css" href="..\css\skilltree.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script src="..\js\main.js"></script>
@@ -21,104 +22,101 @@
     <div class="section" id="powertools">
         <div class="welcome-tag">
             <div style="width: 70%; float: left;">
-<h1 class="welcome-font" style="font-size: 140px;">Power tools.</h1>
-<p class="welcome-description">These tools are <b>electrifying</b>.</p>
-</div>
-<div class="list">
-    <ul>
-        <label for="novice"><li>Novice</li></label>
-        <label for="competent"><li>Competent</li></label>
-        <label for="proficient"><li>Proficient</li></label>
-        <label for="advanced"><li>Advanced</li></label>
-        <label for="expert"><li>Expert</li></label>
-    </ul>
-</div>
-<div class="modal">
-    <input id="novice" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="novice_title" aria-describedby="novice_desc">
-        <div class="modal__wrap">
-            <label for="novice">&#10006;</label>
-            <h2 id="novice_title">Novice Requirements:</h2>
-            <ul id="novice__desc">
-                <li>Congratulations! You’re a novice.</li>
-                <li>What are the names' of the tools? What are they used for?</li>
-                <li>Do you know how to safely and properly use the tools.</li>
-                <li>Can you properly put away the tools.</li>
-                <li>Tools Permitted:</li>
-                    <ul style="list-style-type: disc;">
-                        <li>Cordless Driver</li>
-                        <li>Dremel</li>
-                        <li>Glue gun</li>
-                    </ul>
-			</ul>
+                <h1 class="welcome-font" style="font-size: 140px;">Power Tools.</h1>
+                <p class="welcome-description">These sets of tools encompass a wide array of tools that require an aditional power source instead of manual
+                    power. These tools include: drills, cordless driver, heat gun, etc.</p>
+            </div>
+            <div class="list">
+                <ul>
+                    <label for="novice"><li><a href="..\documents\printing_3d.docx">3D Printing by Gavin Uberti</a></li></label>
+                    <label for="competent"><li><a href="http://www.instructables.com/id/Quick-Start-Guide-Printing-with-a-Makerbot/">Instructables</li></label>
+                    <label for="proficient"><li><a href="https://www.makerbot.com/download-print/">MakerBot</a></li></label>
+                    <label for="advanced"><li><a href="https://www.tinkercad.com/">TinkerCad</a></li></label>
+                    <label for="expert"><li><a href="https://www.thingiverse.com/">Thingiverse</a></li></label>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-<div class="modal">
-    <input id="competent" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="competent_title" aria-describedby="competent_desc">
-        <div class="modal__wrap">
-            <label for="competent">&#10006;</label>
-            <h2 id="competent_title">Competent Requirements:</h2>
-            <ul id="competent_desc">
-                <li>What are the names of the tools?</li>
-                <li>What are the tools used for?</li>
-                <li>How do you load the bit into the tools?</li>
-                <li>How do you control the speed and direction of the tools?</li>
-                <li>Can you safely use the tools?</li>
-                <li>Can you switch the battery packs out and charge them if the power is low?</li>
-			</ul>
+    <div class="section" id="powertools">
+        <div class="tocenter">
+            <div class="container">
+                <div class="col_fifth">
+                    <div class="at-work-process position-relative overflow-hidden text-center">
+                        <div class="at-work-process-text">
+                            <span class="at-work-process-number">01</span>
+                            <span class="at-work-process-number-text">Novice</span>
+                            <div class="at-separator-thick"></div>
+                        </div>
+                        <div class="at-work-process-details">
+                            <i class="fa fa-battery-empty"></i><span>-You are already a novice. Congrats!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_fifth text-center">
+                    <div class="at-work-process position-relative overflow-hidden">
+                        <div class="at-work-process-text">
+                            <span class="at-work-process-number">02</span>
+                            <span class="at-work-process-number-text">Competent</span>
+                            <div class="at-separator-thick"></div>
+                        </div>
+                        <div class="at-work-process-details">
+                            <i class="fa fa-battery-quarter"></i>
+                            <span>-Know the names of the tools.<br><br></span>
+                            <span>-How to load the bit into the tools.<br><br></span>
+                            <span>-How to control the speed and direction of the tools.<br><br></span>
+                            <span>-Know how to safely use the tools.<br><br></span>
+                            <span>-How to switch the battery packs and charge them if it's low.<br><br></span>
+                            <span>-Know what the tools are used for.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_fifth text-center">
+                    <div class="at-work-process position-relative overflow-hidden">
+                        <div class="at-work-process-text">
+                            <span class="at-work-process-number">03</span>
+                            <span class="at-work-process-number-text">Proficient</span>
+                            <div class="at-separator-thick"></div>
+                        </div>
+                        <div class="at-work-process-details">
+                            <i class="fa fa-battery-half"></i>
+                            <span>-Tools permitted: <strong>corded drill</strong> and <strong>heat gun</strong>.<br><br></span>
+                            <span>-Know how to use the tools without help.<br><br></span>
+                            <span>-Supervise others must be in grade (9-12).<br><br></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_fifth text-center end">
+                    <div class="at-work-process position-relative overflow-hidden">
+                        <div class="at-work-process-text">
+                            <span class="at-work-process-number">04</span>
+                            <span class="at-work-process-number-text">Advanced</span>
+                            <div class="at-separator-thick"></div>
+                        </div>
+                        <div class="at-work-process-details">
+                            <i class="fa fa-battery-three-quarters"></i>
+                            <span>-Know how to service the tools.<br><br></span>
+                            <span>-Design and create a project that improves the MakerSpace.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_fifth text-center end">
+                    <div class="at-work-process position-relative overflow-hidden">
+                        <div class="at-work-process-text">
+                            <span class="at-work-process-number">05</span>
+                            <span class="at-work-process-number-text">Expert</span>
+                            <div class="at-separator-thick"></div>
+                        </div>
+                        <div class="at-work-process-bottom">
+                            <i class="fa fa-battery-full"></i>
+                            <span>-There is no expert level for power tools.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="modal">
-    <input id="proficient" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="proficient_title" aria-describedby="proficient_desc">
-        <div class="modal__wrap">
-            <label for="proficient">&#10006;</label>
-            <h2 id="proficient_title">Proficient Requirements:</h2>
-            <ul id="proficient_desc">
-                <li>Tools permitted:</li>
-                    <ul style="list-style-type: disc;">
-                        <li>Corded drill</li>
-                        <li>Heat gun</li>
-                    </ul>
-                <li>Can you use the tools without help?</li>
-                <li>Can you switch the battery packs out and charge them if the power is low?</li>
-                <li>Must be grade 9-12 to supervise others</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="advanced" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="advanced_title" aria-describedby="advanced_desc">
-        <div class="modal__wrap">
-            <label for="advanced">&#10006;</label>
-            <h2 id="advanced_title">Advanced Requirements:</h2>
-            <ul id="advanced_desc">
-            <li>Do you know how to service the tools?</li>
-            <li>Design and create a project that improves the Maker Space</li>
-			</ul>
-        </div>
-    </div>
-</div>
-<div class="modal">
-    <input id="expert" type="checkbox" />
-    <div class="modal__overlay" role="dialog" aria-labelledby="expert_title" aria-describedby="expert_desc">
-        <div class="modal__wrap">
-            <label for="expert">&#10006;</label>
-            <h2 id="expert_title">Expert Requirements (Grade 9-12):</h2>
-            <ul id="expert_desc">
-                    <li>There is no expert level for power tools</li>
-			</ul>
-        </div>
-    </div>
-</div>
 
-<!--End of Modal -->
-</div>
-</div>
+
 </body>
 
 </html>

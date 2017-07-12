@@ -1,7 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 
-
+/*
+  To make this responsive set .col_fifth to have float:left and display inline block.
+  Modify the transitions so that they appear under the text and then change the container size to have no min-width
+  need media query for 700px high
+*/
 .container {
     max-width: 1500px !important;
     min-width: 1200px;
@@ -60,9 +64,6 @@
   transition: all 200ms linear 0s;
       transition-duration: 0.2s;
     transition-timing-function: ease-in-out;
-}
-
-.at-work-process:hover .at-work-process-text{
 }
 
 .at-work-process:hover .at-work-process-details {
