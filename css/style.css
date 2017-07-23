@@ -110,49 +110,49 @@ body {
 
 .usersBackground {
   background-attachment: fixed;
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/SFDL.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/SFDL.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 
 #home {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/SFDL.jpg) no-repeat #000000;
+    background: url(../images/SFDL.jpg) no-repeat #000000;
     background-size: cover;
     top: 2%;
 }
 #machines {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/roland.jpg) 50% 50% no-repeat #000000;
+    background: url(../images/roland.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #levels {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/botsSide.jpg) 50% 50% no-repeat #000000;
+    background: url(../images/botsSide.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #printerbot {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/PrinterBotPlay.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/PrinterBotPlay.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #robo3d {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/robo3d.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/robo3d.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #printerbotplus {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/printerbotplus.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/printerbotplus.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #lasercutter {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/lasercutter.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/lasercutter.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #vinylcutter {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/vinylcutter.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/vinylcutter.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #handtools {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/handtools.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/handtools.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #powertools {
-    background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6)), url(../images/powertools.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .7), rgba(20, 20, 20, .7)), url(../images/powertools.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 
@@ -246,6 +246,7 @@ body {
   position: absolute;
   bottom: 10%;
   left: 5%;
+  background: rgba(0,0,0,0.6);
   padding:5px;
 }
 .information-tag {
@@ -255,6 +256,7 @@ body {
   position: absolute;
   left:5%;
   bottom:10%;
+  background: rgba(0,0,0,0.7);
   padding:5px;
 }
 .welcome-font {
