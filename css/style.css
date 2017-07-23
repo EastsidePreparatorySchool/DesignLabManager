@@ -216,11 +216,19 @@ body {
 }
 
 .main-nav {
+  opacity: 1;
+  width:90%;
   font-size: 16px;
   position: fixed;
   top: 7%;
-  left: 5%;
+  margin-left: 5%;
   z-index: 20;
+}
+
+.main-nav-background {
+  width: 100%;
+  background: linear-gradient( rgba(20, 20, 20, .6), rgba(20, 20, 20, .6));
+  z-index: 19;
 }
 
 .main-nav a {

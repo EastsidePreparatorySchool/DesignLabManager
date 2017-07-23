@@ -11,6 +11,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script src="..\js\main.js"></script>
+    <script>
+        $(window).scroll(function () {
+            $(".main-nav").css("opacity", 1 - $(window).scrollTop() / 500);
+        });
+    </script>
 </head>
 
 <body>

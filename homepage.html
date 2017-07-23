@@ -4,105 +4,105 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>MAKE@EPS</title>
-    
+
     <link rel="stylesheet" href="css\bsStyle.css">
-    
+
     <link rel="stylesheet" href="css\style.css" />
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script> src="js/hide.js"</script>
-
     <script>
-        $(document).ready(function($){
-          var parPosition = [];
-        $('.par').each(function() {
-            parPosition.push($(this).offset().top);
-        });
-
-        $('a').click(function(){
-            $('html, body').animate({
-                scrollTop: $( $.attr(this, 'href') ).offset().top
-            }, 500);
-            return false;
-        });
-
-            $('.vNav ul li a').click(function () {
-            $('.vNav ul li a').removeClass('active');
-                $(this).addClass('active');
-        });
-
-       $('.vNav a').hover(function() {
-           $(this).find('.label').show();
-           }, function() {
-           $(this).find('.label').hide();
-       });
-
-           $(document).scroll(function(){
-        var position = $(document).scrollTop(),
-                index;
-                for (var i=0; i<parPosition.length; i++) {
-                if (position <= parPosition[i]) {
-                    index = i;
-                    break;
-                }
-            }
-      $('.vNav ul li a').removeClass('active');
-            $('.vNav ul li a:eq('+index+')').addClass('active');
-        });
-
-            $('.vNav ul li a').click(function () {
-            $('.vNav ul li a').removeClass('active');
-                $(this).addClass('active');
-        });
-    });
+        src = "js/hide.js"
     </script>
     <script>
-      function submitForm() { //Takes either login, register, or resend
-        var data = new FormData();
-        data.append('email', document.getElementById('email').value);
-        data.append('password', document.getElementById('password').value);
+        $(window).scroll(function () {
+            $(".main-nav").css("opacity", 1 - $(window).scrollTop() / 1600);
+        });
+    </script>
 
-        xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-              result = xhr.responseText;
-              if (result == "") {
-                window.location.replace("/");
-              } else {
-                window.alert(result);
-                // Show error
-              }
-            } else {
-              // Show error
+    <script>
+        $(document).ready(function ($) {
+            var parPosition = [];
+            $('.par').each(function () {
+                parPosition.push($(this).offset().top);
+            });
+
+            $('a').click(function () {
+                $('html, body').animate({
+                    scrollTop: $($.attr(this, 'href')).offset().top
+                }, 500);
+                return false;
+            });
+
+            $('.vNav ul li a').click(function () {
+                $('.vNav ul li a').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('.vNav a').hover(function () {
+                $(this).find('.label').show();
+            }, function () {
+                $(this).find('.label').hide();
+            });
+
+            $(document).scroll(function () {
+                var position = $(document).scrollTop(),
+                    index;
+                for (var i = 0; i < parPosition.length; i++) {
+                    if (position <= parPosition[i]) {
+                        index = i;
+                        break;
+                    }
+                }
+                $('.vNav ul li a').removeClass('active');
+                $('.vNav ul li a:eq(' + index + ')').addClass('active');
+            });
+
+            $('.vNav ul li a').click(function () {
+                $('.vNav ul li a').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+    <script>
+        function submitForm() { //Takes either login, register, or resend
+            var data = new FormData();
+            data.append('email', document.getElementById('email').value);
+            data.append('password', document.getElementById('password').value);
+
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        result = xhr.responseText;
+                        if (result == "") {
+                            window.location.replace("/");
+                        } else {
+                            window.alert(result);
+                            // Show error
+                        }
+                    } else {
+                        // Show error
+                    }
+                }
             }
-          }
+            xhr.open("POST", "/login", true);
+            xhr.send(data);
         }
-        xhr.open("POST", "/login", true);
-        xhr.send(data);
-      }
     </script>
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Make@EPS</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#home">Home</a></li>
-                <li><a href="#machines">Machines</a></li>
-                <li><a href="#levels">Levels</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>{{loginURL | safe}}</li>
-                <li><a>{{loggedin | safe}}</a></li>
-            </ul>
-        </div>
+    <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="users.html">Users</a>
+        <ul style="float:right;">
+            <li style="float:left;">{{loginURL | safe}}</li>
+            <li style="float:left;"><a>{{loggedin | safe}}</a></li>
+        </ul>
     </nav>
 
     {{loginmodal | safe}}
@@ -168,7 +168,7 @@
         <div class="information-tag">
             <div style="width: 50%; margin: auto;">
                 <h1 class="welcome-font">Levels.</h1>
-                <p  class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines
+                <p class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines
                     click the rank.</p>
             </div>
             <table class="table table-bordered">
@@ -183,17 +183,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Novice is the starting rank. The only thing that it requires is an intrest in the tool. Novices are generally not allowed to use tools, only spectate as someone with at least a Profision rank operates the tool.</td>
-                        <td>Competent is the rank at which one understands the basics of operating the tool. Competent students are allowed to use the tool when supervised by an Expert.</td>
-                        <td>Proficient students must know how to operate the tool and must be able to do basic troubleshooting if something goes wrong. Proficient users are alowed to use the tool without supervision, however supervision is advised.</td>
-                        <td>Advanced is a rank that is usually achieved by giving back to the tech community. This means that the user should be able to design and create a product that benifets the community.</td>
-                        <td>Expert users must be able to maintainance the tool. These people are responsible for making sure that the tool stays in working condition. They are also responsible for certifying other users.</td>
+                        <td>Novice is the starting rank. The only thing that it requires is an intrest in the tool. Novices are
+                            generally not allowed to use tools, only spectate as someone with at least a Profision rank operates
+                            the tool.</td>
+                        <td>Competent is the rank at which one understands the basics of operating the tool. Competent students
+                            are allowed to use the tool when supervised by an Expert.</td>
+                        <td>Proficient students must know how to operate the tool and must be able to do basic troubleshooting
+                            if something goes wrong. Proficient users are alowed to use the tool without supervision, however
+                            supervision is advised.</td>
+                        <td>Advanced is a rank that is usually achieved by giving back to the tech community. This means that
+                            the user should be able to design and create a product that benifets the community.</td>
+                        <td>Expert users must be able to maintainance the tool. These people are responsible for making sure
+                            that the tool stays in working condition. They are also responsible for certifying other users.</td>
 
                     </tr>
 
                 </tbody>
             </table>
-            
+
         </div>
     </div>
     <div class="section" id="gallery">
