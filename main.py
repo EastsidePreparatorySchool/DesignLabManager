@@ -123,7 +123,7 @@ class ToolHandler(BaseHandler):
 				'level': 2,
 				'macros': '/public/macros/printrbot.html'
 			},
-			'level': 5,
+			'levels': [0,1,2,3,4,5],
         }))
 
 

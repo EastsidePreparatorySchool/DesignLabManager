@@ -1,5 +1,60 @@
 {% extends "/public/main.html" %}
 {% import tool.macros as macros %}
+
+
+
+
+{% macro certstylemain() %}
+	background-color: blue;
+{% endmacro %}
+{% macro resstylemain() %}
+	background-color: green;
+{% endmacro %}
+
+
+
+{% macro certstyle(level) %}
+{% if tool.level >= level %}
+	#cert-{{ level }} {
+		{{ certstylemain() }}
+		background-color: aqua;
+	}
+{% else %}
+	#cert-{{ level }} {
+		{{ certstylemain() }}
+	}
+{% endif %}
+{% endmacro %}
+
+
+{% macro resstyle(level) %}
+{% if tool.level >= level %}
+	#res-{{ level }} {
+		{{ resstylemain() }}
+		background-color: lime;
+	}
+{% else %}
+	#res-{{ level }} {
+		{{ resstylemain() }}
+	}
+{% endif %}
+{% endmacro %}
+
+
+
+
+{% block style %}
+<style>
+	{% for i in levels %}
+		{{ certstyle(i) }}
+		{{ resstyle(i) }}
+	{% endfor %}
+</style>
+{% endblock %}
+
+
+
+
 {% block content %}
     <div class='container'>
         
@@ -22,13 +77,13 @@
 						{{ macros.description() }}
 					</div>
                     <div class="tab-pane fade" id="levels">
-						{{ macros.level(tool.level) }}
+						{{ macros.level() }}
 					</div>
                     <div class="tab-pane fade" id="tutorials">
 						{{ macros.tutorials() }}
 					</div>
                     <div class="tab-pane fade" id="resources">
-						{{ macros.resources(tool.level) }}
+						{{ macros.resources() }}
 					</div>
                 </div>
             </div>

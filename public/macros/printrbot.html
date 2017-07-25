@@ -6,18 +6,37 @@
 
 
 
-{% macro level(level) %}
+{% macro level() %}
 <div>
-	{% if level > 0 %}
-	{% endif %}
-	{% if level > 1 %}
-	{% endif %}
-	{% if level > 2 %}
-	{% endif %}
-	{% if level > 3 %}
-	{% endif %}
-	{% if level > 4 %}
-	{% endif %}
+	<div id='cert-0'>
+		<div>Here are the previleges of level 0</div>
+		<br>
+	</div>
+	<div id='cert-1'>
+		<div>Here are the certification requirements for level 1</div>
+		<div>Here are the previleges of level 1</div>
+		<br>
+	</div>
+	<div id='cert-2'>
+		<div>Here are the certification requirements for level 2</div>
+		<div>Here are the previleges of level 2</div>
+		<br>
+	</div>
+	<div id='cert-3'>
+		<div>Here are the certification requirements for level 3</div>
+		<div>Here are the previleges of level 3</div>
+		<br>
+	</div>
+	<div id='cert-4'>
+		<div>Here are the certification requirements for level 4</div>
+		<div>Here are the previleges of level 4</div>
+		<br>
+	</div>
+	<div id='cert-5'>
+		<div>Here are the certification requirements for level 5</div>
+		<div>Here are the previleges of level 5</div>
+		<br>
+	</div>
 </div>
 {% endmacro %}
 
@@ -32,15 +51,23 @@
 
 {% macro resources(level) %}
 <div>
-	{% if level > 0 %}
-	{% endif %}
-	{% if level > 1 %}
-	{% endif %}
-	{% if level > 2 %}
-	{% endif %}
-	{% if level > 3 %}
-	{% endif %}
-	{% if level > 4 %}
-	{% endif %}
+	<div id='res-0'>
+		<a href='http://www.summonthensa.com'>links for everyone to use</a>
+	</div>
+	<div id='res-1'>
+		<a href='http://www.itanimuli.org'>links for level 1+ to use</a>
+	</div>
+	<div id='res-2'>
+		<a href='http://www.ismyinternetworking.com'>links for level 2+ to use</a>
+	</div>
+	<div id='res-3'>
+		<a href='http://www.thisisawebsite.com'>links for level 3+ to use</a>
+	</div>
+	<div id='res-4'>
+		<a href='http://www.google.com'>links for level 4+ to use</a>
+	</div>
+	<div id='res-5'>
+		<a href='http://www.bing.org'>links for level 5 to use</a>
+	</div>
 </div>
 {% endmacro %}
