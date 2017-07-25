@@ -18,6 +18,7 @@ import base64
 
 ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
 TOOLS = ["vinyl_cutter", "power_tools", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
+TOOL_FULL_NAMES = ["the vinyl cutter", "power tools", "the sewing machine", "hand tools", "the laser cutters", "the ShopBot", "the 3D printers", "soldering", "making coffee"]
 CRYPTO_KEY = open('data/crypto.key', 'rb').read()
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -72,6 +73,13 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
+        levelKeys = ["noviceLevels", "competentLevels", "proficientLevels", "advancedLevels", "expertLevels"]
+        levelNames = ["a novice", "competent", "proficient", "advanced", "an expert"]
+
+        prefix = "You are proficient on "
+
+        levelReplacements = ["", "", "", "", ""]
+
         loggedin = "You are not logged in"
         logincomps = self.open_html('logincomponents.html')
 
@@ -79,12 +87,23 @@ class MainHandler(BaseHandler):
 
         str_id = self.get_id()
         if (str_id):
+            obj = self.get_db_obj(str_id)
+            for i in range (0, len(levelKeys)):
+                levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
+
             loggedin = "You are logged in as " + str_id
             logincomps = '<a href="logout">--Log Out--</a>'
 
         
         template = JINJA_ENVIRONMENT.get_template('homepage.html')
-        self.response.write(template.render({'loggedin': loggedin, 'loginURL': logincomps, 'loginmodal': loginmodal}))
+        values = {'loggedin': loggedin, 'loginURL': logincomps, 'loginmodal': loginmodal}
+
+        for i in range(0, len(levelKeys)):
+            values[levelKeys[i]] = levelReplacements[i]
+
+        logging.info(str(values))
+
+        self.response.write(template.render(values))
         #user_id = int(str_id)
 #
 #        query = User.query(User.sid == user_id)
@@ -98,6 +117,28 @@ class MainHandler(BaseHandler):
 #            template = JINJA_ENVIRONMENT.get_template('index.html')
 ##            self.response.write(template.render(template_values))
 #           break
+    def getToolsAtLevel(self, obj, level):
+        t = []
+        for i in range (0, len(TOOLS)):
+            if getattr(obj, TOOLS[i]) == level:
+                t.append(TOOL_FULL_NAMES[i])
+
+        if len(t) == 0:
+            return "nothing."
+        if len(t) == 1:
+            return t[0] + "."
+
+        s = ""
+        for i in range (0, len(t)):
+            s += t[i] 
+            if i != (len(t) - 1):
+                s += ", "
+            if i == (len(t) - 2):
+                s += "and "
+
+        s += "."
+
+        return s
 
 class LoginHandler(BaseHandler):
     def get(self):
