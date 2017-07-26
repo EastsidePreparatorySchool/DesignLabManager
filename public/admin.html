@@ -1,188 +1,149 @@
 <!--This file is the file that contains the webpage that lets 
 the admin choose which user's levels they want to edit-->
 <html>
+
 <head>
   <title>DL Administrator</title>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="import" href="bower_components/polymer/polymer.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
   <link rel="import" href="bower_components/paper-button/paper-button.html">
   <link rel="import" href="bower_components/paper-material/paper-material.html">
   <link rel="import" href="bower_components/iron-image/iron-image.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="stylesheet" href="css\admin.css">
+  <script>
+    "use strict";
+
+    $(function () {
+      var submitIcon = $(".searchbox-icon");
+      var inputBox = $(".searchbox-input");
+      var searchBox = $(".searchbox");
+      var isOpen = false;
+
+      submitIcon.click(function () {
+        if (!isOpen) {
+          searchBox.addClass("searchbox-open");
+          inputBox.focus();
+          isOpen = true;
+        } else {
+          searchBox.removeClass("searchbox-open");
+          inputBox.focusout();
+          isOpen = false;
+        }
+      });
+      submitIcon.mouseup(function () {
+        return false;
+      });
+      searchBox.mouseup(function () {
+        return false;
+      });
+      $(document).mouseup(function () {
+        if (isOpen) {
+          $(".searchbox-icon").css("display", "block");
+          submitIcon.click();
+        }
+      });
+    });
+  </script>
 </head>
-<body unresolved>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #F44336;
-      padding: 20px;
-      padding-bottom: 200px;
-      padding-left: 80px;
-      padding-right: 80px;
-      text-align: center;
-    }
-    .card {
-      background: white;
-      max-width: 360px;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 2px;
-    }
-    .tablecard {
-      background: white;
-      padding: 20px;
-      border-radius: 2px;
-    }
-    .image-container {
-      margin-bottom: 0px;
-      width: 360px;
-    }
-    .copy {
-      font-size: 16;
-      margin-bottom: 0px;
-    }
-    paper-input {
-      text-align: left;
-    }
-    .link {
-      text-decoration: none;
-    }
-    paper-button {
-      margin: 12px auto;
-      width: 100%;
-    }
-    #registerText {
-      display: block;
-    }
-    #toast {
-      text-align: left;
-    }
-    iron-image {
-      width: 360px;
-    }
-    .divTable{
-      display: table;
-      width: 100%;
-    }
-    .divTableRow {
-      height: 32px;
-      display: table-row;
-      border-top: 0px;
-      border-bottom: 0px;
-    }
-    .divTableHeading {
-      background-color: #EEE;
-      display: table-header-group;
-    }
-    .divTableCell {
-      display: table-cell;
-      padding: 3px 10px;
-      text-align: center;
-    }
-    .divTableHeading {
-      background-color: #EEE;
-      display: table-row;
-      font-weight: bold;
-    }
-    .divTableBody {
-      display: table-row-group;
-    }
 
-    .level {
-      width: 50%;
-      margin: 0 auto;
-      border-radius: 50%;
+<body>
+  <div class="wrap">
+    <form class="searchform group">
+      <label for="search-box">
+    <span class="fa fa-2x fa-search"></span>
+  </label>
 
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
-      padding: 2px;
-
-      color: #FFF;
-      text-align: center;
-    }
-    .level0 {background-color: #DDD;}
-    .level1 {background-color: #FEF244;}
-    .level2 {background-color: #89D9F8;}
-    .level3 {background-color: #920FAA;}
-    .level4 {background-color: #F04726;}
-    .level5 {background-color: #E52F39;}
-
-  </style>
-
-  <paper-material class="card" elevation="2">
-  	<h1>Design Lab Manager</h1>
-  	<p class="copy">Enter a username or email to view and set certification levels</p>
-
-    <paper-input id="username" label="Username">
-    </paper-input>
-
-    <paper-button onclick="submitForm()" raised id="loginButton">GO</paper-button>
-  </paper-material>
-
-  <paper-material class="tablecard" elevation="2">
-    <h1>All students</h1>
-    <div class="divTable">
-      <div class="divTableBody">
-        <div class="divTableRow divTableHeading">
-          <div class="divTableCell">Username</div>
-          <div class="divTableCell">3D printers</div>
-          <div class="divTableCell">Laser cutters</div>
-          <div class="divTableCell">Vinyl cutters</div>
-          <div class="divTableCell">Shopbot</div>
-          <div class="divTableCell">Hand tools</div>
-          <div class="divTableCell">Power tools</div>
-          <div class="divTableCell">Soldering</div>
-          <div class="divTableCell">Sewing machine</div>
-          <div class="divTableCell">Coffee maker</div>
-        </div>
-        {{students | safe}}
+      <input type="search" id="search-box" placeholder="Search for a user">
+    </form>
+    <h2 style="text-align: center; color:white;">Viewing stats for: Student name here</h2>
+    <div class="skills">
+      <div class="skill">
+        <span>3D Printers</span>
+        <span class="label">Level</span>
+        <span class="level">5 - Expert</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Laser Cutter</span>
+        <span class="label">Level</span>
+        <span class="level">4 - Advanced</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Vinyl Cutter</span>
+        <span class="label">Level</span>
+        <span class="level">3 - Proficient</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Power Tools</span>
+        <span class="label">Level</span>
+        <span class="level">2 - Competent</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Hand Tools</span>
+        <span class="label">Level</span>
+        <span class="level">1 - Novice</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Soldering Iron</span>
+        <span class="label">Level</span>
+        <span class="level">5 - Expert</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Sewing Machine</span>
+        <span class="label">Level</span>
+        <span class="level">5 - Expert</span>
+        <a href="#" class="up">Up</a>
       </div>
     </div>
-  </paper-material>
-
-  <paper-toast id="toast" text="" duration=10000>
-  </paper-toast>
-
+  </div>
   <script>
-    var UNKNOWN_ERROR = {'error':"Something didn't quite work. We're looking into it; try again later."};
+    var UNKNOWN_ERROR = { 'error': "Something didn't quite work. We're looking into it; try again later." };
     function checkSubmit(e) {
       if (e && e.keyCode === 13) {
         submitForm();
       }
     }
-  function submitForm() { //Takes either login, register, or resend
-    var data = new FormData();
-    data.append('username', username.value);
+    function submitForm() { //Takes either login, register, or resend
+      var data = new FormData();
+      data.append('username', username.value);
 
-    xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          result = xhr.responseText;
-          if (result.charAt(0) == "/") { // If it is a redirection URL
-            window.location.replace(result);
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            result = xhr.responseText;
+            if (result.charAt(0) == "/") { // If it is a redirection URL
+              window.location.replace(result);
+            } else {
+              showToast(result);
+            }
           } else {
-            showToast(result);
+            username.value = "";
+            showToast(UNKNOWN_ERROR);
           }
-        } else {
-          username.value = "";
-          showToast(UNKNOWN_ERROR);
         }
       }
+      xhr.open("POST", "/getuser", true);
+      xhr.send(data);
     }
-    xhr.open("POST", "/getuser", true);
-    xhr.send(data);
-  }
 
-  function showToast(text) {
-    toast = document.getElementById("toast");
-    toast.text = text;
-    toast.show();
-  }
+    function showToast(text) {
+      toast = document.getElementById("toast");
+      toast.text = text;
+      toast.show();
+    }
+  </script>
 
-</script>
+</body>
 
-</body></html>
+</html>

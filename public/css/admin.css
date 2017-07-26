@@ -1,0 +1,67 @@
+body { 
+  font-family:'century gothic', arial, sans-serif; 
+  text-transform:uppercase;
+  -webkit-user-select:none;
+  
+  background:#333333; 
+}
+a { 
+  color:#fff; 
+  text-decoration:none; 
+  font-weight:bold; 
+}
+a:hover { color:#888 }
+
+.wrap { 
+  position:absolute; left:0; top:0; 
+  width:100vw; height:100vh; 
+}
+
+.skills { 
+  display:table; 
+  margin:50px auto 0; 
+  width:400px; 
+  color:#fff; 
+}
+
+.skill { 
+  display:table-row; 
+ }
+      
+.skill span, .skill a { 
+  display:table-cell; 
+  padding:25px 0; 
+}
+.label { font-size:.8em; color:#888; }
+.level { font-weight:bold; font-size:18px; width:150px; }
+
+.searchform {
+  display: block;
+  margin: 50px auto;
+  overflow: hidden;
+  width: 400px;
+}
+label, input {
+  vertical-align: baseline;
+  color: #737373;
+}
+label {
+  margin: 0.125em 0.125em 0 0;
+  float: right;
+  
+}
+input[type="search"] {
+  border: 2px solid #737373;
+  border-width: 0 0 3px;
+  background-color: transparent;
+  font: 22px "Open Sans", sans-serif;
+  padding: 0.125em 0.225em;
+  width: 85%;
+  float: left;
+  
+}
+input[type="search"]:focus {
+  color: #1e83ec;
+  border-color: #1e83ec;
+  outline: none;
+}
