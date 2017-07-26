@@ -10,16 +10,17 @@ handlers:
   upload: favicon\.ico
 
 - url: /bower_components
-  static_dir: bower_components
+  static_dir: public/bower_components
 
 - url: /css
-  static_dir: css
+  static_dir: public/css
+
 
 - url: /images
-  static_dir: images
+  static_dir: public/images
 
 - url: /static
-  static_dir: static
+  static_dir: public/static
 
 - url: .*
   script: main.app

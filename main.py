@@ -43,12 +43,12 @@ class BaseHandler(webapp2.RequestHandler):
         with open(filepath, 'r') as f:
             data = f.read()
         return data
-        
+
     def get_id(self):
         if not (self.request.cookies.get("auth")):
             return None
         cookie = self.request.cookies.get("auth")
-        
+
         decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
 
         return json.loads(decoded)["username"]
@@ -81,9 +81,9 @@ class MainHandler(BaseHandler):
         levelReplacements = ["", "", "", "", ""]
 
         loggedin = "You are not logged in"
-        logincomps = self.open_html('logincomponents.html')
+        logincomps = self.open_html('public/logincomponents.html')
 
-        loginmodal = self.open_html('modal.html')
+        loginmodal = self.open_html('public/modal.html')
 
         str_id = self.get_id()
         if (str_id):
@@ -94,8 +94,8 @@ class MainHandler(BaseHandler):
             loggedin = "You are logged in as " + str_id
             logincomps = '<a href="logout">--Log Out--</a>'
 
-        
-        template = JINJA_ENVIRONMENT.get_template('homepage.html')
+
+        template = JINJA_ENVIRONMENT.get_template('public/homepage.html')
         values = {'loggedin': loggedin, 'loginURL': logincomps, 'loginmodal': loginmodal}
 
         for i in range(0, len(levelKeys)):
@@ -130,7 +130,7 @@ class MainHandler(BaseHandler):
 
         s = ""
         for i in range (0, len(t)):
-            s += t[i] 
+            s += t[i]
             if i != (len(t) - 1):
                 s += ", "
             if i == (len(t) - 2):
@@ -151,7 +151,7 @@ class LoginHandler(BaseHandler):
         password = self.request.get('password')
 
         if (authenticate_user.auth_user(email, password)): # Four11 login being finicky, disabled it for now
-            username = string.split(email, "@")[0] 
+            username = string.split(email, "@")[0]
             expiration_date = datetime.datetime.now()
             obj = {"username": username, "time_issued": expiration_date.isoformat()}
             expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
@@ -190,7 +190,7 @@ class ToolHandler(BaseHandler):
         for i in range(1, 6):
             template_vals['level_' + str(i)] = User.query(User._properties[tool] == i).count()
 
-        template = JINJA_ENVIRONMENT.get_template('/tool_pages/' + tool + '.html')
+        template = JINJA_ENVIRONMENT.get_template('public/tool_pages/' + tool + '.html')
 
         self.response.write(template.render(template_vals))
 
@@ -206,10 +206,10 @@ class AdminHandler(BaseHandler):
         query = User.query() # Get all students
         rows = ""
         for student in query:
-            row = JINJA_ENVIRONMENT.get_template('studentrow.html')
+            row = JINJA_ENVIRONMENT.get_template('public/studentrow.html')
             rows += row.render(self.db_user_to_simple_obj(student))
 
-        template = JINJA_ENVIRONMENT.get_template('admin.html')
+        template = JINJA_ENVIRONMENT.get_template('public/admin.html')
 
         self.response.write(template.render({'students' : rows}))
 
@@ -238,7 +238,7 @@ class DataViewHandler(BaseHandler):
             self.error(403) # Unauthorized
             return
 
-        template = JINJA_ENVIRONMENT.get_template('admin_view.html')
+        template = JINJA_ENVIRONMENT.get_template('public/admin_view.html')
         self.response.write(template.render(self.db_user_to_simple_obj(self.get_db_obj(username))))
 
 class LevelSetHandler (BaseHandler):
