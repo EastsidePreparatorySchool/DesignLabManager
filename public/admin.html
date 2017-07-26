@@ -15,40 +15,6 @@ the admin choose which user's levels they want to edit-->
   <link rel="import" href="bower_components/iron-image/iron-image.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
   <link rel="stylesheet" href="css\admin.css">
-  <script>
-    "use strict";
-
-    $(function () {
-      var submitIcon = $(".searchbox-icon");
-      var inputBox = $(".searchbox-input");
-      var searchBox = $(".searchbox");
-      var isOpen = false;
-
-      submitIcon.click(function () {
-        if (!isOpen) {
-          searchBox.addClass("searchbox-open");
-          inputBox.focus();
-          isOpen = true;
-        } else {
-          searchBox.removeClass("searchbox-open");
-          inputBox.focusout();
-          isOpen = false;
-        }
-      });
-      submitIcon.mouseup(function () {
-        return false;
-      });
-      searchBox.mouseup(function () {
-        return false;
-      });
-      $(document).mouseup(function () {
-        if (isOpen) {
-          $(".searchbox-icon").css("display", "block");
-          submitIcon.click();
-        }
-      });
-    });
-  </script>
 </head>
 
 <body>
