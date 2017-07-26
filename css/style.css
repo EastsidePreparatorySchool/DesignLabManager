@@ -170,7 +170,6 @@ body {
 }
 .vNav ul li {
     position: relative;
-    padding-bottom: 20px;
     padding-left: 35%;
     color: rgb(113, 135, 133);
 }
@@ -206,13 +205,17 @@ body {
     font-family: Arial, Helvetica, sans-serif
 }
 .main-nav {
-    opacity: 1;
-    width: 90%;
-    font-size: 16px;
-    position: fixed;
-    top: 7%;
-    margin-left: 5%;
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    font-size: 17px;
     z-index: 20;
+    padding:1vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    height: auto;
+    position: fixed;
+    
+    
 }
 .main-nav-background {
     width: 100%;
@@ -223,16 +226,17 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: white;
     display: inline-block;
-    padding-right: 30px;
+    padding-left: 1vw;
+    padding-right: 1vw;
     position: relative;
 }
 .welcome-tag {
-    width: 35%;
+    width: 90%;
     margin: 0 auto;
     position: absolute;
-    bottom: 10%;
     left: 5%;
-    background: rgba(0, 0, 0, 0.6);
+    bottom: 10%;
+    background: rgba(0, 0, 0, 0.5);
     padding: 5px;
 }
 .information-tag {
