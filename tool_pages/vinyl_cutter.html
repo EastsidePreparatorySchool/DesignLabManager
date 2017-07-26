@@ -20,9 +20,24 @@
 
 <body>
     <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="equipment.html">Equipment</a>
+        <a href="/">Home</a>
         <a href="users.html">Users</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="printers_3d">3D Printers</a>
+                <a href="lasers">Laser Cutter</a>
+                <a href="power_tools">Power Tools</a>
+                <a href="hand_tools">Hand Tools</a>
+                <a href="soldering">Soldering Iron</a>
+                <a href="sewing_machine">Sewing Machine</a>
+                <a href="vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
+        <ul style="float:right;">
+            <li>{{loginURL | safe}}</li>
+            <li><a>{{loggedin | safe}}</a></li>
+        </ul>
     </nav>
     <div class="section" id="vinylcutter">
         <div class="information-tag">
@@ -33,10 +48,10 @@
             </div>
             <div class="list">
                 <ul>
-                    <label for="novice"><li><a href="..\documents\printing_3d.docx">Vinyl Cutting by Gavin Uberti</a></li></label>
-                    <label for="competent"><li><a href="http://www.instructables.com/id/Vinyl-Cutting-for-begginers/">Instructables</li></label>
-                    <label for="proficient"><li><a href="https://inkscape.org/en/download/">Inkscape</a></li></label>
-                    <label for="expert"><li><a href="http://makezine.com/2015/12/15/34-things-didnt-realize-can-vinyl-cutter/">MakeZine</a></li></label>
+                    <label for="novice"><li><a href="..\documents\printing_3d.docx" target="_blank">Vinyl Cutting by Gavin Uberti</a></li></label>
+                    <label for="competent"><li><a href="http://www.instructables.com/id/Vinyl-Cutting-for-begginers/" target="_blank">Instructables</li></label>
+                    <label for="proficient"><li><a href="https://inkscape.org/en/download/" target="_blank">Inkscape</a></li></label>
+                    <label for="expert"><li><a href="http://makezine.com/2015/12/15/34-things-didnt-realize-can-vinyl-cutter/" target="_blank">MakeZine</a></li></label>
                 </ul>
             </div>
         </div>

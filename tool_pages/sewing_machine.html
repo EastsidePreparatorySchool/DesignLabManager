@@ -19,11 +19,26 @@
 </head>
 
 <body>
-  <nav class="main-nav">
-    <a href="index.html">Home</a>
-    <a href="equipment.html">Equipment</a>
-    <a href="users.html">Users</a>
-  </nav>
+    <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="users.html">Users</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="printers_3d">3D Printers</a>
+                <a href="lasers">Laser Cutter</a>
+                <a href="power_tools">Power Tools</a>
+                <a href="hand_tools">Hand Tools</a>
+                <a href="soldering">Soldering Iron</a>
+                <a href="sewing_machine">Sewing Machine</a>
+                <a href="vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
+        <ul style="float:right;">
+            <li>{{loginURL | safe}}</li>
+            <li><a>{{loggedin | safe}}</a></li>
+        </ul>
+    </nav>
   <div class="section" id="powertools">
     <div class="welcome-tag">
       <div style="width: 70%; float: left;">
@@ -32,8 +47,8 @@
       </div>
       <div class="list">
         <ul>
-          <label for="novice"><li><a href="http://www.wikihow.com/Use-a-Sewing-Machine">WikiHow to Sew</a></li></label>
-          <label for="proficient"><li><a href="http://www.singerco.com/projects">Singer Co</a></li></label>
+          <label for="novice"><li><a href="http://www.wikihow.com/Use-a-Sewing-Machine" target="_blank">WikiHow to Sew</a></li></label>
+          <label for="proficient"><li><a href="http://www.singerco.com/projects" target="_blank">Singer Co</a></li></label>
         </ul>
       </div>
     </div>

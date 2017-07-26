@@ -96,9 +96,20 @@
 
 <body>
     <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="equipment.html">Equipment</a>
-        <a href="users.html">Users</a>
+        <a>Home</a>
+        <a href="users.html">Admin</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="/tool/printers_3d">3D Printers</a>
+                <a href="/tool/lasers">Laser Cutter</a>
+                <a href="/tool/power_tools">Power Tools</a>
+                <a href="/tool/hand_tools">Hand Tools</a>
+                <a href="/tool/soldering">Soldering Iron</a>
+                <a href="/tool/sewing_machine">Sewing Machine</a>
+                <a href="/tool/vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
         <ul style="float:right;">
             <li style="float:left;">{{loginURL | safe}}</li>
             <li style="float:left;"><a>{{loggedin | safe}}</a></li>
@@ -171,34 +182,58 @@
                 <p class="welcome-description">All tools have the same ranking scheme, but different requirements for each tool. To view general guidelines
                     click the rank.</p>
             </div>
+
             <table class="table table-bordered">
+
                 <thead>
+
                     <tr style="font-size:large;">
+
                         <th class="danger strokeme">Novice</th>
+
                         <th class="warning strokeme">Competent</th>
+
                         <th class="yellow strokeme">Proficient</th>
+
                         <th class="success strokeme">Advanced</th>
+
                         <th class="blue strokeme">Expert</th>
+
                     </tr>
+
                 </thead>
+
                 <tbody>
+
                     <tr>
+
                         <td>Novice is the starting rank. The only thing that it requires is an intrest in the tool. Novices are
                             generally not allowed to use tools, only spectate as someone with at least a Profision rank operates
                             the tool. {{noviceLevels | safe}}</td>
+
                         <td>Competent is the rank at which one understands the basics of operating the tool. Competent students
                             are allowed to use the tool when supervised by an Expert. {{competentLevels | safe}}</td>
+
                         <td>Proficient students must know how to operate the tool and must be able to do basic troubleshooting
                             if something goes wrong. Proficient users are alowed to use the tool without supervision, however
                             supervision is advised. {{proficientLevels | safe}}</td>
+
                         <td>Advanced is a rank that is usually achieved by giving back to the tech community. This means that
-                            the user should be able to design and create a product that benifets the community. {{advancedLevels | safe}}</td>
+                            the user should be able to design and create a product that benifets the community. {{advancedLevels
+                            | safe}}</td>
+
                         <td>Expert users must be able to maintainance the tool. These people are responsible for making sure
-                            that the tool stays in working condition. They are also responsible for certifying other users. {{expertLevels | safe}}</td>
+                            that the tool stays in working condition. They are also responsible for certifying other users.
+                            {{expertLevels | safe}}</td>
+
+
 
                     </tr>
 
+
+
                 </tbody>
+
             </table>
 
         </div>

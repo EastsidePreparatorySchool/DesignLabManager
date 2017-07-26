@@ -20,9 +20,20 @@
 
 <body>
     <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="equipment.html">Equipment</a>
+        <a href="/">Home</a>
         <a href="users.html">Users</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="printers_3d">3D Printers</a>
+                <a href="lasers.html">Laser Cutter</a>
+                <a href="power_tools">Power Tools</a>
+                <a href="hand_tools">Hand Tools</a>
+                <a href="soldering">Soldering Iron</a>
+                <a href="sewing_machine">Sewing Machine</a>
+                <a href="vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
         <ul style="float:right;">
             <li>{{loginURL | safe}}</li>
             <li><a>{{loggedin | safe}}</a></li>

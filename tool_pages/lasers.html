@@ -20,9 +20,24 @@
 
 <body>
     <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="equipment.html">Equipment</a>
+        <a href="/">Home</a>
         <a href="users.html">Users</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="printers_3d">3D Printers</a>
+                <a href="lasers">Laser Cutter</a>
+                <a href="power_tools">Power Tools</a>
+                <a href="hand_tools">Hand Tools</a>
+                <a href="soldering">Soldering Iron</a>
+                <a href="sewing_machine">Sewing Machine</a>
+                <a href="vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
+        <ul style="float:right;">
+            <li>{{loginURL | safe}}</li>
+            <li><a>{{loggedin | safe}}</a></li>
+        </ul>
     </nav>
     <div class="section" id="lasercutter">
         <div class="information-tag">
@@ -32,10 +47,10 @@
             </div>
             <div class="list">
                 <ul>
-                    <label for="novice"><li><a href="..\documents\printing_3d.docx">Laser Cutting by Gavin Uberti</a></li></label>
-                    <label for="competent"><li><a href="http://www.instructables.com/id/How-to-Use-a-Laser-Cutter/">Instructables</li></label>
-                    <label for="proficient"><li><a href="https://inkscape.org/en/download/">InkScape</a></li></label>
-                    <label for="expert"><li><a href="https://www.thingiverse.com/tag:laser_cutter">Thingiverse</a></li></label>
+                    <label for="novice"><li><a href="..\documents\printing_3d.docx" target="_blank">Laser Cutting by Gavin Uberti</a></li></label>
+                    <label for="competent"><li><a href="http://www.instructables.com/id/How-to-Use-a-Laser-Cutter/" target="_blank">Instructables</li></label>
+                    <label for="proficient"><li><a href="https://inkscape.org/en/download/" target="_blank">InkScape</a></li></label>
+                    <label for="expert"><li><a href="https://www.thingiverse.com/tag:laser_cutter" target="_blank">Thingiverse</a></li></label>
                 </ul>
             </div>
         </div>

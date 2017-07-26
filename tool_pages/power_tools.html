@@ -20,9 +20,24 @@
 
 <body>
     <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="equipment.html">Equipment</a>
+        <a href="/">Home</a>
         <a href="users.html">Users</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="printers_3d">3D Printers</a>
+                <a href="lasers">Laser Cutter</a>
+                <a href="power_tools">Power Tools</a>
+                <a href="hand_tools">Hand Tools</a>
+                <a href="soldering">Soldering Iron</a>
+                <a href="sewing_machine">Sewing Machine</a>
+                <a href="vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
+        <ul style="float:right;">
+            <li>{{loginURL | safe}}</li>
+            <li><a>{{loggedin | safe}}</a></li>
+        </ul>
     </nav>
     <div class="section" id="powertools">
         <div class="information-tag">
@@ -31,15 +46,7 @@
                 <p class="welcome-description">These sets of tools encompass a wide array of tools that require an aditional power source instead of manual
                     power. These tools include: drills, cordless driver, heat gun, etc.</p>
             </div>
-            <div class="list">
-                <ul>
-                    <label for="novice"><li><a href="..\documents\printing_3d.docx">3D Printing by Gavin Uberti</a></li></label>
-                    <label for="competent"><li><a href="http://www.instructables.com/id/Quick-Start-Guide-Printing-with-a-Makerbot/">Instructables</li></label>
-                    <label for="proficient"><li><a href="https://www.makerbot.com/download-print/">MakerBot</a></li></label>
-                    <label for="advanced"><li><a href="https://www.tinkercad.com/">TinkerCad</a></li></label>
-                    <label for="expert"><li><a href="https://www.thingiverse.com/">Thingiverse</a></li></label>
-                </ul>
-            </div>
+
         </div>
     </div>
     <div class="section" id="powertools">
