@@ -15,6 +15,7 @@
 .blue {
     background-color: #4097ec;
 }
+
 .icon {
     display: inline-block;
     position: relative;
@@ -768,8 +769,27 @@ body {} body {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+.shaded{
+    background: rgba(0, 0, 0, 0.5);
+}
+.tool-info{
 
-
+}
+.filler{
+    width:50%;
+    width:50vw;
+    margin:0px;
+    
+}
+.level{
+    width:50%;
+    width:50vw;
+}
+.levels{
+     width:50%;
+    width:50vw;
+    right:0px;
+}
 .certnumber {
   background: #1e83ec;
   border-radius: 0.8em;
