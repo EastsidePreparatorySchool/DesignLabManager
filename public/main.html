@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MAKE@EPS</title>
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="..\css\bsStyle.css">
+    <link rel="stylesheet" type="text/css" href="..\css\style.css" />
+    <link rel="stylesheet" type="text/css" href="..\css\skilltree.css" />
+
+  </head>
+  <body>
+    <nav class="main-nav">
+        <a style="float:left;">Home</a>
+        <a href="users.html">Admin</a>
+        <div class="dropdown">
+            <a href="#">Equipment</a>
+            <div class="dropdown-content">
+                <a href="/tool/printers_3d">3D Printers</a>
+                <a href="/tool/lasers">Laser Cutter</a>
+                <a href="/tool/power_tools">Power Tools</a>
+                <a href="/tool/hand_tools">Hand Tools</a>
+                <a href="/tool/soldering">Soldering Iron</a>
+                <a href="/tool/sewing_machine">Sewing Machine</a>
+                <a href="/tool/vinly_cutter">Vinyl Cutter</a>
+            </div>
+        </div>
+        <ul style="float:right;margin:0px;">
+            <li style="float:right;">{{loginURL | safe}}</li>
+        </ul>
+    </nav>
+    {{loginmodal | safe}}
+
+
+
+    {% block content %}{% endblock %}
+
+
+
+
+  </body>
+
+  <script src = "..\js\main.js"></script>
+  <script src = "..\js\hide.js"></script>
+  <script>
+      $(window).scroll(function () {
+          $(".main-nav").css("opacity", 1 - $(window).scrollTop() / 1600);
+      });
+  </script>
+  <script>
+      $(document).ready(function ($) {
+          var parPosition = [];
+          $('.par').each(function () {
+              parPosition.push($(this).offset().top);
+          });
+
+          $('a').click(function () {
+              $('html, body').animate({
+                  scrollTop: $($.attr(this, 'href')).offset().top
+              }, 500);
+              return false;
+          });
+
+          $('.vNav ul li a').click(function () {
+              $('.vNav ul li a').removeClass('active');
+              $(this).addClass('active');
+          });
+
+          $('.vNav a').hover(function () {
+              $(this).find('.label').show();
+          }, function () {
+              $(this).find('.label').hide();
+          });
+
+          $(document).scroll(function () {
+              var position = $(document).scrollTop(),
+                  index;
+              for (var i = 0; i < parPosition.length; i++) {
+                  if (position <= parPosition[i]) {
+                      index = i;
+                      break;
+                  }
+              }
+              $('.vNav ul li a').removeClass('active');
+              $('.vNav ul li a:eq(' + index + ')').addClass('active');
+          });
+
+          $('.vNav ul li a').click(function () {
+              $('.vNav ul li a').removeClass('active');
+              $(this).addClass('active');
+          });
+      });
+  </script>
+  <script>
+      function submitForm() { //Takes either login, register, or resend
+          var data = new FormData();
+          data.append('email', document.getElementById('email').value);
+          data.append('password', document.getElementById('password').value);
+
+          xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function () {
+              if (xhr.readyState == 4) {
+                  if (xhr.status == 200) {
+                      result = xhr.responseText;
+                      if (result == "") {
+                          window.location.replace("/");
+                      } else {
+                          window.alert(result);
+                          // Show error
+                      }
+                  } else {
+                      // Show error
+                  }
+              }
+          }
+          xhr.open("POST", "/login", true);
+          xhr.send(data);
+      }
+  </script>
+</html>
