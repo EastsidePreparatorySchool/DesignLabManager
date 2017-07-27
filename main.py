@@ -83,7 +83,7 @@ class MainHandler(BaseHandler):
         levelReplacements = ["", "", "", "", ""]
 
         loggedin = "You are not logged in"
-        logincomps = self.open_html('public/logincomponents.html')
+        logincomps = "<a data-toggle='modal' data-target='#myModal'>Log In</a>"
 
         loginmodal = self.open_html('public/modal.html')
 
@@ -97,7 +97,7 @@ class MainHandler(BaseHandler):
             logincomps = '<a href="logout">--Log Out--</a>'
 
 
-        template = JINJA_ENVIRONMENT.get_template('public/homepage.html')
+        template = JINJA_ENVIRONMENT.get_template('public/index.html')
         values = {'loggedin': loggedin, 'loginURL': logincomps, 'loginmodal': loginmodal}
 
         for i in range(0, len(levelKeys)):
@@ -106,19 +106,8 @@ class MainHandler(BaseHandler):
         logging.info(str(values))
 
         self.response.write(template.render(values))
-        #user_id = int(str_id)
-#
-#        query = User.query(User.sid == user_id)
-#        for db_obj in query: # Will only ever be one
-#            template_values = { \
-#            'sid': db_obj.sid, \
-#            'fullname': db_obj.fullname, \
-#            'sewing_machine_cert_level': db_obj.sewing_machine_cert_level, \
-#            'soldering_cert_level': db_obj.soldering_cert_level, \
-#            }
-#            template = JINJA_ENVIRONMENT.get_template('index.html')
-##            self.response.write(template.render(template_values))
-#           break
+
+
     def getToolsAtLevel(self, obj, level):
         t = []
         for i in range (0, len(TOOLS)):
