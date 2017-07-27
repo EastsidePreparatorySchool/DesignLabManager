@@ -97,7 +97,7 @@ class MainHandler(BaseHandler):
 
 
         template = JINJA_ENVIRONMENT.get_template('public/index.html')
-        values = {'loggedin': loggedin, 'loginURL': logincomps, 'loginmodal': loginmodal}
+        values = {'loggedin': loggedin, 'loginURL': logincomps}
 
         for i in range(0, len(levelKeys)):
             values[levelKeys[i]] = levelReplacements[i]
