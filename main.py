@@ -28,15 +28,15 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
-    vinyl_cutter = ndb.IntegerProperty()
-    sewing_machine = ndb.IntegerProperty()
-    hand_tools = ndb.IntegerProperty()
-    power_tools = ndb.IntegerProperty()
-    lasers = ndb.IntegerProperty()
-    cnc = ndb.IntegerProperty()
-    printers_3d = ndb.IntegerProperty()
-    soldering = ndb.IntegerProperty()
-    coffee_maker = ndb.IntegerProperty()
+    vinyl_cutter = ndb.IntegerProperty(default=0)
+    sewing_machine = ndb.IntegerProperty(default=0)
+    hand_tools = ndb.IntegerProperty(default=0)
+    power_tools = ndb.IntegerProperty(default=0)
+    lasers = ndb.IntegerProperty(default=0)
+    cnc = ndb.IntegerProperty(default=0)
+    printers_3d = ndb.IntegerProperty(default=0)
+    soldering = ndb.IntegerProperty(default=0)
+    coffee_maker = ndb.IntegerProperty(default=0)
 
 class BaseHandler(webapp2.RequestHandler):
     def open_html(self, filepath):
@@ -57,12 +57,14 @@ class BaseHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('login.html')
         self.response.write(template.render({}))
 
-    def get_db_obj(self, name):
-        query = User.query(User.username == name)
-        for item in query:
-            return item
-        logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
+    def get_db_obj(self, username):
+        return ndb.Key('User', username).get()
         return None
+
+    def new_db_obj(self, username):
+        user = User(username=username)
+        user.key = ndb.Key('User', username)
+        user.put()
 
     def db_user_to_simple_obj(self, db_obj):
         obj = {"username" : db_obj.username}
@@ -161,10 +163,8 @@ class LoginHandler(BaseHandler):
             self.response.set_cookie('auth', cookie, expires=expiration_date)
             # Now, if user does not already have a database object, make them one
             if not self.get_db_obj(username):
-                user = User(username=username)
-                for tool_name in TOOLS:
-                    setattr(user, tool_name, 0)
-                user.put()
+                self.new_db_obj(username)
+
 
             self.response.write("")
 
