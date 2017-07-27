@@ -21,6 +21,7 @@
 </head>
 
 <body>
+    <!----Navbar---->
     <nav class="main-nav">
         <a href="/" style="float:left;">Home</a>
         <a href="users.html">Admin</a>
@@ -37,11 +38,47 @@
             </div>
         </div>
         <ul style="float:right;margin:0px;">
-            <li style="float:right;">{{loggedin}}{{loginURL | safe}}</li>
+            <li style="float:right;">
+              {{loggedin}}{{loginURL | safe}}
+            </li>
         </ul>
     </nav>
 
-    {{loginmodal | safe}}
+
+
+    <!----Log in modal---->
+    <div class="modal fade" id="myModal" role="dialog">
+    	<div class="modal-dialog">
+
+    		<!-- Modal content-->
+    		<div class="modal-content modal-sm" style="margin: 0 auto">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal">&times;</button>
+    				<h4 class="modal-title text">Log In</h4>
+    			</div>
+    			<div class="modal-body">
+    					<p class="text">
+    						<label style="padding:5px" class="image-replace cd-email" for="signin-email">Username</label>
+    						<input id="email" type="email" placeholder="E-mail">
+    					</p>
+
+    					<p class= "text">
+    						<label style="padding:5px" class="text">Password</label>
+    						<input  type="password" placeholder="Password" id="password" class="masked" name="password" />
+    					</p>
+
+    					<div align="center";>
+    					<button class="btn btn-success" onclick="submitForm()">Log In</button>
+    					</div>
+    			</div>
+
+    		</div>
+
+    	</div>
+    </div>
+    <!----Log in modal---->
+
+
 
     {%block content %}{% endblock %}
 

@@ -85,7 +85,6 @@ class MainHandler(BaseHandler):
         loggedin = "You are not logged in"
         logincomps = "<a data-toggle='modal' data-target='#myModal'>Log In</a>"
 
-        loginmodal = self.open_html('public/modal.html')
 
         str_id = self.get_id()
         if (str_id):
