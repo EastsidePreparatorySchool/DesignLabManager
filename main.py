@@ -179,7 +179,7 @@ class ToolHandler(BaseHandler):
         for i in range(1, 6):
             template_vals['level_' + str(i)] = User.query(User._properties[tool] == i).count()
 
-        template = JINJA_ENVIRONMENT.get_template('public/tool_pages/' + tool + '.html')
+        template = JINJA_ENVIRONMENT.get_template('public/tool/' + tool + '.html')
 
         self.response.write(template.render(template_vals))
 
