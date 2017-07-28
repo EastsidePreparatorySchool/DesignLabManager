@@ -1,0 +1,218 @@
+<html>
+
+<head>
+  <title>DL Administrator</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="css\admin.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <form class="searchform group">
+      <label for="search-box">
+    <span class="fa fa-2x fa-search"></span>
+  </label>
+
+      <input type="search" id="search-box" placeholder="Search for a user">
+    </form>
+    <h2 style="text-align: center; color:white;">Viewing stats for: Student name here</h2>
+    <div class="skills">
+      <div class="skill">
+        <span>3D Printers</span>
+        <span class="label">Level</span>
+        <span class="level">5 - Expert</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Laser Cutter</span>
+        <span class="label">Level</span>
+        <span class="level">4 - Advanced</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Vinyl Cutter</span>
+        <span class="label">Level</span>
+        <span class="level">3 - Proficient</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Power Tools</span>
+        <span class="label">Level</span>
+        <span class="level">2 - Competent</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Hand Tools</span>
+        <span class="label">Level</span>
+        <span class="level">1 - Novice</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Soldering Iron</span>
+        <span class="label">Level</span>
+        <span class="level">5 - Expert</span>
+        <a href="#" class="up">Up</a>
+      </div>
+      <div class="skill">
+        <span>Sewing Machine</span>
+        <span class="label">Level</span>
+        <span class="level">5 - Expert</span>
+        <a href="#" class="up">Up</a>
+      </div>
+    </div>
+
+    <h1>Data for: Machine Name Here</h1>
+    <br>
+    <h5>There are <span></span> experts on this machine</h5>
+    <h5>There are <span></span> advanced members on this machine</h5>
+    <h5>There are <span></span> proficient members on this machine</h5>
+    <h5>There are <span></span> competent members on this machine</h5>
+    <h5>There are <span></span> novice members on this machine</h5>
+    <div class="tbl-header">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <thead>
+          <tr>
+            <th>Name </th>
+            <th>Graduation Year</th>
+            <th>Certification Level</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="tbl-content">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tbody>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Daman</td>
+            <td>2018</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    var UNKNOWN_ERROR = { 'error': "Something didn't quite work. We're looking into it; try again later." };
+    function checkSubmit(e) {
+      if (e && e.keyCode === 13) {
+        submitForm();
+      }
+    }
+    function submitForm() { //Takes either login, register, or resend
+      var data = new FormData();
+      data.append('username', username.value);
+
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            result = xhr.responseText;
+            if (result.charAt(0) == "/") { // If it is a redirection URL
+              window.location.replace(result);
+            } else {
+              showToast(result);
+            }
+          } else {
+            username.value = "";
+            showToast(UNKNOWN_ERROR);
+          }
+        }
+      }
+      xhr.open("POST", "/getuser", true);
+      xhr.send(data);
+    }
+
+    function showToast(text) {
+      toast = document.getElementById("toast");
+      toast.text = text;
+      toast.show();
+    }
+  </script>
+
+
+
+</body>
+
+</html>

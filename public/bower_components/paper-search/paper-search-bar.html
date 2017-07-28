@@ -1,0 +1,167 @@
+<!doctype html>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/image-icons.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-badge/paper-badge.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<!--
+Bar in which the user can enter search terms and filter
+
+@demo demo/paper-search-bar.html
+-->
+<dom-module id="paper-search-bar">
+
+	<template>
+		<style>
+			:host {
+				background: var(--background-color, white);
+				display: block;
+				padding: 0 16px;
+				@apply(--layout-horizontal);
+				@apply(--layout-center);
+			}
+
+			.input-panel {
+				@apply(--layout-horizontal);
+				@apply(--layout-center);
+			}
+
+			.icon {
+				color: var(--disabled-text-color);
+			}
+
+			#input {
+				margin: 0 10px;
+				border: 0;
+				outline: 0;
+				padding: 16px 0;
+				cursor: text;
+			}
+
+			#input[disabled] {
+				background: var(--background-color, white);
+			}
+
+			.badge {
+				--paper-badge-background: var(--paper-red-500);
+				--paper-badge-opacity: 1;
+				--paper-badge-width: 18px;
+				--paper-badge-height: 18px;
+				--paper-badge-margin-left: -15px;
+				--paper-badge-margin-bottom: -15px;
+			}
+		</style>
+
+		<div class="input-panel flex">
+			<iron-icon icon="[[icon]]" class="icon"></iron-icon>
+			<input is="iron-input" id="input" bind-value="{{query}}" placeholder="[[placeholder]]" class="flex"></input>
+		</div>
+		<paper-icon-button icon="clear" hidden$="[[!query]]" on-tap="_clear" class="icon"></paper-icon-button>
+		<div hidden$="[[hideFilterButton]]">
+			<paper-icon-button id="filter" icon="image:tune" on-tap="_filter" class="icon" disabled="[[disableFilterButton]]"></paper-icon-button>
+			<paper-badge for="filter" label="[[nrSelectedFilters]]" class="badge" hidden$="[[!nrSelectedFilters]]"></paper-badge>
+		</div>
+	</template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+	Polymer({
+		is: 'paper-search-bar',
+
+		/**
+		 * Fired when the user requests to open the filtering dialog
+		 *
+		 * @event paper-search-filter
+		 */
+		 /**
+		 * Fired when the user requests to search for a query
+		 *
+		 * @event paper-search-search
+		 */
+		 /**
+		 * Fired when the user taps the clear icon
+		 *
+		 * @event paper-search-clear
+		 */
+
+		properties: {
+			/**
+			 * Text for which the user is searching
+			 */
+			query: {
+				type: String,
+				notify: true,
+				value: ''
+			},
+			/**
+			 * Whether to hide the Filter button. Set attribute "hide-filter-button" to do so.
+			 */
+			hideFilterButton: {
+				type: Boolean,
+				value: false
+			},
+			/**
+			 * Whether to disable the Filter button. Set attribute "disable-filter-button" to do so.
+			 */
+			disableFilterButton: {
+				type: Boolean,
+				value: false
+			},
+			/**
+			 * Number of filters the user has been selected (shown in the badge) (optional)
+			 */
+			nrSelectedFilters: {
+				type: Number,
+				value: 0
+			},
+			/**
+			 * Icon shown in the search background
+			 */
+			icon: {
+				type: String,
+				value: 'search'
+			},
+			/**
+			 * Text shown in the search box if the user didn't enter any query
+			 */
+			placeholder: {
+				type: String,
+				value: 'Search'
+			},
+		},
+
+		behaviors: [
+			Polymer.IronA11yKeysBehavior
+		],
+
+		keyBindings: {
+			'enter': '_search'
+		},
+
+		// Private methods
+		_filter: function(e) {
+			this.fire('paper-search-filter');
+		},
+		_clear: function() {
+			this.query = "";
+			this.$.input.focus();
+			this.fire('paper-search-clear');
+		},
+		_search: function() {
+			this.fire('paper-search-search');
+		}
+	});
+
+})();
+
+</script>

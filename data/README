@@ -1,0 +1,14 @@
+How to use fake key:
+-------------------
+
+Copy the file "fake.key"
+
+DO NOT SIMPLY RENAME THE FILE!
+
+Paste it, so that you now have a "fake.key" and a "fake - Copy.key"
+
+Rename the copy to "crypto.key".
+
+You should now have a folder with "fake.key" and "crypto.key"
+
+You're good to go!

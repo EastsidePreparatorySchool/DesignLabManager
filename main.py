@@ -18,6 +18,7 @@ import base64
 
 ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
 TOOLS = ["vinyl_cutter", "power_tools", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
+TOOL_FULL_NAMES = ["the vinyl cutter", "power tools", "the sewing machine", "hand tools", "the laser cutters", "the ShopBot", "the 3D printers", "soldering", "making coffee"]
 CRYPTO_KEY = open('data/crypto.key', 'rb').read()
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -27,22 +28,27 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
-    vinyl_cutter = ndb.IntegerProperty()
-    sewing_machine = ndb.IntegerProperty()
-    hand_tools = ndb.IntegerProperty()
-    power_tools = ndb.IntegerProperty()
-    lasers = ndb.IntegerProperty()
-    cnc = ndb.IntegerProperty()
-    printers_3d = ndb.IntegerProperty()
-    soldering = ndb.IntegerProperty()
-    coffee_maker = ndb.IntegerProperty()
+    vinyl_cutter = ndb.IntegerProperty(default=0)
+    sewing_machine = ndb.IntegerProperty(default=0)
+    hand_tools = ndb.IntegerProperty(default=0)
+    power_tools = ndb.IntegerProperty(default=0)
+    lasers = ndb.IntegerProperty(default=0)
+    cnc = ndb.IntegerProperty(default=0)
+    printers_3d = ndb.IntegerProperty(default=0)
+    soldering = ndb.IntegerProperty(default=0)
+    coffee_maker = ndb.IntegerProperty(default=0)
 
 class BaseHandler(webapp2.RequestHandler):
+    def open_html(self, filepath):
+        with open(filepath, 'r') as f:
+            data = f.read()
+        return data
+
     def get_id(self):
         if not (self.request.cookies.get("auth")):
             return None
         cookie = self.request.cookies.get("auth")
-        
+
         decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
 
         return json.loads(decoded)["username"]
@@ -51,12 +57,14 @@ class BaseHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('login.html')
         self.response.write(template.render({}))
 
-    def get_db_obj(self, name):
-        query = User.query(User.username == name)
-        for item in query:
-            return item
-        logging.info("-----------------------DB QUERY COULD NOT FIND ANYTHING!___________________")
+    def get_db_obj(self, username):
+        return ndb.Key('User', username).get()
         return None
+
+    def new_db_obj(self, username):
+        user = User(username=username)
+        user.key = ndb.Key('User', username)
+        user.put()
 
     def db_user_to_simple_obj(self, db_obj):
         obj = {"username" : db_obj.username}
@@ -67,30 +75,60 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
+        levelKeys = ["noviceLevels", "competentLevels", "proficientLevels", "advancedLevels", "expertLevels"]
+        levelNames = ["a novice", "competent", "proficient", "advanced", "an expert"]
+
+        prefix = "You are proficient on "
+
+        levelReplacements = ["", "", "", "", ""]
+
         loggedin = "You are not logged in"
-        loginlink = '<a href="login">--Login--</a>'
+        logincomps = "<a data-toggle='modal' data-target='#myModal'>Log In</a>"
+
 
         str_id = self.get_id()
         if (str_id):
-            loggedin = "You are logged in as " + str_id
-            loginlink = '<a href="logout">--Log Out--</a>'
+            obj = self.get_db_obj(str_id)
+            for i in range (0, len(levelKeys)):
+                levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
 
-        
-        template = JINJA_ENVIRONMENT.get_template('homepage.html')
-        self.response.write(template.render({'loggedin': loggedin, 'loginURL': loginlink}))
-        #user_id = int(str_id)
-#
-#        query = User.query(User.sid == user_id)
-#        for db_obj in query: # Will only ever be one
-#            template_values = { \
-#            'sid': db_obj.sid, \
-#            'fullname': db_obj.fullname, \
-#            'sewing_machine_cert_level': db_obj.sewing_machine_cert_level, \
-#            'soldering_cert_level': db_obj.soldering_cert_level, \
-#            }
-#            template = JINJA_ENVIRONMENT.get_template('index.html')
-##            self.response.write(template.render(template_values))
-#           break
+            loggedin = "You are logged in as " + str_id
+            logincomps = '<a href="logout">--Log Out--</a>'
+
+
+        template = JINJA_ENVIRONMENT.get_template('public/index.html')
+        values = {'loggedin': loggedin, 'loginURL': logincomps}
+
+        for i in range(0, len(levelKeys)):
+            values[levelKeys[i]] = levelReplacements[i]
+
+        logging.info(str(values))
+
+        self.response.write(template.render(values))
+
+
+    def getToolsAtLevel(self, obj, level):
+        t = []
+        for i in range (0, len(TOOLS)):
+            if getattr(obj, TOOLS[i]) == level:
+                t.append(TOOL_FULL_NAMES[i])
+
+        if len(t) == 0:
+            return "nothing."
+        if len(t) == 1:
+            return t[0] + "."
+
+        s = ""
+        for i in range (0, len(t)):
+            s += t[i]
+            if i != (len(t) - 1):
+                s += ", "
+            if i == (len(t) - 2):
+                s += "and "
+
+        s += "."
+
+        return s
 
 class LoginHandler(BaseHandler):
     def get(self):
@@ -103,7 +141,7 @@ class LoginHandler(BaseHandler):
         password = self.request.get('password')
 
         if (authenticate_user.auth_user(email, password)): # Four11 login being finicky, disabled it for now
-            username = string.split(email, "@")[0] 
+            username = string.split(email, "@")[0]
             expiration_date = datetime.datetime.now()
             obj = {"username": username, "time_issued": expiration_date.isoformat()}
             expiration_date += datetime.timedelta(2) # Cookie should expire in 48 hours
@@ -113,15 +151,18 @@ class LoginHandler(BaseHandler):
             self.response.set_cookie('auth', cookie, expires=expiration_date)
             # Now, if user does not already have a database object, make them one
             if not self.get_db_obj(username):
-                user = User(username=username)
-                for tool_name in TOOLS:
-                    setattr(user, tool_name, 0)
-                user.put()
+                self.new_db_obj(username)
+
 
             self.response.write("")
 
         else:
             self.response.write("Username or password was incorrect")
+
+class LogoutHandler(BaseHandler):
+    def get(self):
+        self.response.delete_cookie("auth")
+        self.redirect("/")
 
 class ToolHandler(BaseHandler):
     def get(self, tool):
@@ -137,7 +178,7 @@ class ToolHandler(BaseHandler):
         for i in range(1, 6):
             template_vals['level_' + str(i)] = User.query(User._properties[tool] == i).count()
 
-        template = JINJA_ENVIRONMENT.get_template('/tool_pages/' + tool + '.html')
+        template = JINJA_ENVIRONMENT.get_template('public/tool/' + tool + '.html')
 
         self.response.write(template.render(template_vals))
 
@@ -153,10 +194,10 @@ class AdminHandler(BaseHandler):
         query = User.query() # Get all students
         rows = ""
         for student in query:
-            row = JINJA_ENVIRONMENT.get_template('studentrow.html')
+            row = JINJA_ENVIRONMENT.get_template('public/studentrow.html')
             rows += row.render(self.db_user_to_simple_obj(student))
 
-        template = JINJA_ENVIRONMENT.get_template('admin.html')
+        template = JINJA_ENVIRONMENT.get_template('public/admin.html')
 
         self.response.write(template.render({'students' : rows}))
 
@@ -185,7 +226,7 @@ class DataViewHandler(BaseHandler):
             self.error(403) # Unauthorized
             return
 
-        template = JINJA_ENVIRONMENT.get_template('admin_view.html')
+        template = JINJA_ENVIRONMENT.get_template('public/admin_view.html')
         self.response.write(template.render(self.db_user_to_simple_obj(self.get_db_obj(username))))
 
 class LevelSetHandler (BaseHandler):
@@ -212,5 +253,6 @@ app = webapp2.WSGIApplication([
     ('/admin', AdminHandler),
     ('/getuser', AdminUserSearchHandler),
     ('/userlevel/([\w\-]+)', DataViewHandler),
-    ('/setlevel', LevelSetHandler)
+    ('/setlevel', LevelSetHandler),
+    ('/logout', LogoutHandler)
 ], debug=True)

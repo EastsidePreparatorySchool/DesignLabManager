@@ -1,0 +1,179 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+/*
+  To make this responsive set .col_fifth to have float:left and display inline block.
+  Modify the transitions so that they appear under the text and then change the container size to have no min-width
+  need media query for 700px high
+*/
+
+.container {
+    max-width: 1500px !important;
+    min-width: 1200px;
+    font-family: "Open Sans";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.container {
+    box-sizing: border-box;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+/*-=-=-=-=-=-=-=-=-=-*/
+/* Column Grids */
+/*-=-=-=-=-=-=-=-=-= */
+
+.col_half {
+    width: 49%;
+}
+.col_third {
+    width: 32%;
+}
+.col_fourth {
+    width: 23.5%;
+}
+.col_fifth {
+    width: 20vw;;
+}
+.col_sixth {
+    width: 15%;
+}
+.col_three_fourth {
+    width: 74.5%;
+}
+.col_twothird {
+    width: 66%;
+}
+.col_half,
+.col_third,
+.col_twothird,
+.col_fourth,
+.col_three_fourth,
+.col_fifth {
+    margin: 50px 15%;
+    /* margin-left: 2%; */
+}
+.text-center {
+    text-align: centesr !important;
+}
+/*-=-=-=-=-=-=-=-=-=-*/
+/* Style             */
+/*-=-=-=-=-=-=-=-=-= */
+
+* {
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+.at-work-process {
+    min-height: 100px;
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+.at-work-process-text {
+    line-height: 40px;
+    transition: all 200ms linear 0s;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+.at-work-process:hover .at-work-process-details {
+    z-index: 2;
+    opacity: 1;
+    bottom: 0;
+    -webkit-transform: translateX(90%);
+    -moz-transform: translateX(90%);
+    -ms-transform: translateX(90%);
+    -o-transform: translateX(90%);
+    transform: translateX(90%);
+}
+.at-work-process:hover .at-work-process-bottom {
+    z-index: 2;
+    opacity: 1;
+    bottom: 0;
+    -webkit-transform: translate(90%, -60px);
+    -moz-transform: translate(90%, -60px);
+    -ms-transform: translate(90%, -60px);
+    -o-transform: translate(90%, -60px);
+    transform: translate(90%, -60px);
+}
+.at-work-process-number {
+    color: #1e83ec;
+    font-size: 50px;
+    font-weight: 100;
+    letter-spacing: -2px;
+    display: block;
+}
+.at-work-process-number-text {
+    font-family: Open Sans;
+    font-size: 18px;
+    font-weight: 600;
+    color: #eee;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.at-separator-thick {
+    background: #d4d4d4;
+    margin: 3% auto;
+    height: 4px;
+    width: 30px;
+}
+.at-work-process-details {
+    bottom: -60px;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    position: absolute;
+    display: block;
+    color: #eee;
+}
+.at-work-process-details i {
+    color: #1e83ec;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 40px;
+}
+.at-work-process-details span {
+    font-size: 16px;
+    line-height: 15px;
+    text-transform: uppercase;
+}
+.at-work-process-bottom {
+    bottom: -60px;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    position: absolute;
+    display: block;
+    color: #eee;
+}
+.at-work-process-bottom i {
+    color: #1e83ec;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 40px;
+}
+.at-work-process-bottom span {
+    font-size: 16px;
+    line-height: 15px;
+    text-transform: uppercase;
+}
+@media screen and (max-height: 900px),
+screen and (max-width: 800px) {
+    .col_half,
+    .col_third,
+    .col_twothird,
+    .col_fourth,
+    .col_three_fourth,
+    .col_fifth {
+        margin: 0px 10vw;
+        /* margin-left: 2%; */
+    }
+    .table-fill {
+      opacity:0;
+    }
+}

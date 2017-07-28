@@ -9,14 +9,25 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+
+
 - url: /bower_components
-  static_dir: bower_components
+  static_dir: public/bower_components
 
 - url: /css
-  static_dir: css
+  static_dir: public/css
 
 - url: /images
-  static_dir: images
+  static_dir: public/images
+
+- url: /docs
+  static_dir: public/docs
+
+- url: /js
+  static_dir: public/js
+
+
+
 - url: .*
   script: main.app
 
