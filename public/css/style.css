@@ -153,6 +153,10 @@ body {
     background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/powertools.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
+#sewingmachine {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/powertools.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
 /* NAV */
 
 .vNav {
@@ -306,7 +310,6 @@ body {
     visibility: hidden;
 }
 .panel {
-    display: inline-block;
     height: 100%;
     visibility: visible;
     position: relative;
@@ -779,17 +782,9 @@ body {} body {
     width:50%;
     width:50vw;
     margin:0px;
-    
-}
-.level{
-    width:50%;
-    width:50vw;
-}
-.levels{
-     width:50%;
-    width:50vw;
     right:0px;
 }
+
 .certnumber {
   background: #1e83ec;
   border-radius: 0.8em;

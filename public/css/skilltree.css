@@ -34,7 +34,7 @@
     width: 23.5%;
 }
 .col_fifth {
-    width: 18.4%;
+    width: 20vw;;
 }
 .col_sixth {
     width: 15%;
@@ -170,7 +170,7 @@ screen and (max-width: 800px) {
     .col_fourth,
     .col_three_fourth,
     .col_fifth {
-        margin: 0px auto;
+        margin: 0px 10vw;
         /* margin-left: 2%; */
     }
     .table-fill {
