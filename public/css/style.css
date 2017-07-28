@@ -126,7 +126,7 @@ body {
     background-size: cover;
 }
 #printerbot {
-    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/PrinterBotPlay.jpg) 50% 50% no-repeat #000000;
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/bots.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #robo3d {
@@ -141,22 +141,51 @@ body {
     background:  linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)), url(../images/lasercutter.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
+#zing {
+    background:  linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)), url(../images/zing.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
 #vinylcutter {
     background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)), url(../images/vinylcutter.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
+#sticker {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/mcrn.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
 #handtools {
     background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/handtools.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
+#triangle {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/handtool.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
 #powertools {
     background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/powertools.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
-#sewingmachine {
-    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/powertools.jpg) 50% 50% no-repeat #000000;
+#drill {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/powertool.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
+#sewingmachine {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/sewing1.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
+#sewing2 {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/sewing2.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
+#solder {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/solder.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
+#soldering {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/soldering.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
+
 /* NAV */
 
 .vNav {
