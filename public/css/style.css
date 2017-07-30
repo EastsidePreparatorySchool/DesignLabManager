@@ -828,3 +828,9 @@ body {} body {
   width: 1.6em; 
 
 }
+.level0 {background-color: #DDD;}
+.level1 {background-color: #FEF244;}
+.level2 {background-color: #89D9F8;}
+.level3 {background-color: #920FAA;}
+.level4 {background-color: #F04726;}
+.level5 {background-color: #E52F39;}

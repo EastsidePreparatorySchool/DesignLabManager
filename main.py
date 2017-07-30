@@ -85,19 +85,26 @@ class MainHandler(BaseHandler):
         loggedin = "You are not logged in"
         logincomps = "<a data-toggle='modal' data-target='#myModal'>Log In</a>"
 
+        values = {'loggedin': loggedin, 'loginURL': logincomps}
 
         str_id = self.get_id()
         if (str_id):
             obj = self.get_db_obj(str_id)
+
+            values.update(self.db_user_to_simple_obj(obj))
+
             for i in range (0, len(levelKeys)):
                 levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
 
-            loggedin = "You are logged in as " + str_id
-            logincomps = '<a href="logout">--Log Out--</a>'
+            values['loggedin'] = "You are logged in as " + str_id
+            values['loginURL'] = '<a href="logout">--Log Out--</a>'
+
+        if not (str_id):
+            for tool in TOOLS:
+                values[tool + "_cert"] = 0;
 
 
         template = JINJA_ENVIRONMENT.get_template('public/index.html')
-        values = {'loggedin': loggedin, 'loginURL': logincomps}
 
         for i in range(0, len(levelKeys)):
             values[levelKeys[i]] = levelReplacements[i]
