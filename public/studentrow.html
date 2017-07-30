@@ -1,12 +1,12 @@
-<div class="divTableRow">
-  <div class="divTableCell"><a href="/userlevel/{{username | safe}}">{{username | safe}}</a></div>
-  <div class="divTableCell"><div class="level level{{printers_3d_cert | safe}}">{{printers_3d_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{lasers_cert | safe}}">{{lasers_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{vinyl_cutter_cert | safe}}">{{vinyl_cutter_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{cnc_cert | safe}}">{{cnc_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{hand_tools_cert | safe}}">{{hand_tools_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{power_tools_cert | safe}}">{{power_tools_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{soldering_cert | safe}}">{{soldering_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{sewing_machine_cert | safe}}">{{sewing_machine_cert | safe}}</div></div>
-  <div class="divTableCell"><div class="level level{{coffee_maker_cert | safe}}">{{coffee_maker_cert | safe}}</div></div>
-</div>
+<iron-collapse class="divTableRow" id="{{username | safe}}" opened>
+    <div class="divTableCell"><a href="/userlevel/{{username | safe}}">{{username | safe}}</a></div>
+    <div class="divTableCell"><div class="level level{{printers_3d_cert | safe}}">{{printers_3d_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{lasers_cert | safe}}">{{lasers_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{vinyl_cutter_cert | safe}}">{{vinyl_cutter_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{cnc_cert | safe}}">{{cnc_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{hand_tools_cert | safe}}">{{hand_tools_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{power_tools_cert | safe}}">{{power_tools_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{soldering_cert | safe}}">{{soldering_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{sewing_machine_cert | safe}}">{{sewing_machine_cert | safe}}</div></div>
+    <div class="divTableCell"><div class="level level{{coffee_maker_cert | safe}}">{{coffee_maker_cert | safe}}</div></div>
+</iron-collapse>
