@@ -81,6 +81,7 @@ class MainHandler(BaseHandler):
         prefix = "You are proficient on "
 
         levelReplacements = ["", "", "", "", ""]
+        values = {}
 
 
         user = False
@@ -96,7 +97,6 @@ class MainHandler(BaseHandler):
             for i in range (0, len(levelKeys)):
                 levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
             user = str_id
-
 
         if not (str_id):
             for tool in TOOLS:
