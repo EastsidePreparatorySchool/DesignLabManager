@@ -95,15 +95,9 @@ class MainHandler(BaseHandler):
             values.update(self.db_user_to_simple_obj(obj))
 
             for i in range (0, len(levelKeys)):
-                levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
+                values[levelKeys[i]] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
             user = str_id
 
-        if not (str_id):
-            for tool in TOOLS:
-                values[tool + "_cert"] = 0;
-
-        for i in range(0, len(levelKeys)):
-            values[levelKeys[i]] = levelReplacements[i]
 
         self.send_template('public/index.html', values)
 
