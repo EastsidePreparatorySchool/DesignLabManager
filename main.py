@@ -48,14 +48,8 @@ class BaseHandler(webapp2.RequestHandler):
         if not (self.request.cookies.get("auth")):
             return None
         cookie = self.request.cookies.get("auth")
-
         decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
-
         return json.loads(decoded)["username"]
-
-    def send_login_response(self):
-        template = JINJA_ENVIRONMENT.get_template('login.html')
-        self.response.write(template.render({}))
 
     def get_db_obj(self, username):
         return ndb.Key('User', username).get()
@@ -73,6 +67,12 @@ class BaseHandler(webapp2.RequestHandler):
             obj[tool + "_cert"] = attr
         return obj
 
+    def send_template(self, path, options):
+        template = JINJA_ENVIRONMENT.get_template(path)
+        if (self.get_id()):
+            options["user"] = self.get_id()
+        self.response.write(template.render(options))
+
 class MainHandler(BaseHandler):
     def get(self):
         levelKeys = ["noviceLevels", "competentLevels", "proficientLevels", "advancedLevels", "expertLevels"]
@@ -82,29 +82,20 @@ class MainHandler(BaseHandler):
 
         levelReplacements = ["", "", "", "", ""]
 
-        loggedin = "You are not logged in"
-        logincomps = "<a data-toggle='modal' data-target='#myModal'>Log In</a>"
 
-
+        user = False
         str_id = self.get_id()
         if (str_id):
             obj = self.get_db_obj(str_id)
             for i in range (0, len(levelKeys)):
                 levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
+            user = str_id
 
-            loggedin = "You are logged in as " + str_id
-            logincomps = '<a href="logout">--Log Out--</a>'
-
-
-        template = JINJA_ENVIRONMENT.get_template('public/index.html')
-        values = {'loggedin': loggedin, 'loginURL': logincomps}
-
+        values = {}
         for i in range(0, len(levelKeys)):
             values[levelKeys[i]] = levelReplacements[i]
 
-        logging.info(str(values))
-
-        self.response.write(template.render(values))
+        self.send_template('public/index.html', values)
 
 
     def getToolsAtLevel(self, obj, level):
@@ -131,9 +122,6 @@ class MainHandler(BaseHandler):
         return s
 
 class LoginHandler(BaseHandler):
-    def get(self):
-        self.send_login_response()
-
     def post(self):
         email = self.request.get('email').lower()
         if "@" not in email:
@@ -159,11 +147,6 @@ class LoginHandler(BaseHandler):
         else:
             self.response.write("Username or password was incorrect")
 
-class LogoutHandler(BaseHandler):
-    def get(self):
-        self.response.delete_cookie("auth")
-        self.redirect("/")
-
 class ToolHandler(BaseHandler):
     def get(self, tool):
         if tool not in TOOLS:
@@ -173,14 +156,13 @@ class ToolHandler(BaseHandler):
         total_certified = User.query(User._properties[tool] > 0).count()
         people_certified_by_level = []
 
-        template_vals = {'total_certified': total_certified}
+        values = {'total_certified': total_certified}
 
         for i in range(1, 6):
-            template_vals['level_' + str(i)] = User.query(User._properties[tool] == i).count()
+            values['level_' + str(i)] = User.query(User._properties[tool] == i).count()
+        
+        self.send_template('public/tool/' + tool + '.html', values)
 
-        template = JINJA_ENVIRONMENT.get_template('public/tool/' + tool + '.html')
-
-        self.response.write(template.render(template_vals))
 
 class AdminHandler(BaseHandler):
     def get(self):
@@ -253,6 +235,5 @@ app = webapp2.WSGIApplication([
     ('/admin', AdminHandler),
     ('/getuser', AdminUserSearchHandler),
     ('/userlevel/([\w\-]+)', DataViewHandler),
-    ('/setlevel', LevelSetHandler),
-    ('/logout', LogoutHandler)
+    ('/setlevel', LevelSetHandler)
 ], debug=True)

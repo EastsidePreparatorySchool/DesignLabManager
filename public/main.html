@@ -12,108 +12,80 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+
     <link rel="stylesheet" type="text/css" href="\css\skilltree.css" />
     <link rel="stylesheet" type="text/css" href="\css\bsStyle.css">
     <link rel="stylesheet" type="text/css" href="\css\style.css">
 
     {% block style %}{% endblock %}
 
-</head>
+  </head>
 
-<body>
+  <body>
     <!----Navbar---->
     <nav class="main-nav">
-        <a href="/" style="float:left;">Home</a>
-        <a href="users.html">Admin</a>
-        <div class="dropdown">
-            <a href="#machines">Equipment</a>
-            <div class="dropdown-content">
-                <a href="/tool/printers_3d">3D Printers</a>
-                <a href="/tool/lasers">Laser Cutter</a>
-                <a href="/tool/power_tools">Power Tools</a>
-                <a href="/tool/hand_tools">Hand Tools</a>
-                <a href="/tool/soldering">Soldering Iron</a>
-                <a href="/tool/sewing_machine">Sewing Machine</a>
-                <a href="/tool/vinyl_cutter">Vinyl Cutter</a>
-            </div>
+      <a href="/" style="float:left;">Home</a>
+      <a href="users.html">Admin</a>
+      <div class="dropdown">
+        <a href="#machines">Equipment</a>
+        <div class="dropdown-content">
+          <a href="/tool/printers_3d">3D Printers</a>
+          <a href="/tool/lasers">Laser Cutter</a>
+          <a href="/tool/power_tools">Power Tools</a>
+          <a href="/tool/hand_tools">Hand Tools</a>
+          <a href="/tool/soldering">Soldering Iron</a>
+          <a href="/tool/sewing_machine">Sewing Machine</a>
+          <a href="/tool/vinyl_cutter">Vinyl Cutter</a>
         </div>
-        <ul style="float:right;margin:0px;">
-            <li style="float:right;">
-              {{loggedin}}{{loginURL | safe}}
-            </li>
-        </ul>
+      </div>
+      <ul style="float:right;margin:0px;">
+        <li style="float:right;">
+          {% if user %}
+            You are logged in as {{user}}
+            <a onclick="logout()">Log Out</a>
+          {% else %}
+            <a data-toggle='modal' data-target='#loginmodal'>Log In</a>
+          {% endif %}
+        </li>
+      </ul>
     </nav>
-
+    <!----Navbar---->
 
 
     <!----Log in modal---->
-    <div class="modal fade" id="myModal" role="dialog">
-    	<div class="modal-dialog">
+    <div class="modal fade" id="loginmodal" role="dialog">
+      <div class="modal-dialog">
+      	<!-- Modal content-->
+        <div class="modal-content modal-sm" style="margin: 0 auto">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+      	    <h4 class="modal-title text">Log In</h4>
+          </div>
+          <div class="modal-body">
+            <p class="text">
+              <label style="padding:5px" class="image-replace cd-email" for="signin-email">Username</label>
+      	      <input id="email" type="email" placeholder="E-mail">
+      	    </p>
 
-    		<!-- Modal content-->
-    		<div class="modal-content modal-sm" style="margin: 0 auto">
-    			<div class="modal-header">
-    				<button type="button" class="close" data-dismiss="modal">&times;</button>
-    				<h4 class="modal-title text">Log In</h4>
-    			</div>
-    			<div class="modal-body">
-    					<p class="text">
-    						<label style="padding:5px" class="image-replace cd-email" for="signin-email">Username</label>
-    						<input id="email" type="email" placeholder="E-mail">
-    					</p>
+      	    <p class= "text">
+      	      <label style="padding:5px" class="text">Password</label>
+      		    <input  type="password" placeholder="Password" id="password" class="masked" name="password" />
+      	    </p>
 
-    					<p class= "text">
-    						<label style="padding:5px" class="text">Password</label>
-    						<input  type="password" placeholder="Password" id="password" class="masked" name="password" />
-    					</p>
-
-    					<div align="center";>
-    					<button class="btn btn-success" onclick="submitForm()">Log In</button>
-    					</div>
-    			</div>
-
-    		</div>
-
-    	</div>
+  			    <div align="center";>
+      	      <button class="btn btn-success" onclick="login()">Log In</button>
+      	    </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!----Log in modal---->
-
-
 
     {%block content %}{% endblock %}
 
 
   </body>
-  <script>
-  $(window).scroll(function () {
-    $(".main-nav").css("opacity", 1 - $(window).scrollTop() / 1600);
-  });
-
-  function submitForm() { //Takes either login, register, or resend
-    var data = new FormData();
-    data.append('email', document.getElementById('email').value);
-    data.append('password', document.getElementById('password').value);
-
-    xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          result = xhr.responseText;
-          if (result == "") {
-            window.location.replace("/");
-          } else {
-            window.alert(result);
-                        // Show error
-          }
-        } else {
-                    // Show error
-        }
-      }
-    }
-    xhr.open("POST", "/login", true);
-    xhr.send(data);
-  }
-  </script>
+  <script src='/js/http.js'></script>
+  <script src='/js/global.js'></script>
   {% block script %}{% endblock %}
 </html>
