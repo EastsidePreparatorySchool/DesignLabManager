@@ -87,11 +87,18 @@ class MainHandler(BaseHandler):
         str_id = self.get_id()
         if (str_id):
             obj = self.get_db_obj(str_id)
+
+            values.update(self.db_user_to_simple_obj(obj))
+
             for i in range (0, len(levelKeys)):
                 levelReplacements[i] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
             user = str_id
 
         values = {}
+        if not (str_id):
+            for tool in TOOLS:
+                values[tool + "_cert"] = 0;
+
         for i in range(0, len(levelKeys)):
             values[levelKeys[i]] = levelReplacements[i]
 
@@ -160,7 +167,7 @@ class ToolHandler(BaseHandler):
 
         for i in range(1, 6):
             values['level_' + str(i)] = User.query(User._properties[tool] == i).count()
-        
+
         self.send_template('public/tool/' + tool + '.html', values)
 
 
