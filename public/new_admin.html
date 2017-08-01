@@ -1,4 +1,4 @@
-{% extends /public/main.html %}
+{# {% extends "/public/main.html" %}
 {% block style %}
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
@@ -107,7 +107,7 @@
 {% endblock %}
 
 
-
+#}
 
 
 
@@ -116,7 +116,7 @@
 
 
 <!--This file is the file that contains the webpage that lets
-the admin choose which user's levels they want to edit--
+the admin choose which user's levels they want to edit-->
 <html>
 
 <head>
@@ -131,10 +131,73 @@ the admin choose which user's levels they want to edit--
   <link rel="import" href="bower_components/paper-material/paper-material.html">
   <link rel="import" href="bower_components/iron-image/iron-image.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
-  <link rel="stylesheet" href="css\admin.css">
+
+
+  <link rel="stylesheet" type="text/css" href="\css\bsStyle.css">
+  <link rel="stylesheet" type="text/css" href="\css\admin.css">
+  <link rel="stylesheet" type="text/css" href="\css\nav.css">
 </head>
 
 <body>
+
+  <nav class="main-nav">
+    <a href="/" style="float:left;">Home</a>
+    <a href="/admin">Admin</a>
+    <div class="dropdown">
+      <a href="#machines">Equipment</a>
+      <div class="dropdown-content">
+        <a href="/tool/printers_3d">3D Printers</a>
+        <a href="/tool/lasers">Laser Cutter</a>
+        <a href="/tool/power_tools">Power Tools</a>
+        <a href="/tool/hand_tools">Hand Tools</a>
+        <a href="/tool/soldering">Soldering Iron</a>
+        <a href="/tool/sewing_machine">Sewing Machine</a>
+        <a href="/tool/vinyl_cutter">Vinyl Cutter</a>
+      </div>
+    </div>
+    <ul style="float:right;margin:0px;">
+      <li style="float:right;">
+        {% if user %}
+          You are logged in as {{user}}
+          <a onclick="logout()">Log Out</a>
+        {% else %}
+          <a data-toggle='modal' data-target='#loginmodal'>Log In</a>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
+
+  <!----Log in modal---->
+  <div class="modal fade" id="loginmodal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content modal-sm" style="margin: 0 auto">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text">Log In</h4>
+        </div>
+        <div class="modal-body">
+          <p class="text">
+            <label style="padding:5px" class="image-replace cd-email" for="signin-email">Username</label>
+            <input id="email" type="email" placeholder="E-mail">
+          </p>
+
+          <p class= "text">
+            <label style="padding:5px" class="text">Password</label>
+            <input  type="password" placeholder="Password" id="password" class="masked" name="password" />
+          </p>
+
+          <div align="center";>
+            <button class="btn btn-success" onclick="login()">Log In</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----Log in modal---->
+
+
+
   <div class="wrap">
     <form class="searchform group">
       <label for="search-box">
@@ -229,4 +292,4 @@ the admin choose which user's levels they want to edit--
 
 </body>
 
-</html>-->
+</html>
