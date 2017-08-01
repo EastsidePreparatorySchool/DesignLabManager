@@ -1,23 +1,24 @@
 body {
     font-family: 'century gothic', arial, sans-serif;
-    text-transform: uppercase;
     -webkit-user-select: none;
     background: #333333;
 }
-a {
+.skill a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    text-transform: uppercase;
 }
-a:hover {
+.skill a:hover {
     color: #888
 }
 .wrap {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 50px;
     width: 100vw;
     height: 100vh;
+    text-transform: uppercase;
 }
 .skills {
     display: table;
@@ -25,6 +26,7 @@ a:hover {
     width: 400px;
     color: #fff;
     padding-bottom: 100px;
+    text-transform: uppercase;
 }
 .skill {
     display: table-row;
@@ -53,6 +55,7 @@ label,
 input {
     vertical-align: baseline;
     color: #737373;
+    text-transform: uppercase;
 }
 label {
     margin: 0.125em 0.125em 0 0;
@@ -75,6 +78,7 @@ input[type="search"]:focus {
 h1, h5 {
     color: white;
     text-align: center;
+    text-transform: uppercase;
 }
 table {
     margin: 0 auto;

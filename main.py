@@ -16,7 +16,7 @@ import base64
 
 
 
-ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack"]
+ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack", "dmulye"]
 TOOLS = ["vinyl_cutter", "power_tools", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
 TOOL_FULL_NAMES = ["the vinyl cutter", "power tools", "the sewing machine", "hand tools", "the laser cutters", "the ShopBot", "the 3D printers", "soldering", "making coffee"]
 CRYPTO_KEY = open('data/crypto.key', 'rb').read()
