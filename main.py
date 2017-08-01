@@ -184,9 +184,10 @@ class AdminHandler(BaseHandler):
             rows += row.render(self.db_user_to_simple_obj(student))
 
         ##Replace new_admin.html with admin.html for practical purposes
-        template = JINJA_ENVIRONMENT.get_template('public/new_admin.html')
+        #template = JINJA_ENVIRONMENT.get_template('public/new_admin.html')
 
-        self.response.write(template.render({'students' : rows}))
+        #self.response.write(template.render({'students' : rows}))
+        self.send_template('public/new_admin.html', {'students' : rows})
 
 class AdminUserSearchHandler (BaseHandler):
     def post(self):
