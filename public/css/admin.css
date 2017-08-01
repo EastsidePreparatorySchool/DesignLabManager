@@ -3,6 +3,11 @@ body {
     -webkit-user-select: none;
     background: #333333;
 }
+
+ul {
+    list-style: none;
+}
+
 .skill a {
     color: #fff;
     text-decoration: none;
