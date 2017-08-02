@@ -170,45 +170,7 @@
 
 
 
-
-
-  var UNKNOWN_ERROR = { 'error': "Something didn't quite work. We're looking into it; try again later." };
-  function checkSubmit(e) {
-    if (e && e.keyCode === 13) {
-      console.log('submit');
-      //submitForm();
-    }
-  }
-  function submitForm() { //Takes either login, register, or resend
-    var data = new FormData();
-    data.append('username', username.value);
-
-    xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          result = xhr.responseText;
-          if (result.charAt(0) == "/") { // If it is a redirection URL
-            window.location.replace(result);
-          } else {
-            showToast(result);
-          }
-        } else {
-          username.value = "";
-          showToast(UNKNOWN_ERROR);
-        }
-      }
-    }
-    xhr.open("POST", "/getuser", true);
-    xhr.send(data);
-  }
-
-  function showToast(text) {
-    toast = document.getElementById("toast");
-    toast.text = text;
-    toast.show();
-  }
-
+  
 
 </script>
 {% endblock %}
