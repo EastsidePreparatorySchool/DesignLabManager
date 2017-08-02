@@ -275,8 +275,8 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/login', LoginHandler),
     ('/tool/([\w\-]+)', ToolHandler),
-    ('/admin', NewAdminHandler),
-    #('/admin', AdminHandler)
+    #('/admin', NewAdminHandler),
+    ('/admin', AdminHandler)
     ('/admin/data', AdminDataHandler),
     ('/getuser', AdminUserSearchHandler),
     ('/userlevel/([\w\-]+)', DataViewHandler),
