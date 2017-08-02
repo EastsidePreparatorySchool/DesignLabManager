@@ -18,7 +18,7 @@ import base64
 
 ADMIN_USERNAMES = ["guberti", "qbowers", "jbriggs", "dclarke", "jnolan", "rmack", "dmulye"]
 TOOLS = ["vinyl_cutter", "power_tools", "sewing_machine", "hand_tools", "lasers", "cnc", "printers_3d", "soldering", "coffee_maker"]
-TOOL_FULL_NAMES = ["the vinyl cutter", "power tools", "the sewing machine", "hand tools", "the laser cutters", "the ShopBot", "the 3D printers", "soldering", "making coffee"]
+TOOL_FULL_NAMES = ["vinyl cutter", "power tools", "sewing machine", "hand tools", "laser cutters", "ShopBot", "3D printers", "soldering iron", "coffee maker"]
 CRYPTO_KEY = open('data/crypto.key', 'rb').read()
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -28,15 +28,15 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
-    vinyl_cutter = ndb.IntegerProperty(default=0)
-    sewing_machine = ndb.IntegerProperty(default=0)
-    hand_tools = ndb.IntegerProperty(default=0)
-    power_tools = ndb.IntegerProperty(default=0)
-    lasers = ndb.IntegerProperty(default=0)
-    cnc = ndb.IntegerProperty(default=0)
-    printers_3d = ndb.IntegerProperty(default=0)
-    soldering = ndb.IntegerProperty(default=0)
-    coffee_maker = ndb.IntegerProperty(default=0)
+    vinyl_cutter = ndb.IntegerProperty(default=1)
+    power_tools = ndb.IntegerProperty(default=1)
+    sewing_machine = ndb.IntegerProperty(default=1)
+    hand_tools = ndb.IntegerProperty(default=1)
+    lasers = ndb.IntegerProperty(default=1)
+    cnc = ndb.IntegerProperty(default=1)
+    printers_3d = ndb.IntegerProperty(default=1)
+    soldering = ndb.IntegerProperty(default=1)
+    coffee_maker = ndb.IntegerProperty(default=1)
 
 class BaseHandler(webapp2.RequestHandler):
     def open_html(self, filepath):
@@ -51,6 +51,12 @@ class BaseHandler(webapp2.RequestHandler):
         decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
         return json.loads(decoded)["username"]
 
+    def is_admin(self):
+        if (self.get_id()):
+            if (self.get_id() in ADMIN_USERNAMES):
+                return True
+        return False
+
     def get_db_obj(self, username):
         return ndb.Key('User', username).get()
         return None
@@ -64,66 +70,44 @@ class BaseHandler(webapp2.RequestHandler):
         obj = {"username" : db_obj.username}
         for tool in TOOLS:
             attr = getattr(db_obj, tool)
-            obj[tool + "_cert"] = attr
+            obj[tool] = attr
         return obj
+
+    def get_levels(self, id):
+        db_obj = self.get_db_obj(id)
+        obj = self.db_user_to_simple_obj(db_obj)
+        return obj
+
+    def get_levels_verbose(self, id):
+        obj = self.get_levels(id)
+        v_obj = {}
+        for i in range(0, len(TOOLS)):
+            v_obj[TOOL_FULL_NAMES[i]] = obj[TOOLS[i]]
+        return v_obj
 
     def send_template(self, path, options):
         template = JINJA_ENVIRONMENT.get_template(path)
         if (self.get_id()):
             options["user"] = self.get_id()
+        options["admin"] = self.is_admin()
+        options["tools"] = TOOL_FULL_NAMES
         self.response.write(template.render(options))
 
 class MainHandler(BaseHandler):
     def get(self):
-        levelKeys = ["noviceLevels", "competentLevels", "proficientLevels", "advancedLevels", "expertLevels"]
-        levelNames = ["a novice", "competent", "proficient", "advanced", "an expert"]
 
-        prefix = "You are proficient on "
-
-        levelReplacements = ["", "", "", "", ""]
-        values = {}
-
+        #self.new_db_obj('nbowers')
 
         user = False
-
         values = {}
-
         str_id = self.get_id()
+
         if (str_id):
             obj = self.get_db_obj(str_id)
-
             values.update(self.db_user_to_simple_obj(obj))
-
-            for i in range (0, len(levelKeys)):
-                values[levelKeys[i]] = "You are " + levelNames[i] + " on " + self.getToolsAtLevel(obj, i + 1)
-            user = str_id
-
 
         self.send_template('public/index.html', values)
 
-
-    def getToolsAtLevel(self, obj, level):
-        t = []
-        for i in range (0, len(TOOLS)):
-            if getattr(obj, TOOLS[i]) == level:
-                t.append(TOOL_FULL_NAMES[i])
-
-        if len(t) == 0:
-            return "nothing."
-        if len(t) == 1:
-            return t[0] + "."
-
-        s = ""
-        for i in range (0, len(t)):
-            s += t[i]
-            if i != (len(t) - 1):
-                s += ", "
-            if i == (len(t) - 2):
-                s += "and "
-
-        s += "."
-
-        return s
 
 class LoginHandler(BaseHandler):
     def post(self):
@@ -168,6 +152,62 @@ class ToolHandler(BaseHandler):
         self.send_template('public/tool/' + tool + '.html', values)
 
 
+
+class NewAdminHandler(BaseHandler):
+    def get(self):
+        if not (self.is_admin()):
+            self.error(403)
+            return
+
+        #logging.info('------------' + self.get_id())
+        levels = self.get_levels_verbose(self.get_id())
+        self.send_template('public/new_admin.html', {'levels': levels})
+
+class AdminDataHandler(BaseHandler):
+    def get(self):
+        #logging.info('\n\n-----------------------ADMIN DATA--------------------------\n\n')
+        if not (self.is_admin()):
+            self.error(403)
+            return
+        if not (self.request.get('user')):
+            self.error(404)
+            return
+
+        user = self.request.get('user').lower()
+        if not (self.get_db_obj(user)):
+            self.error(404)
+            return
+
+        data = {
+            'user': user,
+            'levels': self.get_levels_verbose(user)
+        }
+        #self.response.headers['content-type'] = 'application/json'
+        self.response.out.write(json.dumps(data))
+    def post(self):
+        if not (self.is_admin()):
+            self.error(403)
+            return
+        if not (self.request.get('user')):
+            self.error(404)
+            return
+        if not self.request.get('tool') in TOOL_FULL_NAMES:
+            self.error(404)
+            return
+
+        user = self.request.get('user').lower()
+        if not (self.get_db_obj(user)):
+            self.error(404)
+            return
+        tool_full = self.request.get('tool')
+        tool = TOOLS[TOOL_FULL_NAMES.index(tool_full)]
+
+        obj = self.get_db_obj(user)
+        setattr(obj, tool, int(self.request.get('level')))
+        obj.put()
+        self.response.write('')
+
+
 class AdminHandler(BaseHandler):
     def get(self):
         admin_name = self.get_id()
@@ -179,12 +219,12 @@ class AdminHandler(BaseHandler):
 
         query = User.query() # Get all students
         rows = ""
+        row = JINJA_ENVIRONMENT.get_template('public/studentrow.html')
         for student in query:
-            row = JINJA_ENVIRONMENT.get_template('public/studentrow.html')
             rows += row.render(self.db_user_to_simple_obj(student))
 
         ##Replace new_admin.html with admin.html for practical purposes
-        self.send_template('public/admin.html', {'students' : rows})
+        self.send_template('public/new_admin.html', {'students' : rows})
 
 class AdminUserSearchHandler (BaseHandler):
     def post(self):
@@ -235,7 +275,9 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/login', LoginHandler),
     ('/tool/([\w\-]+)', ToolHandler),
-    ('/admin', AdminHandler),
+    ('/admin', NewAdminHandler),
+    #('/admin', AdminHandler)
+    ('/admin/data', AdminDataHandler),
     ('/getuser', AdminUserSearchHandler),
     ('/userlevel/([\w\-]+)', DataViewHandler),
     ('/setlevel', LevelSetHandler)

@@ -8,7 +8,7 @@
     <title>MAKE@EPS</title>
 
 
-
+    {% block style %}
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -18,8 +18,7 @@
     <link rel="stylesheet" type="text/css" href="\css\skilltree.css">
     <link rel="stylesheet" type="text/css" href="\css\bsStyle.css">
     <link rel="stylesheet" type="text/css" href="\css\style.css">
-
-    {% block style %}{% endblock %}
+    {% endblock %}
 
   </head>
 
@@ -27,7 +26,6 @@
     <!----Navbar---->
     <nav class="main-nav">
       <a href="/" style="float:left;">Home</a>
-      <a href="/admin">Admin</a>
       <div class="dropdown">
         <a href="#machines">Equipment</a>
         <div class="dropdown-content">
@@ -40,6 +38,7 @@
           <a href="/tool/vinyl_cutter">Vinyl Cutter</a>
         </div>
       </div>
+      {% if admin %} <a href="/admin">Admin</a> {% endif %}
       <ul style="float:right;margin:0px;list-style: none;">
         <li style="float:right;">
           {% if user %}

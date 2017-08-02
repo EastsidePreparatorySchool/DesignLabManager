@@ -1,4 +1,4 @@
-{# {% extends "/public/main.html" %}
+{% extends "/public/main.html" %}
 {% block style %}
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
@@ -8,20 +8,44 @@
   <link rel="import" href="bower_components/paper-material/paper-material.html">
   <link rel="import" href="bower_components/iron-image/iron-image.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
-  <link rel="stylesheet" href="css\admin.css">
+
+
+  <link rel="stylesheet" type="text/css" href="\css\bsStyle.css">
+  <link rel="stylesheet" type="text/css" href="\css\admin.css">
+  <link rel="stylesheet" type="text/css" href="\css\nav.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {% endblock %}
+
+
+
+
+{% macro skill(tool) %}
+  <div class="skill" id='{{ tool }}'>
+    <span>{{ tool }}</span>
+    <span class='label'></span>
+    <span class='level'></span>
+    <a href='#' class='up' onclick='uplevel("{{ tool }}")'>Up</a>
+  </div>
+{% endmacro %}
+
 {% block content %}
   <div class="wrap">
-    <form class="searchform group">
+    <div class="searchform group">
       <label for="search-box">
         <span class="fa fa-2x fa-search"></span>
       </label>
 
       <input type="search" id="search-box" placeholder="Search for a user">
-    </form>
-    <h2 style="text-align: center; color:white;">Viewing stats for: Student name here</h2>
+    </div>
+    <h2 style="text-align: center; color:white;" id='studentName'>Viewing stats for: Student name here</h2>
     <div class="skills">
-      <div class="skill">
+
+      {% for tool in tools %}
+        {{ skill(tool) }}
+      {% endfor %}
+
+      {# <div class="skill">
         <span>3D Printers</span>
         <span class="label">Level</span>
         <span class="level">5 - Expert</span>
@@ -62,16 +86,97 @@
         <span class="label">Level</span>
         <span class="level">5 - Expert</span>
         <a href="#" class="up">Up</a>
-      </div>
+      </div> #}
     </div>
   </div>
 {% endblock %}
 {% block script %}
 <script>
+
+
+  //initialize data with Jinja replacements
+  let userData = {user: '{{user}}', levels: {}}
+  {% for tool in tools %}
+    userData.levels['{{tool}}'] = {{ levels[tool] }};
+  {% endfor %}
+
+  fillUserData();
+
+  function levelString(level) {
+    switch(Number(level)) {
+      case 1:
+        return '1 - Novice';
+      case 2:
+        return '2 - Competent';
+      case 3:
+        return '3 - Proficient';
+      case 4:
+        return '4 - Advanced';
+      case 5:
+        return '5 - Expert';
+      default:
+        return 'missing'
+    }
+  }
+  function fillUserData() {
+    document.getElementById('search-box').value = '';
+    document.getElementById('search-box').blur();
+    document.getElementById('studentName').innerHTML = 'Viewing stats for: ' + userData.user;
+
+    let skills = document.getElementsByClassName('skill');
+    for(let i = 0; i < Object.keys(userData.levels).length; i++) {
+        let key = Object.keys(userData.levels)[i];
+        skills[key].children[2].innerHTML = levelString(userData.levels[key]);
+    }
+  }
+
+
+  function uplevel(tool) {
+    httpClient.post('admin/data', {
+      user: userData.user,
+      tool: tool,
+      level: userData.levels[tool] + 1
+    }, (xhr) => {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) requestUserData(userData.user);
+      }
+    });
+  }
+
+  function requestUserData(username) {
+    //ampersand for delimeters
+    httpClient.get('admin/data?user='+username, (xhr) => {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 404) showAlert('No Database entry for ' + username + '.\nLog in as ' + username + ' to create one.');
+        if (xhr.status == 200) {
+          Object.assign(userData, JSON.parse(xhr.response));
+          fillUserData();
+        }
+      }
+    });
+  }
+
+  function showAlert(text) {window.alert(text);}
+
+  let search = document.getElementById('search-box');
+  search.addEventListener('keyup', (e) => {
+    if (e.which == 13 || e.keyCode == 13) {
+      requestUserData(search.value);
+    }
+  });
+
+
+
+
+
+
+
+
   var UNKNOWN_ERROR = { 'error': "Something didn't quite work. We're looking into it; try again later." };
   function checkSubmit(e) {
     if (e && e.keyCode === 13) {
-      submitForm();
+      console.log('submit');
+      //submitForm();
     }
   }
   function submitForm() { //Takes either login, register, or resend
@@ -103,193 +208,7 @@
     toast.text = text;
     toast.show();
   }
+
+
 </script>
 {% endblock %}
-
-
-#}
-
-
-
-
-
-
-
-<!--This file is the file that contains the webpage that lets
-the admin choose which user's levels they want to edit-->
-<html>
-
-<head>
-  <title>DL Administrator</title>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link rel="import" href="bower_components/polymer/polymer.html">
-  <link rel="import" href="bower_components/paper-input/paper-input.html">
-  <link rel="import" href="bower_components/paper-button/paper-button.html">
-  <link rel="import" href="bower_components/paper-material/paper-material.html">
-  <link rel="import" href="bower_components/iron-image/iron-image.html">
-  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
-
-
-  <link rel="stylesheet" type="text/css" href="\css\bsStyle.css">
-  <link rel="stylesheet" type="text/css" href="\css\admin.css">
-  <link rel="stylesheet" type="text/css" href="\css\nav.css">
-</head>
-
-<body>
-
-  <nav class="main-nav">
-    <a href="/" style="float:left;">Home</a>
-    <a href="/admin">Admin</a>
-    <div class="dropdown">
-      <a href="#machines">Equipment</a>
-      <div class="dropdown-content">
-        <a href="/tool/printers_3d">3D Printers</a>
-        <a href="/tool/lasers">Laser Cutter</a>
-        <a href="/tool/power_tools">Power Tools</a>
-        <a href="/tool/hand_tools">Hand Tools</a>
-        <a href="/tool/soldering">Soldering Iron</a>
-        <a href="/tool/sewing_machine">Sewing Machine</a>
-        <a href="/tool/vinyl_cutter">Vinyl Cutter</a>
-      </div>
-    </div>
-    <ul style="float:right;margin:0px;">
-      <li style="float:right;">
-        {% if user %}
-          You are logged in as {{user}}
-          <a onclick="logout()">Log Out</a>
-        {% else %}
-          <a data-toggle='modal' data-target='#loginmodal'>Log In</a>
-        {% endif %}
-      </li>
-    </ul>
-  </nav>
-
-  <!----Log in modal---->
-  <div class="modal fade" id="loginmodal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content modal-sm" style="margin: 0 auto">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text">Log In</h4>
-        </div>
-        <div class="modal-body">
-          <p class="text">
-            <label style="padding:5px" class="image-replace cd-email" for="signin-email">Username</label>
-            <input id="email" type="email" placeholder="E-mail">
-          </p>
-
-          <p class= "text">
-            <label style="padding:5px" class="text">Password</label>
-            <input  type="password" placeholder="Password" id="password" class="masked" name="password" />
-          </p>
-
-          <div align="center";>
-            <button class="btn btn-success" onclick="login()">Log In</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!----Log in modal---->
-
-
-
-  <div class="wrap">
-    <form class="searchform group">
-      <label for="search-box">
-        <span class="fa fa-2x fa-search"></span>
-      </label>
-      <input type="search" id="search-box" placeholder="Search for a user">
-    </form>
-
-    <h2 style="text-align: center; color:white;">Viewing stats for: Student name here</h2>
-    <div class="skills">
-      <div class="skill">
-        <span>3D Printers</span>
-        <span class="label">Level</span>
-        <span class="level">5 - Expert</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Laser Cutter</span>
-        <span class="label">Level</span>
-        <span class="level">4 - Advanced</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Vinyl Cutter</span>
-        <span class="label">Level</span>
-        <span class="level">3 - Proficient</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Power Tools</span>
-        <span class="label">Level</span>
-        <span class="level">2 - Competent</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Hand Tools</span>
-        <span class="label">Level</span>
-        <span class="level">1 - Novice</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Soldering Iron</span>
-        <span class="label">Level</span>
-        <span class="level">5 - Expert</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Sewing Machine</span>
-        <span class="label">Level</span>
-        <span class="level">5 - Expert</span>
-        <a href="#" class="up">Up</a>
-      </div>
-    </div>
-  </div>
-  <script>
-    var UNKNOWN_ERROR = { 'error': "Something didn't quite work. We're looking into it; try again later." };
-    function checkSubmit(e) {
-      if (e && e.keyCode === 13) {
-        submitForm();
-      }
-    }
-    function submitForm() { //Takes either login, register, or resend
-      var data = new FormData();
-      data.append('username', username.value);
-
-      xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-          if (xhr.status == 200) {
-            result = xhr.responseText;
-            if (result.charAt(0) == "/") { // If it is a redirection URL
-              window.location.replace(result);
-            } else {
-              showToast(result);
-            }
-          } else {
-            username.value = "";
-            showToast(UNKNOWN_ERROR);
-          }
-        }
-      }
-      xhr.open("POST", "/getuser", true);
-      xhr.send(data);
-    }
-
-    function showToast(text) {
-      toast = document.getElementById("toast");
-      toast.text = text;
-      toast.show();
-    }
-  </script>
-
-</body>
-
-</html>
