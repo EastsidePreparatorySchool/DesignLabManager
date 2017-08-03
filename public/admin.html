@@ -94,6 +94,8 @@ the admin choose which user's levels they want to edit-->
     #toastButton {
       margin-left: 48px;
       color: #2196f3;
+      float: right;
+      cursor: pointer;
     }
     .level {
       width: 50%;
@@ -145,7 +147,7 @@ the admin choose which user's levels they want to edit-->
   </paper-material>
 
   <paper-toast id="toast" text="" duration=10000>
-    <span id="toastButton" onclick="submitForm(true)">Add user</span>
+    <span id="toastButton" onclick="submitForm(true)">Add user?</span>
   </paper-toast>
 
   <script>
@@ -166,12 +168,9 @@ the admin choose which user's levels they want to edit-->
           result = xhr.responseText;
           if (result.charAt(0) == "/") { // If it is a redirection URL
             window.location.replace(result);
-          } else {
-            showToast(result, true);
           }
         } else {
-          username.value = "";
-          showToast(UNKNOWN_ERROR, false);
+          showToast("Unknown account. ", true);
         }
       }
     }
@@ -195,7 +194,7 @@ the admin choose which user's levels they want to edit-->
     }
   }
   function showToast(text, showButton) {
-    document.getElementById(text).style.display = showButton ? 'block' : 'none';
+    document.getElementById("toastButton").style.display = showButton ? 'block' : 'none';
     toast = document.getElementById("toast");
     toast.text = text;
     toast.show();

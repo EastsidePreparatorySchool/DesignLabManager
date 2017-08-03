@@ -238,9 +238,16 @@ class AdminUserSearchHandler (BaseHandler):
 
         obj = self.get_db_obj(username)
         if not obj:
-            self.response.write("That user has never logged in.")
+            if not bool(self.request.get("create")):
+                self.response.write("That user has never logged in.")
+                return
+            else:
+                self.new_db_obj(username)
+                # We'll return a URL at the end
+
         if not obj.username:
             self.response.write("That user has never logged in.")
+            return
 
         self.response.write("/userlevel/" + username)
 
@@ -267,6 +274,7 @@ class LevelSetHandler (BaseHandler):
 
         for tool_name in TOOLS:
             if self.request.get(tool_name):
+                logging.info(tool_name)
                 setattr(obj, tool_name, int(self.request.get(tool_name)))
 
         obj.put()
