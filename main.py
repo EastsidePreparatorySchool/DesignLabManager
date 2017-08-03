@@ -69,7 +69,7 @@ class BaseHandler(webapp2.RequestHandler):
         obj = {"username" : db_obj.username}
         for tool in TOOLS:
             attr = getattr(db_obj, tool)
-            obj[tool] = attr
+            obj[tool + "_cert"] = attr
         return obj
 
     def get_levels(self, id):
