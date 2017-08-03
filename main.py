@@ -58,8 +58,7 @@ class BaseHandler(webapp2.RequestHandler):
         return False
 
     def get_db_obj(self, username):
-        return ndb.Key('User', username).get()
-        return None
+        return ndb.Key('User', username).get(use_cache=False, use_memcache=False)
 
     def new_db_obj(self, username):
         user = User(username=username)
@@ -126,6 +125,7 @@ class LoginHandler(BaseHandler):
 
             self.response.set_cookie('auth', cookie, expires=expiration_date)
             # Now, if user does not already have a database object, make them one
+
             if not self.get_db_obj(username):
                 self.new_db_obj(username)
 
