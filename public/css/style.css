@@ -185,6 +185,14 @@ body {
     background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/soldering.jpg) 50% 50% no-repeat #000000;
     background-size: cover;
 }
+#cnc {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/shopbot.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
+#cncback {
+    background: linear-gradient( rgba(20, 20, 20, .4), rgba(20, 20, 20, .4)),  url(../images/fullMachineBack.jpg) 50% 50% no-repeat #000000;
+    background-size: cover;
+}
 
 /* NAV */
 
