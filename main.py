@@ -224,7 +224,7 @@ class AdminHandler(BaseHandler):
             rows += row.render(self.db_user_to_simple_obj(student))
 
         ##Replace new_admin.html with admin.html for practical purposes
-        self.send_template('public/new_admin.html', {'students' : rows})
+        self.send_template('public/admin.html', {'students' : rows})
 
 class AdminUserSearchHandler (BaseHandler):
     def post(self):
