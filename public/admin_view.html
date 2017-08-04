@@ -1,4 +1,4 @@
-<!--This file is the file that contains the webpage that lets 
+<!--This file is the file that contains the webpage that lets
 the admin edit the levels of an individual student-->
 <html>
   <head>
@@ -72,35 +72,35 @@ the admin edit the levels of an individual student-->
 	<h1>Set levels for {{username | safe}}</h1>
   <div class="toolcontainer">
     <span class="toollabel">3D printers</span>
-    <paper-slider id="printers_3d" pin snaps max="5" step="1" value="{{printers_3d_cert | safe}}" editable></paper-slider>
+    <paper-slider id="printers_3d" pin snaps max="5" step="1" value="{{printers_3d | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Laser cutters</span>
-    <paper-slider id="lasers" pin snaps max="5" step="1" value="{{lasers_cert | safe}}" editable></paper-slider>
+    <paper-slider id="lasers" pin snaps max="5" step="1" value="{{lasers | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Vinyl cutter</span>
-    <paper-slider id="vinyl_cutter" pin snaps max="5" step="1" value="{{vinyl_cutter_cert | safe}}" editable></paper-slider>
+    <paper-slider id="vinyl_cutter" pin snaps max="5" step="1" value="{{vinyl_cutter | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Soldering</span>
-    <paper-slider id="soldering" pin snaps max="5" step="1" value="{{soldering_cert | safe}}" editable></paper-slider>
+    <paper-slider id="soldering" pin snaps max="5" step="1" value="{{soldering | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Shopbot</span>
-    <paper-slider id="cnc" pin snaps max="5" step="1" value="{{cnc_cert | safe}}" editable></paper-slider>
+    <paper-slider id="cnc" pin snaps max="5" step="1" value="{{cnc | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Hand tools</span>
-    <paper-slider id="hand_tools" pin snaps max="5" step="1" value="{{hand_tools_cert | safe}}" editable></paper-slider>
+    <paper-slider id="hand_tools" pin snaps max="5" step="1" value="{{hand_tools | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Sewing machine</span>
-    <paper-slider id="sewing_machine" pin snaps max="5" step="1" value="{{sewing_machine_cert | safe}}" editable></paper-slider>
+    <paper-slider id="sewing_machine" pin snaps max="5" step="1" value="{{sewing_machine | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Coffee maker</span>
-    <paper-slider id="coffee_maker" pin snaps max="5" step="1" value="{{coffee_maker_cert | safe}}" editable></paper-slider>
+    <paper-slider id="coffee_maker" pin snaps max="5" step="1" value="{{coffee_maker | safe}}" editable></paper-slider>
   </div>
 
   <paper-button onclick="submitForm()" raised id="loginButton">SET LEVELS</paper-button>

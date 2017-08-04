@@ -3,7 +3,9 @@
 
 
 {% macro certnumber(tool) %}
-  {% if user %} <span class='certnumber level{{tool | safe}}'>{{tool | safe}}</span> {% endif %}
+  <span class='certnumber {% if user %}level{{tool | safe}}{% else %}num-certified{% endif %}'>{{tool | safe}}</span>
+
+
 {% endmacro %}
 
 
