@@ -69,7 +69,7 @@ class BaseHandler(webapp2.RequestHandler):
         obj = {"username" : db_obj.username}
         for tool in TOOLS:
             attr = getattr(db_obj, tool)
-            obj[tool + "_cert"] = attr
+            obj[tool] = attr
         return obj
 
     def get_levels(self, id):
@@ -219,6 +219,9 @@ class AdminHandler(BaseHandler):
 
         query = User.query() # Get all students
         rows = ""
+
+
+        logging.info('\n\n\n------------------------------------------\n\n\n')
         row = JINJA_ENVIRONMENT.get_template('public/studentrow.html')
         for student in query:
             rows += row.render(self.db_user_to_simple_obj(student))
