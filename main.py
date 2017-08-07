@@ -28,15 +28,15 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
-    vinyl_cutter = ndb.IntegerProperty(default=1)
-    power_tools = ndb.IntegerProperty(default=1)
-    sewing_machine = ndb.IntegerProperty(default=1)
-    hand_tools = ndb.IntegerProperty(default=1)
-    lasers = ndb.IntegerProperty(default=1)
-    cnc = ndb.IntegerProperty(default=1)
-    printers_3d = ndb.IntegerProperty(default=1)
-    soldering = ndb.IntegerProperty(default=1)
-    coffee_maker = ndb.IntegerProperty(default=1)
+    vinyl_cutter = ndb.IntegerProperty(default=0)
+    power_tools = ndb.IntegerProperty(default=0)
+    sewing_machine = ndb.IntegerProperty(default=0)
+    hand_tools = ndb.IntegerProperty(default=0)
+    lasers = ndb.IntegerProperty(default=0)
+    cnc = ndb.IntegerProperty(default=0)
+    printers_3d = ndb.IntegerProperty(default=0)
+    soldering = ndb.IntegerProperty(default=0)
+    coffee_maker = ndb.IntegerProperty(default=0)
 
 class BaseHandler(webapp2.RequestHandler):
     def open_html(self, filepath):
