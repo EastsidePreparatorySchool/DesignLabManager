@@ -104,6 +104,7 @@ class MainHandler(BaseHandler):
         if (str_id):
             obj = self.get_db_obj(str_id)
             values.update(self.db_user_to_simple_obj(obj))
+            values['total_certs'] = User.query().count()
 
         self.send_template('public/index.html', values)
 
@@ -142,9 +143,19 @@ class ToolHandler(BaseHandler):
             return
 
         total_certified = User.query(User._properties[tool] > 0).count()
-        people_certified_by_level = []
+        values = {}
+        str_id = self.get_id()
 
-        values = {'total_certified': total_certified}
+        if (str_id):
+            obj = self.get_db_obj(str_id)
+            level = getattr(obj, tool)
+            if not level:
+                str_id = None # Simply triggers the default case below. Does NOT delete user from database
+            else:
+                values['cert_num'] = 'You are certified to level ' + str(level) + '.'
+
+        if not (str_id):
+            values['cert_num'] = 'Join the ' + str(total_certified) + ' people certified by talking to Mr. Mack.'
 
         for i in range(1, 6):
             values['level_' + str(i)] = User.query(User._properties[tool] == i).count()
