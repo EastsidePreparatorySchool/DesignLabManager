@@ -22,73 +22,58 @@
 
 {% macro skill(tool) %}
   <div class="skill" id='{{ tool }}'>
-    <span>{{ tool }}</span>
+    <a href='#' onclick='requestToolData("{{ tool }}");'><span>{{ tool }}</span></a>
     <span class='label'></span>
     <span class='level'></span>
     <a href='#' class='up' onclick='uplevel("{{ tool }}")'>Up</a>
   </div>
 {% endmacro %}
 
+
 {% block content %}
-  <div class="wrap">
+  <div class="wrap" id='student-view'>
+
     <div class="searchform group">
       <label for="search-box">
         <span class="fa fa-2x fa-search"></span>
       </label>
-
       <input type="search" id="search-box" placeholder="Search for a user">
     </div>
+
     <h2 style="text-align: center; color:white;" id='studentName'>Viewing stats for: Student name here</h2>
     <div class="skills">
-
       {% for tool in tools %}
         {{ skill(tool) }}
       {% endfor %}
-
-      {# <div class="skill">
-        <span>3D Printers</span>
-        <span class="label">Level</span>
-        <span class="level">5 - Expert</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Laser Cutter</span>
-        <span class="label">Level</span>
-        <span class="level">4 - Advanced</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Vinyl Cutter</span>
-        <span class="label">Level</span>
-        <span class="level">3 - Proficient</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Power Tools</span>
-        <span class="label">Level</span>
-        <span class="level">2 - Competent</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Hand Tools</span>
-        <span class="label">Level</span>
-        <span class="level">1 - Novice</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Soldering Iron</span>
-        <span class="label">Level</span>
-        <span class="level">5 - Expert</span>
-        <a href="#" class="up">Up</a>
-      </div>
-      <div class="skill">
-        <span>Sewing Machine</span>
-        <span class="label">Level</span>
-        <span class="level">5 - Expert</span>
-        <a href="#" class="up">Up</a>
-      </div> #}
     </div>
   </div>
+
+
+  <div class='wrap' id='tool-view' style='display:none'>
+    <div id='tableDiv'>
+
+      <div id='tbl-header'>
+        <table cellPadding="0" cellSpacing="0" border="0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Graduation Year</th>
+              <th>Certification Level</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <div class='tbl-content'>
+        <table cellPadding="0" cellSpacing="0" border="0">
+          <tbody id='students'>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
 {% endblock %}
 {% block script %}
 <script>
@@ -129,6 +114,46 @@
         skills[key].children[2].innerHTML = levelString(userData.levels[key]);
     }
   }
+  function requestUserData(username) {
+    //ampersand for delimeters
+    httpClient.get('admin/data?user='+username, (xhr) => {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 404) showAlert('No Database entry for ' + username + '.\nLog in as ' + username + ' to create one.');
+        if (xhr.status == 200) {
+          Object.assign(userData, JSON.parse(xhr.response));
+          fillUserData();
+        }
+      }
+    });
+  }
+
+  let toolData = {};
+  function userString(user) {
+    return '<tr> <td>'
+      + user.username+'</td> <td>'
+      + user.gradYear+'</td> <td>'
+      + user.level+'</td> </tr>';
+  }
+  function fillToolData() {
+    let students = document.getElementById('students');
+    students.innerHTML = '';
+    for (let i = 0; i < Object.keys(toolData.users).length; i++) {
+      students.appendChild(userString(toolData.users[i]));
+    }
+  }
+  function requestToolData(tool) {
+    httpClient.get('admin/data?tool=' + tool, (xhr) => {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 404) showAlert('No Database entry for ' + tool);
+        if (xhr.status == 200) {
+          console.log(JSON.parse(xhr.response))
+          //toolData = JSON.parse(xhr.response));
+          //fillToolData();
+        }
+      }
+    });
+  }
+
 
 
   function uplevel(tool) {
@@ -139,19 +164,6 @@
     }, (xhr) => {
       if (xhr.readyState == 4) {
         if (xhr.status == 200) requestUserData(userData.user);
-      }
-    });
-  }
-
-  function requestUserData(username) {
-    //ampersand for delimeters
-    httpClient.get('admin/data?user='+username, (xhr) => {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 404) showAlert('No Database entry for ' + username + '.\nLog in as ' + username + ' to create one.');
-        if (xhr.status == 200) {
-          Object.assign(userData, JSON.parse(xhr.response));
-          fillUserData();
-        }
       }
     });
   }
@@ -170,7 +182,7 @@
 
 
 
-  
+
 
 </script>
 {% endblock %}

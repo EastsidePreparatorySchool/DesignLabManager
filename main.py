@@ -176,25 +176,42 @@ class NewAdminHandler(BaseHandler):
 
 class AdminDataHandler(BaseHandler):
     def get(self):
+        userrequest = True
         #logging.info('\n\n-----------------------ADMIN DATA--------------------------\n\n')
         if not (self.is_admin()):
             self.error(403)
             return
         if not (self.request.get('user')):
-            self.error(404)
-            return
+            userrequest = False
+            if not (self.request.get('tool')):
+                self.error(404)
+                return
 
-        user = self.request.get('user').lower()
-        if not (self.get_db_obj(user)):
-            self.error(404)
-            return
+        data = {}
+        if (userrequest):
+            data = {'user': self.request.get('user'), 'levels': self.userData(self.request.get('user').lower())}
+        else:
+            data = self.toolData(self.request.get('tool').lower())
 
-        data = {
-            'user': user,
-            'levels': self.get_levels_verbose(user)
-        }
         #self.response.headers['content-type'] = 'application/json'
         self.response.out.write(json.dumps(data))
+
+    def userData(self, user):
+        return self.get_levels_verbose(user)
+    def toolData(self, tool):
+        users = [];
+        query = User.query(User.printers_3d > 0)
+        for user in User.query():
+            obj = self.db_user_to_simple_obj(user)
+
+            #obj.username == null
+            #users.append({'username': obj.username, level: obj[tool]})
+            users.append({'username': obj})
+        return {
+            'tool': tool,
+            'users': users
+        }
+
     def post(self):
         if not (self.is_admin()):
             self.error(403)
