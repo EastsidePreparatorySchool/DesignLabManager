@@ -48,7 +48,10 @@ class BaseHandler(webapp2.RequestHandler):
         if not (self.request.cookies.get("auth")):
             return None
         cookie = self.request.cookies.get("auth")
-        decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
+        try:
+            decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
+        except TypeError:
+            return None
         return json.loads(decoded)["username"]
 
     def is_admin(self):
