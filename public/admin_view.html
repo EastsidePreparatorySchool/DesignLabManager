@@ -83,10 +83,6 @@ the admin edit the levels of an individual student-->
     <paper-slider id="vinyl_cutter" pin snaps max="5" step="1" value="{{vinyl_cutter | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
-    <span class="toollabel">Soldering</span>
-    <paper-slider id="soldering" pin snaps max="5" step="1" value="{{soldering | safe}}" editable></paper-slider>
-  </div>
-  <div class="toolcontainer">
     <span class="toollabel">Shopbot</span>
     <paper-slider id="cnc" pin snaps max="5" step="1" value="{{cnc | safe}}" editable></paper-slider>
   </div>
@@ -96,7 +92,11 @@ the admin edit the levels of an individual student-->
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Power tools</span>
-    <paper-slider id="power_tools" pin snaps max="5" step="1" value="{{power_tools_cert | safe}}" editable></paper-slider>
+    <paper-slider id="power_tools" pin snaps max="5" step="1" value="{{power_tools | safe}}" editable></paper-slider>
+  </div>
+  <div class="toolcontainer">
+    <span class="toollabel">Soldering</span>
+    <paper-slider id="soldering" pin snaps max="5" step="1" value="{{soldering | safe}}" editable></paper-slider>
   </div>
   <div class="toolcontainer">
     <span class="toollabel">Sewing machine</span>
@@ -129,6 +129,7 @@ the admin edit the levels of an individual student-->
     data.append('cnc', cnc.value);
     data.append('sewing_machine', sewing_machine.value);
     data.append('hand_tools', hand_tools.value);
+    data.append('power_tools', power_tools.value);
     data.append('soldering', soldering.value);
     data.append('vinyl_cutter', vinyl_cutter.value);
 
