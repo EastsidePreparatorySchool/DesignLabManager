@@ -48,7 +48,10 @@ class BaseHandler(webapp2.RequestHandler):
         if not (self.request.cookies.get("auth")):
             return None
         cookie = self.request.cookies.get("auth")
-        decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
+        try:
+            decoded = aes.decryptData(CRYPTO_KEY, base64.b64decode(cookie))
+        except TypeError:
+            return None
         return json.loads(decoded)["username"]
 
     def is_admin(self):
@@ -199,14 +202,14 @@ class AdminDataHandler(BaseHandler):
     def userData(self, user):
         return self.get_levels_verbose(user)
     def toolData(self, tool):
-        users = []
+        users = [];
         query = User.query(User.printers_3d > 0)
         for user in User.query():
             obj = self.db_user_to_simple_obj(user)
-            levels = self.get_levels_verbose(obj['username'])
+
             #obj.username == null
             #users.append({'username': obj.username, level: obj[tool]})
-            users.append({'username': obj['username'], 'level': levels[tool]})
+            users.append({'username': obj})
         return {
             'tool': tool,
             'users': users
@@ -314,8 +317,8 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/login', LoginHandler),
     ('/tool/([\w\-]+)', ToolHandler),
-    ('/admin', NewAdminHandler),
-    #('/admin', AdminHandler),
+    #('/admin', NewAdminHandler),
+    ('/admin', AdminHandler),
     ('/admin/data', AdminDataHandler),
     ('/getuser', AdminUserSearchHandler),
     ('/userlevel/([\w\-]+)', DataViewHandler),

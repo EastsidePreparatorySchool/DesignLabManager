@@ -51,11 +51,6 @@
 
 
   <div class='wrap' id='tool-view' style='display:none'>
-
-    <div id='head'></div>
-
-
-
     <div id='tableDiv'>
 
       <div id='tbl-header'>
@@ -85,21 +80,6 @@
 <script>
 
 
-let view = {
-  current: 'student-view',
-  switch: (id) => {
-    document.getElementById(view.current).style.display = 'none';
-    document.getElementById(id).style.display = 'block';
-    view.current = id;
-
-  }
-};
-
-
-
-
-
-
   //initialize data with Jinja replacements
   let userData = {user: '{{user}}', levels: {}}
   {% for tool in tools %}
@@ -108,27 +88,8 @@ let view = {
 
   fillUserData();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   function levelString(level) {
     switch(Number(level)) {
-      case 0:
-        return '0 - Just Bad';
       case 1:
         return '1 - Novice';
       case 2:
@@ -153,7 +114,6 @@ let view = {
         let key = Object.keys(userData.levels)[i];
         skills[key].children[2].innerHTML = levelString(userData.levels[key]);
     }
-    view.switch('student-view');
   }
   function requestUserData(username) {
     //ampersand for delimeters
@@ -170,32 +130,26 @@ let view = {
 
   let toolData = {};
   function userString(user) {
-
-    return '<tr> <td><a href="#" onclick=\'requestUserData("' + user.username + '")\'>'
-      + user.username+'</a></td> <td>'
-      + 2020+'</td> <td>'
+    return '<tr> <td>'
+      + user.username+'</td> <td>'
+      + user.gradYear+'</td> <td>'
       + user.level+'</td> </tr>';
   }
   function fillToolData() {
-    let head = document.getElementById('head');
-    head.innerHTML = '<h1>' + toolData.tool + '</h1>'
-
-
-
     let students = document.getElementById('students');
     students.innerHTML = '';
     for (let i = 0; i < Object.keys(toolData.users).length; i++) {
-      students.innerHTML += userString(toolData.users[i]);
+      students.appendChild(userString(toolData.users[i]));
     }
-    view.switch('tool-view');
   }
   function requestToolData(tool) {
     httpClient.get('admin/data?tool=' + tool, (xhr) => {
       if (xhr.readyState == 4) {
         if (xhr.status == 404) showAlert('No Database entry for ' + tool);
         if (xhr.status == 200) {
-          toolData = JSON.parse(xhr.response);
-          fillToolData();
+          console.log(JSON.parse(xhr.response))
+          //toolData = JSON.parse(xhr.response));
+          //fillToolData();
         }
       }
     });
