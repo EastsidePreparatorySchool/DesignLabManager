@@ -26,6 +26,7 @@
     <span class='label'></span>
     <span class='level'></span>
     <a href='#' class='up' onclick='uplevel("{{ tool }}")'>Up</a>
+    <a href='#' class='up' onclick='downlevel("{{ tool }}")'>Down</a>
   </div>
 {% endmacro %}
 
@@ -207,6 +208,17 @@ let view = {
       user: userData.user,
       tool: tool,
       level: userData.levels[tool] + 1
+    }, (xhr) => {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) requestUserData(userData.user);
+      }
+    });
+  }
+  function downlevel(tool) {
+    httpClient.post('admin/data', {
+      user: userData.user,
+      tool: tool,
+      level: userData.levels[tool] - 1
     }, (xhr) => {
       if (xhr.readyState == 4) {
         if (xhr.status == 200) requestUserData(userData.user);
