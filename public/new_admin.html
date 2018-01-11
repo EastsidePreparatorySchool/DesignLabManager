@@ -78,7 +78,15 @@
 {% endblock %}
 {% block script %}
 <script>
+  let view = {
+    current: 'student-view',
+    switch: (id) => {
+      document.getElementById(view.current).style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+      view.current = id;
 
+    }
+  };
 
   //initialize data with Jinja replacements
   let userData = {user: '{{user}}', levels: {}}
@@ -90,6 +98,8 @@
 
   function levelString(level) {
     switch(Number(level)) {
+      case 0:
+        return '0 - Uncertified';
       case 1:
         return '1 - Novice';
       case 2:
@@ -114,6 +124,7 @@
         let key = Object.keys(userData.levels)[i];
         skills[key].children[2].innerHTML = levelString(userData.levels[key]);
     }
+    view.switch('student-view');
   }
   function requestUserData(username) {
     //ampersand for delimeters
