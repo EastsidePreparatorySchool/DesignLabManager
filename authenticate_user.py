@@ -25,7 +25,7 @@ def get_auth_token():
     page_source = page.read()
     # Providing start and end bounds below (5000 to 6000 chars) makes our search faster
     # If search ever totally breaks, lower our start bound
-    starting_char = page_source.find('authenticity_token" value="', 5000, 6000)
+    starting_char = page_source.find('authenticity_token" value="', 5000, 9000)
 
     starting_index = starting_char + 27
     ending_index = starting_char + 27
